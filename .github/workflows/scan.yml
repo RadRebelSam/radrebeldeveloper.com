@@ -58,13 +58,24 @@ jobs:
           if-no-files-found: error
           retention-days: 14          # private-repo artifact storage is metered
 
+      # Everything the scan touches is generated, so when the branch has moved
+      # under us the answer is not to merge but to rebase the working tree onto
+      # it: this run's output is the newer truth either way.
       - name: Commit what changed
         run: |
           git config user.name "scan"
           git config user.email "scan@users.noreply.github.com"
-          git add -A
-          git diff --staged --quiet || git commit -m "scan: refresh projects"
-          git push
+          for attempt in 1 2 3; do
+            git fetch -q origin main
+            git reset -q --soft origin/main
+            git add -A
+            git diff --staged --quiet && { echo "nothing changed"; exit 0; }
+            git commit -q -m "scan: refresh projects"
+            git push -q origin HEAD:main && exit 0
+            echo "branch moved, retrying ($attempt)"
+          done
+          echo "could not push after three attempts" >&2
+          exit 1
 
       # Uploads index.html, projects.json, assets/ and icons/ over FTPS.
       # The credentials live in the repository's Actions secrets, never here.
