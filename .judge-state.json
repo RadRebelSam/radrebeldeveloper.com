@@ -1,5 +1,5 @@
 {
-  "since": "2026-09-20T12:57:46.937Z",
+  "since": "2026-09-20T13:00:59.300Z",
   "decided": {
     "jev-decision-lab": {
       "verdict": "listed",
@@ -49,6 +49,36 @@
     "CodePath-WEB102-Prework": {
       "verdict": "skip",
       "usable": 0.42,
+      "at": "2026-09-20"
+    },
+    "motionsites-demo": {
+      "verdict": "add",
+      "usable": 0.85,
+      "at": "2026-09-20"
+    },
+    "storyflow": {
+      "verdict": "add",
+      "usable": 0.6,
+      "at": "2026-09-20"
+    },
+    "true-me-in-browser": {
+      "verdict": "add",
+      "usable": 0.71,
+      "at": "2026-09-20"
+    },
+    "videomark": {
+      "verdict": "add",
+      "usable": 0.62,
+      "at": "2026-09-20"
+    },
+    "sora-watermark": {
+      "verdict": "add",
+      "usable": 0.81,
+      "at": "2026-09-20"
+    },
+    "ai-web-activity-monitor": {
+      "verdict": "add",
+      "usable": 0.83,
       "at": "2026-09-20"
     }
   }

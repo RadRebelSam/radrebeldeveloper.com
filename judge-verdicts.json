@@ -1,165 +1,65 @@
 {
-  "judged": "2026-09-20T12:57:46.938Z",
+  "judged": "2026-09-20T13:00:59.301Z",
   "rule": "add when usable >= 0.6 and coursework <= 0.5 and a site exists; ask otherwise",
   "verdicts": [
     {
-      "repo": "jev-decision-lab",
-      "usable": null,
-      "coursework": null,
-      "kind": "",
-      "site": "radrebelsam.github.io/jev-decision-lab",
-      "verdict": "listed",
-      "why": "already on the board",
-      "issue": null
-    },
-    {
-      "repo": "awesome-jev",
-      "usable": null,
-      "coursework": null,
-      "kind": "",
-      "site": "radrebelsam.github.io/awesome-jev",
-      "verdict": "listed",
-      "why": "already on the board",
-      "issue": null
-    },
-    {
-      "repo": "ai301-coursework",
-      "usable": 0.22,
-      "coursework": 0.96,
-      "kind": "course-or-tutorial-work",
-      "site": "",
-      "verdict": "skip",
-      "why": "nobody else could use it (0.22)",
-      "issue": null
-    },
-    {
-      "repo": "ai301-unit1-starter",
-      "usable": 0.82,
-      "coursework": 0.96,
-      "kind": "course-or-tutorial-work",
-      "site": "",
-      "verdict": "ask",
-      "why": "usable (0.82) but reads as course work (0.96)",
-      "issue": 2
-    },
-    {
       "repo": "motionsites-demo",
-      "usable": 0.86,
+      "usable": 0.85,
       "coursework": 0.27,
       "kind": "experiment-or-demo",
-      "site": "",
-      "verdict": "ask",
-      "why": "usable (0.86) but nothing is deployed, so it has no logo to show",
-      "issue": 3
-    },
-    {
-      "repo": "rick-sanchez",
-      "usable": null,
-      "coursework": null,
-      "kind": "",
-      "site": "",
-      "verdict": "listed",
-      "why": "already on the board",
+      "site": "github.com/RadRebelSam/motionsites-demo",
+      "verdict": "add",
+      "why": "usable (0.85), not course work (0.27)",
       "issue": null
-    },
-    {
-      "repo": "ai4all-20c-darkpatterns",
-      "usable": 0.88,
-      "coursework": 0.72,
-      "kind": "web-app",
-      "site": "radrebelsam.github.io/ai4all-20c-darkpatterns",
-      "verdict": "ask",
-      "why": "usable (0.88) but reads as course work (0.72)",
-      "issue": 4
     },
     {
       "repo": "storyflow",
-      "usable": 0.61,
+      "usable": 0.6,
       "coursework": 0.19,
       "kind": "library-or-tool",
-      "site": "",
-      "verdict": "ask",
-      "why": "usable (0.61) but nothing is deployed, so it has no logo to show",
-      "issue": 5
+      "site": "github.com/RadRebelSam/storyflow",
+      "verdict": "add",
+      "why": "usable (0.6), not course work (0.19)",
+      "issue": null
     },
     {
       "repo": "true-me-in-browser",
-      "usable": 0.69,
-      "coursework": 0.26,
+      "usable": 0.71,
+      "coursework": 0.28,
       "kind": "web-app",
-      "site": "",
-      "verdict": "ask",
-      "why": "usable (0.69) but nothing is deployed, so it has no logo to show",
-      "issue": 6
+      "site": "github.com/RadRebelSam/true-me-in-browser",
+      "verdict": "add",
+      "why": "usable (0.71), not course work (0.28)",
+      "issue": null
     },
     {
       "repo": "videomark",
-      "usable": 0.63,
-      "coursework": 0.31,
+      "usable": 0.62,
+      "coursework": 0.3,
       "kind": "web-app",
-      "site": "",
-      "verdict": "ask",
-      "why": "usable (0.63) but nothing is deployed, so it has no logo to show",
-      "issue": 7
+      "site": "github.com/RadRebelSam/videomark",
+      "verdict": "add",
+      "why": "usable (0.62), not course work (0.3)",
+      "issue": null
     },
     {
       "repo": "sora-watermark",
-      "usable": 0.82,
-      "coursework": 0.25,
+      "usable": 0.81,
+      "coursework": 0.24,
       "kind": "web-app",
-      "site": "",
-      "verdict": "ask",
-      "why": "usable (0.82) but nothing is deployed, so it has no logo to show",
-      "issue": 8
-    },
-    {
-      "repo": "ai-support-agent",
-      "usable": 0.53,
-      "coursework": 0.92,
-      "kind": "web-app",
-      "site": "",
-      "verdict": "skip",
-      "why": "nobody else could use it (0.53)",
-      "issue": null
-    },
-    {
-      "repo": "CodePath-WEB102-Project2",
-      "usable": 0.31,
-      "coursework": 0.94,
-      "kind": "course-or-tutorial-work",
-      "site": "",
-      "verdict": "skip",
-      "why": "nobody else could use it (0.31)",
-      "issue": null
-    },
-    {
-      "repo": "CodePath-WEB102-Project1",
-      "usable": 0.26,
-      "coursework": 0.95,
-      "kind": "course-or-tutorial-work",
-      "site": "",
-      "verdict": "skip",
-      "why": "nobody else could use it (0.26)",
+      "site": "github.com/RadRebelSam/sora-watermark",
+      "verdict": "add",
+      "why": "usable (0.81), not course work (0.24)",
       "issue": null
     },
     {
       "repo": "ai-web-activity-monitor",
-      "usable": 0.8,
-      "coursework": 0.22,
+      "usable": 0.83,
+      "coursework": 0.24,
       "kind": "browser-extension",
-      "site": "",
-      "verdict": "ask",
-      "why": "usable (0.8) but nothing is deployed, so it has no logo to show",
-      "issue": 9
-    },
-    {
-      "repo": "CodePath-WEB102-Prework",
-      "usable": 0.42,
-      "coursework": 0.97,
-      "kind": "course-or-tutorial-work",
-      "site": "",
-      "verdict": "skip",
-      "why": "nobody else could use it (0.42)",
+      "site": "github.com/RadRebelSam/ai-web-activity-monitor",
+      "verdict": "add",
+      "why": "usable (0.83), not course work (0.24)",
       "issue": null
     }
   ]

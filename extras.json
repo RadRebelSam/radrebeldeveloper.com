@@ -2,6 +2,12 @@
   "_comment": "Projects that do not live on a radrebeldeveloper.com subdomain. scan.mjs probes these hosts too, and never drops one for being silent — a host named here is deliberate, so no answer means not up yet. Subdomains find themselves through certificate transparency and don't belong here.",
   "hosts": [
     "clawconnected.com",
+    "github.com/RadRebelSam/ai-web-activity-monitor",
+    "github.com/RadRebelSam/motionsites-demo",
+    "github.com/RadRebelSam/sora-watermark",
+    "github.com/RadRebelSam/storyflow",
+    "github.com/RadRebelSam/true-me-in-browser",
+    "github.com/RadRebelSam/videomark",
     "whichjudge.dev"
   ]
 }
