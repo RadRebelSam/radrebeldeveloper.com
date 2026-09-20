@@ -190,7 +190,7 @@ function guessCategory(blob) {
 
 /* ------------------------------------------------------------------ probing */
 
-async function probe(target) {
+async function probe(target, named) {
   /* target is either a subdomain slug or a full "host[/path]" from extras.json */
   const external = target.includes('.');
   const host = external ? target : `${target}.${DOMAIN}`;
@@ -203,7 +203,9 @@ async function probe(target) {
      since been deleted keeps turning up here. One that does not answer at all —
      no DNS, no connection — is gone rather than unfinished, and is dropped from
      the manifest entirely. Tried twice, so one flaky moment can't erase a
-     project that is really still there. */
+     project that is really still there.
+     A host you named yourself in extras.json is the exception: you meant it, so
+     silence means "not up yet", not "deleted". */
   let html = '';
   let reached = false;
   for (let attempt = 0; attempt < 2 && !reached; attempt++) {
@@ -213,7 +215,9 @@ async function probe(target) {
       if (!res.ok) return { ...base, tagline: `Not serving yet (HTTP ${res.status}).` };
       html = (await res.text()).slice(0, 80000);
     } catch {
-      if (attempt) return null;                       /* nothing there — drop it */
+      if (attempt) {
+        return named ? { ...base, tagline: 'Not live yet.' } : null;
+      }
     }
   }
 
@@ -254,8 +258,12 @@ let extras = [];
 try { extras = (JSON.parse(await readFile(EXTRAS, 'utf8')).hosts || []); } catch {}
 
 const projects = [];
-for (const t of [...slugs, ...extras]) {
-  const p = await probe(t);                           /* serial: be polite */
+for (const t of slugs) {
+  const p = await probe(t, false);                    /* serial: be polite */
+  if (p) projects.push(p);
+}
+for (const t of extras) {
+  const p = await probe(t, true);                     /* named by hand: never dropped */
   if (p) projects.push(p);
 }
 

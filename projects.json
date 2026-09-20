@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-20T12:24:49.670Z",
+  "generated": "2026-09-20T12:31:23.847Z",
   "projects": [
     {
       "slug": "clawconnected",
@@ -61,6 +61,15 @@
       "host": "synapsecanvas.radrebeldeveloper.com",
       "name": "synapsecanvas",
       "tagline": "No favicon yet — still being built.",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "whichjudge",
+      "host": "whichjudge.dev",
+      "name": "whichjudge",
+      "tagline": "Not live yet.",
       "category": "misc",
       "icon": "",
       "status": "building"
