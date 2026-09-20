@@ -1,7 +1,17 @@
-# radrebeldeveloper.com — home
+# radrebeldeveloper.com
 
-A sticker board of everything that has shipped. Each project is its own logo, die-cut
-into a shape generated from its name, draggable, and linked to the live site.
+The home page of **[radrebeldeveloper.com](https://radrebeldeveloper.com)** — a sticker
+board of everything that has shipped.
+
+Each project is its own logo, die-cut into a shape generated from its name, dealt into a
+pile you can drag around. Nothing on the board is hand-maintained: a scanner finds the
+projects through certificate transparency, reads each site for its copy and its favicon,
+and decides from the favicon alone whether something has shipped or is still being built.
+
+One static HTML file, no framework, no build step, no dependencies. The only moving parts
+are Node scripts that run before deploy, never on the server.
+
+**Live:** https://radrebeldeveloper.com
 
 ## Files
 
