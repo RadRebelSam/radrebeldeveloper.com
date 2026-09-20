@@ -36,6 +36,18 @@ case "$mode" in
     tls="--ssl-reqd"
     [ "${FTP_INSECURE:-}" = "1" ] && tls="--ssl"
 
+    # Refuse to invent a directory tree. --ftp-create-dirs below will happily
+    # create whatever path it is given, so if FTP_DIR is wrong the upload would
+    # silently build a stray site somewhere instead of failing. List the target
+    # first: no such directory, no upload.
+    if ! curl $tls --disable-epsv -sS --fail --list-only "$base/" -o /dev/null --config - <<CFG
+user = "${FTP_USER}:${FTP_PASS}"
+CFG
+    then
+      echo "cannot list ${FTP_DIR:-/public_html} on ${FTP_HOST} — check FTP_DIR and the credentials" >&2
+      exit 1
+    fi
+
     upload() {   # upload <local> <remote-path>
       curl $tls --ftp-create-dirs --disable-epsv -sS --fail \
            -T "$1" "$base/$2" --config - <<CFG

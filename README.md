@@ -138,6 +138,12 @@ machine. They are the toolchain, not the site.
 The apex currently serves Hostinger's placeholder, so `public_html` already exists and
 holds a default `index.html` that this replaces.
 
+**Subdomains are not touched.** On Hostinger each subdomain has its own document root —
+`domains/<sub>.radrebeldeveloper.com/public_html` — a sibling of the apex root, not a
+folder inside it. The deploy writes four things (`index.html`, `projects.json`, `assets/`,
+`icons/`) into the apex root and nothing else; it never deletes and never recurses
+elsewhere. Worth confirming your own layout in the File Manager once before the first run.
+
 **By hand:** hPanel → Files → File Manager → `domains/radrebeldeveloper.com/public_html`,
 delete the placeholder `index.html`, upload `dist/radrebeldeveloper.com.zip` and use the
 file manager's Extract — the paths inside are already relative to the site root.
