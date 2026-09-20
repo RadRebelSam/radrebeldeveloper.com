@@ -14,9 +14,14 @@
  * does it exist to satisfy a course — and the thresholds below are policy, held
  * here in code rather than asked of the model.
  *
+ * Nothing here publishes anything. Every run's conclusions leave as a pull
+ * request, which is where they are agreed to or thrown out. The same repository
+ * can score either side of a threshold on two runs, so the line is a proposal,
+ * never the last word.
+ *
  *   usable < 0.60                        -> skip, and never ask again
- *   usable >= 0.75, coursework <= 0.50   -> add
- *   usable in between, or course work    -> open an issue and let a human say
+ *   usable >= 0.60, coursework <= 0.50   -> propose adding it
+ *   usable >= 0.60, coursework >  0.50   -> propose it, flagged for a decision
  *
  * A repository with nothing deployed still goes on the board, pointing at the
  * repository and wearing GitHub's mark, since it has no logo of its own.
@@ -54,9 +59,8 @@ const DRY = ARGS.includes('--dry');
 const REPLAY = (() => { const i = ARGS.indexOf('--verdicts'); return i < 0 ? null : ARGS[i + 1]; })();
 
 const NL = String.fromCharCode(10);
-const USABLE_ENOUGH = 0.60;        /* below this: nobody else could use it */
-const CLEARLY_USABLE = 0.75;       /* above this: add it without asking */
-const TOO_MUCH_COURSEWORK = 0.50;
+const USABLE_ENOUGH = 0.60;        /* usable to a stranger: it belongs on the board */
+const TOO_MUCH_COURSEWORK = 0.50;  /* unless it only exists to satisfy a course */
 
 /* Already on the board by another route, so there is nothing to decide. */
 const SKIP_REPOS = new Set(['radrebeldeveloper.com', 'radrebelsam.github.io']);
@@ -191,13 +195,7 @@ function decide(v) {
   if (v.coursework > TOO_MUCH_COURSEWORK) {
     return { verdict: 'ask', why: `usable (${v.usable}) but reads as course work (${v.coursework})` };
   }
-  /* Between the two thresholds the model is not really saying yes, and the same
-     repository can land either side of 0.60 on different runs. Ask instead of
-     putting a coin toss on the board. */
-  if (v.usable < CLEARLY_USABLE) {
-    return { verdict: 'ask', why: `usable, but only just (${v.usable})` };
-  }
-  return { verdict: 'add', why: `clearly usable (${v.usable}), not course work (${v.coursework})` };
+  return { verdict: 'add', why: `usable (${v.usable}), not course work (${v.coursework})` };
 }
 
 /* --------------------------------------------------------------- the asking */
@@ -328,7 +326,7 @@ if (!DRY) {
   await writeFile(STATE, JSON.stringify(state, null, 2) + '\n');
   await writeFile(REPORT, JSON.stringify({
     judged: new Date().toISOString(),
-    rule: `add when usable >= ${USABLE_ENOUGH} and coursework <= ${TOO_MUCH_COURSEWORK} and a site exists; ask otherwise`,
+    rule: `usable >= ${USABLE_ENOUGH} proposes an addition; coursework > ${TOO_MUCH_COURSEWORK} flags it for a decision; every proposal goes out as a pull request`,
     verdicts: results.map(r => ({
       repo: r.repo, usable: r.usable, coursework: r.coursework, kind: r.kind,
       site: r.site, verdict: r.verdict, why: r.why, issue: r.issue || null
