@@ -1,0 +1,31 @@
+{
+  "judged": "2026-09-20",
+  "model": "jev-1.13.0",
+  "questions": {
+    "usable_by_others": "Someone other than the author could use, run, or view the result of what is in this repository as it stands.",
+    "coursework": "The contents exist to satisfy a course, assignment, prework, capstone or tutorial rather than the author's own initiative.",
+    "kind": "What kind of artifact the repository holds."
+  },
+  "rule": "add when usable_by_others >= 0.60 and coursework <= 0.50 — the threshold is policy, not Jev's; Jev returns probabilities",
+  "verdicts": [
+    { "repo": "awesome-jev",             "usable": 0.89, "coursework": 0.09, "kind": "directory-or-dataset",   "verdict": "add", "already_listed": "jev.radrebeldeveloper.com" },
+    { "repo": "jev-decision-lab",        "usable": 0.82, "coursework": 0.21, "kind": "experiment-or-demo",     "verdict": "add", "already_listed": "jevdecisionlab.radrebeldeveloper.com" },
+    { "repo": "rick-sanchez",            "usable": 0.82, "coursework": 0.28, "kind": "static-site",            "verdict": "add", "already_listed": "ricksanchez.radrebeldeveloper.com" },
+    { "repo": "motionsites-demo",        "usable": 0.68, "coursework": 0.31, "kind": "experiment-or-demo",     "verdict": "add", "already_listed": null },
+    { "repo": "ai-web-activity-monitor", "usable": 0.65, "coursework": 0.30, "kind": "browser-extension",      "verdict": "add", "already_listed": null },
+
+    { "repo": "ai4all-20c-darkpatterns", "usable": 0.82, "coursework": 0.73, "kind": "web-app",                "verdict": "borderline", "note": "usable, but reads as course work" },
+    { "repo": "radrebelsam.github.io",   "usable": 0.55, "coursework": 0.28, "kind": "static-site",            "verdict": "borderline", "note": "the Pages host itself, not a project" },
+
+    { "repo": "sora-watermark",          "usable": 0.42, "coursework": 0.35, "kind": "web-app",                "verdict": "skip" },
+    { "repo": "ai301-unit1-starter",     "usable": 0.42, "coursework": 0.95, "kind": "course-or-tutorial-work","verdict": "skip" },
+    { "repo": "videomark",               "usable": 0.40, "coursework": 0.36, "kind": "web-app",                "verdict": "skip" },
+    { "repo": "ai-support-agent",        "usable": 0.38, "coursework": 0.90, "kind": "web-app",                "verdict": "skip" },
+    { "repo": "storyflow",               "usable": 0.36, "coursework": 0.26, "kind": "library-or-tool",        "verdict": "skip" },
+    { "repo": "CodePath-WEB102-Prework", "usable": 0.30, "coursework": 0.96, "kind": "course-or-tutorial-work","verdict": "skip" },
+    { "repo": "true-me-in-browser",      "usable": 0.28, "coursework": 0.34, "kind": "web-app",                "verdict": "skip" },
+    { "repo": "CodePath-WEB102-Project1","usable": 0.28, "coursework": 0.94, "kind": "course-or-tutorial-work","verdict": "skip" },
+    { "repo": "CodePath-WEB102-Project2","usable": 0.27, "coursework": 0.95, "kind": "course-or-tutorial-work","verdict": "skip" },
+    { "repo": "ai301-coursework",        "usable": 0.13, "coursework": 0.95, "kind": "course-or-tutorial-work","verdict": "skip" }
+  ]
+}
