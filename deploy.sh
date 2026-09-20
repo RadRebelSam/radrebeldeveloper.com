@@ -40,7 +40,13 @@ case "$mode" in
     case "$host" in
       *:*) port="${host##*:}"; host="${host%%:*}" ;;      # host carried its own port
     esac
-    base="ftp://${host}:${port}${FTP_DIR:-/public_html}"
+    # An FTP account is often already rooted at the folder it may write to, in
+    # which case the remote path is just "/". Normalise whatever is given: one
+    # leading slash, no trailing one, so "public_html/" and "/public_html" and
+    # "/" all build the same URL.
+    dir="${FTP_DIR:-/public_html}"
+    dir="/${dir#/}"; dir="${dir%/}"
+    base="ftp://${host}:${port}${dir}"
 
     # Explicit FTPS is required: an FTP password crossing the wire in clear text
     # is not worth the convenience. Shared hosts often present a certificate for
@@ -63,8 +69,8 @@ CFG
         6)  echo "no such host: ${host} — hPanel states the FTP host on Files -> FTP Accounts" >&2 ;;
         60) echo "the certificate at ${host} is for another name. Use the server's own hostname (hPanel shows it, typically srvNNNN.hstgr.io), or set FTP_INSECURE=1 to keep TLS without verifying it" >&2 ;;
         67) echo "the server rejected ${FTP_USER} — check FTP_USER and FTP_PASS" >&2 ;;
-        9)  echo "cannot open ${FTP_DIR:-/public_html} — check FTP_DIR against 'Folder to upload files'" >&2 ;;
-        *)  echo "cannot reach ${FTP_DIR:-/public_html} on ${host}:${port} (curl $code)" >&2 ;;
+        9)  echo "the server will not open ${dir:-/} — set FTP_DIR to the 'Folder to upload files' hPanel states; an account rooted at its own site wants FTP_DIR=/" >&2 ;;
+        *)  echo "cannot reach ${dir:-/} on ${host}:${port} (curl $code)" >&2 ;;
       esac
       exit 1
     fi
