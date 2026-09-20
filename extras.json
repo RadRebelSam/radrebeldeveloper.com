@@ -1,0 +1,6 @@
+{
+  "_comment": "Projects that do not live on a radrebeldeveloper.com subdomain. scan.mjs probes these hosts too. Subdomains find themselves through certificate transparency and don't belong here.",
+  "hosts": [
+    "clawconnected.com"
+  ]
+}

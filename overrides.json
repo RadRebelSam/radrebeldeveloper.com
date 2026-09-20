@@ -1,0 +1,10 @@
+{
+  "_comment": "Hand-tuned copy, categories and logos. Anything here wins over what scan.mjs scrapes. Categories: chrome-extension | obsidian-plugin | saas | skill | directory | site | misc. Leave `icon` out unless the site has no favicon worth using — a pinned icon stops tracking the live site.",
+
+  "decoder":       { "category": "chrome-extension" },
+  "rewordly":      { "category": "chrome-extension" },
+  "ricksanchez":   { "category": "site", "name": "ricksanchez", "tagline": "Rick and Morty season hub" },
+  "clawconnected": { "category": "saas", "name": "clawconnected" },
+  "jev":           { "category": "directory", "name": "awesome jev",
+                     "tagline": "A crawler-maintained directory of Jev projects" }
+}

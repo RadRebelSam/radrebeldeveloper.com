@@ -1,0 +1,67 @@
+name: scan and deploy
+
+# Rescans the domain every morning, commits whatever changed, and pushes the
+# site to Hostinger over FTPS. Also runnable by hand from the Actions tab.
+on:
+  schedule:
+    - cron: "0 6 * * *"          # 06:00 UTC daily
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:                        # a hand-edit to the page redeploys too
+      - "index.html"
+      - "assets/**"
+      - "overrides.json"
+      - "extras.json"
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false       # never let two uploads overlap
+
+permissions:
+  contents: write                 # the scan commits its own results back
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Queries certificate transparency, probes every host, refreshes the
+      # logos, rewrites projects.json and rebuilds dist/…zip.
+      - name: Scan
+        run: node scan.mjs
+
+      # dist/ is gitignored, so hand the zip out here instead: every run leaves a
+      # downloadable copy of exactly what it deployed.
+      - name: Keep the zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist/radrebeldeveloper.com.zip
+          if-no-files-found: error
+          retention-days: 14          # private-repo artifact storage is metered
+
+      - name: Commit what changed
+        run: |
+          git config user.name "scan"
+          git config user.email "scan@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "scan: refresh projects"
+          git push
+
+      # Uploads index.html, projects.json, assets/ and icons/ over FTPS.
+      # The credentials live in the repository's Actions secrets, never here.
+      - name: Deploy to Hostinger
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASS: ${{ secrets.FTP_PASS }}
+          FTP_DIR: ${{ vars.FTP_DIR || '/public_html' }}
+        run: |
+          chmod +x deploy.sh
+          ./deploy.sh ftp

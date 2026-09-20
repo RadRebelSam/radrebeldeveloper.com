@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#F7F6F2">
+<title>RadRebelDeveloper</title>
+<meta name="description" content="A sticker board of everything RadRebelDeveloper has shipped. Drag them around.">
+<link rel="icon" href="assets/brand.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F6F2;
+  --ink:#16181D;
+  --ink-soft:#33343A;
+  --muted:#6E6E73;
+  --meta:#7A7A7E;
+  --rule:rgba(22,24,29,.10);
+  --live:#3E9B63;                 /* shipped: it has a favicon of its own */
+  --wip:#C4C4C9;                  /* still being built */
+}
+*{box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--paper);margin:0}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;color:var(--ink);
+}
+
+/* ---------- stage: one scaling system for the whole composition ---------- */
+.stage{
+  --u : min(calc(100vw / 1280), calc(100vh / 600));
+  --cu: max(calc(100vw / 1280), calc(100vh / 940));
+  position:fixed;inset:0;overflow:hidden;background:var(--paper);isolation:isolate;
+}
+
+/* ---------- the board ---------- */
+.collage{
+  --cs:calc(var(--cu) * var(--fit, 1));
+  position:absolute;left:50%;
+  top:calc(240 * var(--u));
+  width:calc(1280 * var(--cs));
+  transform:translateX(-50%);
+  z-index:1;
+}
+
+/* A sticker is the project's own logo, die-cut: no card, no panel behind it.
+   The white stroke is the cut line; the caption is printed under it. */
+.st{
+  position:absolute;display:block;text-decoration:none;
+  transform-origin:50% 42%;
+  transform:translate(calc(var(--ox,0) * var(--cs)),calc(var(--oy,0) * var(--cs))) rotate(var(--rot));
+  filter:drop-shadow(0 calc(5 * var(--cs)) calc(14 * var(--cs)) rgba(20,24,40,.18));
+  -webkit-user-select:none;user-select:none;-webkit-user-drag:none;
+  touch-action:none;scale:1;
+  transition:scale .18s cubic-bezier(.2,.8,.2,1), filter .18s cubic-bezier(.2,.8,.2,1);
+}
+.st svg{display:block;width:100%;height:auto;pointer-events:none}
+.cap{
+  display:block;text-align:center;pointer-events:none;
+  margin-top:calc(var(--sw) * var(--cs) * 0.03);
+}
+.cap b{
+  display:block;font-weight:800;color:var(--ink);
+  font-size:calc(var(--sw) * var(--cs) * 0.085);
+  letter-spacing:-.02em;line-height:1.05;
+}
+.cap i{
+  display:block;font-style:normal;font-weight:600;color:var(--meta);
+  font-size:calc(var(--sw) * var(--cs) * 0.037);
+  letter-spacing:.17em;line-height:1.7;
+}
+.stage.ready .st{cursor:grab}
+.stage.ready .st:hover{scale:1.035}
+.stage.ready .st.held{cursor:grabbing;scale:1.07;
+  filter:drop-shadow(0 calc(16 * var(--cs)) calc(32 * var(--cs)) rgba(20,24,40,.28))}
+.st:focus-visible{outline:none;filter:drop-shadow(0 0 calc(3 * var(--cs)) var(--ink))}
+
+/* ---------- header ---------- */
+.head{
+  position:absolute;top:0;left:50%;width:calc(1078 * var(--u));
+  height:calc(236 * var(--u));transform:translateX(-50%);z-index:2;
+}
+.brand{position:absolute;left:0;top:calc(66 * var(--u))}
+.lock{display:flex;align-items:center;gap:calc(14 * var(--u))}
+.chip{
+  width:calc(112 * var(--u));height:calc(112 * var(--u));flex:none;display:block;
+  border-radius:calc(31 * var(--u));object-fit:cover;
+}
+.word{
+  font-size:calc(31 * var(--u));line-height:1;font-weight:800;letter-spacing:calc(-.035 * 31 * var(--u));
+  color:var(--ink);white-space:nowrap;
+}
+.word em{font-style:normal;font-weight:500;color:var(--muted)}
+.tagline{
+  margin:calc(18 * var(--u)) 0 0 calc(130 * var(--u));
+  font-size:calc(12.4 * var(--u));line-height:1;font-weight:400;color:var(--muted);white-space:nowrap;
+}
+
+/* A menu bar, not a directory: two buttons that each open a panel, so the header
+   stays one line and the board gets the room. */
+.menu{position:absolute;right:0;top:calc(104 * var(--u));display:flex;gap:calc(10 * var(--u))}
+.mi{position:relative}
+.mt{
+  appearance:none;font:inherit;cursor:pointer;
+  display:flex;align-items:center;gap:calc(9 * var(--u));white-space:nowrap;
+  padding:calc(10 * var(--u)) calc(16 * var(--u));
+  font-size:calc(11.4 * var(--u));font-weight:700;
+  letter-spacing:calc(.09 * 11.4 * var(--u));color:var(--ink-soft);
+  background:transparent;border:1px solid var(--rule);border-radius:999px;
+  transition:color .18s ease, border-color .18s ease, background-color .18s ease;
+}
+.mt:hover{color:var(--ink);border-color:rgba(22,24,29,.28)}
+.mi.open .mt{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chev{width:calc(9 * var(--u));height:calc(9 * var(--u));flex:none;
+  transition:transform .2s cubic-bezier(.2,.8,.2,1)}
+.mi.open .chev{transform:rotate(180deg)}
+
+.mp{
+  position:absolute;top:calc(100% + 10 * var(--u));right:0;z-index:6;
+  min-width:calc(236 * var(--u));padding:calc(8 * var(--u));
+  background:#FFFFFF;border:1px solid var(--rule);border-radius:calc(16 * var(--u));
+  box-shadow:0 calc(18 * var(--u)) calc(40 * var(--u)) rgba(20,24,40,.16);
+  opacity:0;transform:translateY(calc(-6 * var(--u))) scale(.985);transform-origin:100% 0;
+  pointer-events:none;
+  transition:opacity .17s ease, transform .17s cubic-bezier(.2,.8,.2,1);
+}
+.mi.open .mp{opacity:1;transform:none;pointer-events:auto}
+.mp a{
+  display:flex;align-items:center;gap:calc(10 * var(--u));
+  padding:calc(10 * var(--u)) calc(12 * var(--u));border-radius:calc(10 * var(--u));
+  font-size:calc(12.4 * var(--u));line-height:1.2;color:var(--muted);text-decoration:none;
+  transition:background-color .14s ease, color .14s ease;
+}
+.mp a:hover,.mp a:focus-visible{background:rgba(22,24,29,.055);color:var(--ink);outline:none}
+.mp .dot{width:calc(6 * var(--u));height:calc(6 * var(--u));flex:none;border-radius:50%;
+  background:var(--wip)}
+.mp .dot.live{background:var(--live)}
+.mp .k{margin-left:auto;font-size:calc(9.2 * var(--u));font-weight:600;
+  letter-spacing:calc(.14 * 9.2 * var(--u));color:var(--meta)}
+.mg{
+  padding:calc(12 * var(--u)) calc(12 * var(--u)) calc(6 * var(--u));
+  font-size:calc(9.2 * var(--u));font-weight:700;
+  letter-spacing:calc(.16 * 9.2 * var(--u));color:var(--meta);
+}
+.mg + a{margin-top:0}
+.mp > .mg:first-child{padding-top:calc(6 * var(--u))}
+.mp > .mg:not(:first-child){
+  margin-top:calc(6 * var(--u));border-top:1px solid var(--rule);
+  padding-top:calc(12 * var(--u));
+}
+
+.foot{
+  position:absolute;left:50%;bottom:calc(30 * var(--u));width:calc(1078 * var(--u));
+  transform:translateX(-50%);
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:calc(11.8 * var(--u));line-height:1;color:var(--meta);white-space:nowrap;z-index:3;
+}
+.foot::before{
+  content:"";position:absolute;left:0;right:0;top:calc(-19 * var(--u));
+  height:1px;background:var(--rule);
+}
+
+/* ---------- entrance ---------- */
+@keyframes riseMask{
+  from{opacity:0;transform:translateY(100%);clip-path:inset(0 -4% 0 -4%)}
+  to  {opacity:1;transform:translateY(0);clip-path:inset(-70% -4% -70% -4%)}
+}
+@keyframes softRise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes settle{
+  from{opacity:0;transform:translateY(20px) scale(.97) rotate(var(--rot))}
+  to  {opacity:1;transform:translateY(0) scale(1) rotate(var(--rot))}
+}
+.lock    {animation:riseMask .9s cubic-bezier(.16,1,.3,1) .08s backwards}
+.tagline {animation:riseMask .7s cubic-bezier(.16,1,.3,1) .34s backwards}
+.mt,.foot{animation:softRise .55s cubic-bezier(.22,1,.36,1) backwards}
+.mi:nth-child(1) .mt{animation-delay:.52s}
+.mi:nth-child(2) .mt{animation-delay:.60s}
+.foot{animation-duration:.62s;animation-delay:1.02s}
+.st{animation:settle .95s cubic-bezier(.19,1,.22,1) backwards;
+    animation-delay:calc(.44s + var(--seq) * .07s)}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important}
+  .lock,.tagline,.mt,.foot,.st{animation:none}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:1199.98px),(orientation:portrait){
+  .stage{--cu:max(calc(100vw / 1240), calc(100vh / 1500));display:block}
+  .head{position:static;transform:none;width:100%;height:auto;
+        padding:clamp(28px,6vh,74px) clamp(24px,4.6vw,70px) 0;
+        display:flex;flex-wrap:wrap;align-items:flex-start;
+        column-gap:clamp(28px,5vw,88px);row-gap:clamp(22px,3.4vh,44px)}
+  .brand{position:static;flex:0 1 auto;min-width:0}
+  .chip{width:clamp(76px,7.8vw,112px);height:clamp(76px,7.8vw,112px);border-radius:28px}
+  .lock{gap:clamp(11px,1.1vw,14px)}
+  .word{font-size:clamp(23px,2.5vw,31px);letter-spacing:-.035em}
+  .tagline{margin:clamp(10px,1.4vh,16px) 0 0 0;font-size:clamp(11.6px,1.05vw,12.6px);white-space:normal}
+  .menu{position:static;margin-left:auto;gap:10px}
+  .mt{padding:10px 16px;font-size:clamp(10.8px,1.05vw,11.4px);letter-spacing:.09em;gap:9px}
+  .chev{width:10px;height:10px}
+  .mp{min-width:236px;padding:8px;border-radius:16px;top:calc(100% + 10px)}
+  .mp a{padding:10px 12px;border-radius:10px;font-size:clamp(11.6px,1.05vw,12.6px);gap:10px}
+  .mp .dot{width:6px;height:6px}
+  .mp .k{font-size:9.2px;letter-spacing:.14em}
+  .mg{padding:12px 12px 6px;font-size:9.2px;letter-spacing:.16em}
+  .mp > .mg:first-child{padding-top:6px}
+  .mp > .mg:not(:first-child){margin-top:6px;padding-top:12px}
+  .foot{left:0;right:0;width:auto;transform:none;bottom:clamp(16px,2.6vh,30px);
+        padding:0 clamp(24px,4.6vw,70px);font-size:clamp(11px,1vw,12px)}
+  .foot::before{left:clamp(24px,4.6vw,70px);right:clamp(24px,4.6vw,70px);top:-14px}
+}
+@media (max-width:559.98px){
+  .stage{--cu:max(calc(100vw / 760), calc(100dvh / 1800));height:100dvh}
+  .head{padding:clamp(26px,6vh,70px) max(7vw,env(safe-area-inset-right)) 0 max(7vw,env(safe-area-inset-left));
+        row-gap:clamp(24px,4.6vh,54px);column-gap:0}
+  .brand{flex:0 0 100%}
+  .word{font-size:clamp(22px,6.4vw,30px)}
+  .tagline{font-size:clamp(11.8px,3.1vw,13.2px)}
+  .menu{margin-left:0;flex:0 0 100%;gap:8px}
+  .mi{flex:1 1 0;min-width:0}
+  .mt{width:100%;justify-content:center;padding:11px 10px;font-size:clamp(10px,2.7vw,11.4px)}
+  .mp{left:0;right:0;min-width:0}
+  .foot{padding:0 max(7vw,env(safe-area-inset-left));font-size:clamp(10.6px,2.7vw,12px)}
+  .foot::before{left:max(7vw,env(safe-area-inset-left));right:max(7vw,env(safe-area-inset-right))}
+}
+@media (max-width:1199.98px) and (max-height:560px) and (min-aspect-ratio:1/1){
+  .stage{--cu:max(calc(100vw / 1280), calc(100vh / 1560))}
+  .head{padding:12px 5vw 0;row-gap:12px}
+  .brand{flex:0 1 auto}
+  .word{font-size:20px}.chip{width:62px;height:62px;border-radius:18px}
+  .tagline{margin-top:6px;font-size:11px}
+  .menu{margin-left:auto;gap:8px}
+  .mt{padding:7px 12px;font-size:10px}
+  .mp{min-width:210px}
+  .foot{bottom:10px;font-size:10px}
+}
+</style>
+</head>
+<body>
+<main class="stage">
+  <div class="collage" id="collage"></div>
+
+  <header class="head">
+    <div class="brand">
+      <div class="lock">
+        <img class="chip" src="assets/brand.jpg" alt="" width="112" height="112">
+        <span class="word">RadRebel<em>Developer</em></span>
+      </div>
+      <p class="tagline">Everything I've shipped, in one pile.</p>
+    </div>
+
+    <nav class="menu" aria-label="Site">
+      <div class="mi">
+        <button class="mt" type="button" aria-expanded="false" aria-haspopup="true"
+                aria-controls="mProjects">PROJECTS
+          <svg class="chev" viewBox="0 0 10 10" aria-hidden="true">
+            <path d="M2 4l3 3 3-3" fill="none" stroke="currentColor"
+                  stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="mp" id="mProjects" role="menu"></div>
+      </div>
+
+      <div class="mi">
+        <button class="mt" type="button" aria-expanded="false" aria-haspopup="true"
+                aria-controls="mElsewhere">ELSEWHERE
+          <svg class="chev" viewBox="0 0 10 10" aria-hidden="true">
+            <path d="M2 4l3 3 3-3" fill="none" stroke="currentColor"
+                  stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="mp" id="mElsewhere" role="menu">
+          <a role="menuitem" href="https://x.com/RadRebelDev" rel="noopener">X<span class="k">RADREBELDEV</span></a>
+          <a role="menuitem" href="https://github.com/RadRebelSam" rel="noopener">GitHub<span class="k">RADREBELSAM</span></a>
+          <a role="menuitem" href="mailto:contact@radrebeldeveloper.com">Email<span class="k">CONTACT@</span></a>
+        </div>
+      </div>
+    </nav>
+
+  </header>
+
+  <footer class="foot">
+    <span>RadRebelDeveloper &copy; 2026</span>
+    <span>Built in public.</span>
+  </footer>
+</main>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------------- data ----------------
+     Inline copy so the file still works opened straight from disk (file:// blocks
+     fetch). projects.json is the live source and wins whenever it can be fetched.
+     Both are written by scan.mjs — don't hand-edit the block below. */
+  /* @generated:fallback — rewritten by scan.mjs, do not edit by hand */
+  var FALLBACK = {projects:[
+    {"slug":"clawconnected","host":"clawconnected.com","name":"clawconnected","tagline":"The OpenClaw Agent-to-Agent Freelance Gig Marketplace","category":"saas","icon":"icons/clawconnected.24b1b715.jpg","status":"live"},
+    {"slug":"decoder","host":"decoder.radrebeldeveloper.com","name":"decoder","tagline":"What do they actually mean?","category":"chrome-extension","icon":"icons/decoder.fe24659d.png","status":"live"},
+    {"slug":"jev","host":"jev.radrebeldeveloper.com","name":"awesome jev","tagline":"A crawler-maintained directory of Jev projects","category":"directory","icon":"icons/jev.53e1ba38.svg","status":"live"},
+    {"slug":"rewordly","host":"rewordly.radrebeldeveloper.com","name":"rewordly","tagline":"replace the words clogging your screen","category":"chrome-extension","icon":"icons/rewordly.0a57543e.png","status":"live"},
+    {"slug":"ricksanchez","host":"ricksanchez.radrebeldeveloper.com","name":"ricksanchez","tagline":"Rick and Morty season hub","category":"site","icon":"icons/ricksanchez.9c8bd75e.png","status":"live"},
+    {"slug":"synapsecanvas","host":"synapsecanvas.radrebeldeveloper.com","name":"synapsecanvas","tagline":"No favicon yet — still being built.","category":"misc","icon":"","status":"building"}
+  ]};
+  /* @end:fallback */
+
+  var CATEGORY = {
+    "chrome-extension":"CHROME EXTENSION",
+    "obsidian-plugin" :"OBSIDIAN PLUGIN",
+    "saas"            :"SAAS",
+    "skill"           :"CLAUDE SKILL",
+    "directory"       :"DIRECTORY",
+    "site"            :"SITE",
+    "misc"            :"PROJECT"
+  };
+
+  /* ---------------- deterministic randomness ----------------
+     Every cut is derived from the slug, so a sticker looks identical on every
+     load and a NEW project gets its own shape without anyone drawing it. */
+  function hash(str){
+    var h = 2166136261 >>> 0;
+    for(var i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h,16777619) >>> 0; }
+    return h >>> 0;
+  }
+  function rng(seed){
+    var s = (seed || 1) >>> 0;
+    return function(){ s ^= s<<13; s>>>=0; s ^= s>>>17; s ^= s<<5; s>>>=0; return s/4294967296; };
+  }
+
+  /* ---------------- the cut ----------------
+     One closed path per sticker, cut freehand around the logo: a ring of radii
+     wobbled by the slug's own noise, so no two projects are cut the same way and
+     none of them reads as a rounded-rectangle template. */
+  var S = 300, C = 150;
+
+  function fx(n){ return Math.round(n*10)/10; }
+
+  function cut(seed){
+    var r = rng(seed);
+    var pts  = 7 + Math.floor(r()*4);        /* 7–10 corners */
+    var hard = r() < 0.45;                   /* some cut sharp, some cut soft */
+    var wob  = hard ? 0.06 : 0.13;
+    var spin = r() * Math.PI * 2;
+    var P = [];
+
+    for(var i=0;i<pts;i++){
+      var a = spin + (i/pts) * Math.PI * 2;
+      var rad = 133 * (1 - wob/2 + r()*wob);
+      P.push([C + Math.cos(a)*rad, C + Math.sin(a)*rad]);
+    }
+
+    /* Catmull-Rom through those points, emitted as cubics: one closed smooth cut. */
+    var t = hard ? 0.16 : 0.42;              /* tension = how round the corners are */
+    var d = 'M' + fx(P[0][0]) + ' ' + fx(P[0][1]);
+    for(var j=0;j<pts;j++){
+      var p0 = P[(j-1+pts)%pts], p1 = P[j], p2 = P[(j+1)%pts], p3 = P[(j+2)%pts];
+      d += 'C' + fx(p1[0] + (p2[0]-p0[0])*t/3) + ' ' + fx(p1[1] + (p2[1]-p0[1])*t/3) +
+           ' '  + fx(p2[0] - (p3[0]-p1[0])*t/3) + ' ' + fx(p2[1] - (p3[1]-p1[1])*t/3) +
+           ' '  + fx(p2[0]) + ' ' + fx(p2[1]);
+    }
+    return d + 'Z';
+  }
+
+  function esc(s){
+    return String(s).replace(/[&<>"]/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; });
+  }
+
+  /* ---------------- one sticker ---------------- */
+  function sticker(p,i){
+    var seed = hash(p.slug || p.host);
+    var d    = cut(seed);
+    var id   = 'cut-' + (p.slug || i);
+    var name = p.name || p.slug;
+
+    var a = document.createElement('a');
+    a.className = 'st';
+    a.href = 'https://' + p.host;
+    a.rel  = 'noopener';
+    a.setAttribute('aria-label', name + ' — ' + (CATEGORY[p.category] || '').toLowerCase() +
+                                 ' — ' + (p.tagline || ''));
+    a.setAttribute('title', p.tagline || p.host);
+    a.style.setProperty('--seq', i);
+
+    a.innerHTML =
+      '<svg viewBox="0 0 '+S+' '+S+'" aria-hidden="true">'+
+        '<defs><clipPath id="'+id+'"><path d="'+d+'"/></clipPath></defs>'+
+        /* the white cut line goes down first; the logo then covers its inner half */
+        '<path d="'+d+'" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26" stroke-linejoin="round"/>'+
+        '<g clip-path="url(#'+id+')">'+
+          '<image href="'+esc(p.icon)+'" x="0" y="0" width="'+S+'" height="'+S+'" '+
+            'preserveAspectRatio="xMidYMid slice"/>'+
+        '</g>'+
+      '</svg>'+
+      '<span class="cap"><b>'+esc(name)+'</b><i>'+esc(CATEGORY[p.category] || CATEGORY.misc)+'</i></span>';
+
+    a._seed = seed;
+    return a;
+  }
+
+  /* ---------------- layout ----------------
+     Reference space is 1280 wide and every number is multiplied by --cs at paint
+     time, so the pile scales as one object and a moved sticker keeps its place. */
+  function layout(els, maxPerRow){
+    var n = els.length;
+    if(!n) return 0;
+
+    var W = 1280, CAP = 318, TALL = 1.21;          /* TALL = logo + its caption */
+    var cols  = Math.max(2, Math.min(maxPerRow || 3, n));
+    var rows  = Math.ceil(n / cols);
+    var size  = Math.min(CAP, (W / cols) * 0.94);
+    var cellW = W / cols;
+    var cellH = size * TALL * 0.88;                /* < 1: rows are meant to overlap */
+
+    /* Cells are a scaffold, not a grid: the deck is shuffled, every sticker lands
+       somewhere inside the cell it drew, and the jitter is wide enough that
+       neighbours pile onto each other instead of lining up. */
+    var deck = [];
+    for(var k=0;k<rows*cols;k++) deck.push(k);
+
+    var shuffle = rng(DEAL || 7);
+    for(var d=deck.length-1; d>0; d--){
+      var j = Math.floor(shuffle() * (d+1));
+      var t = deck[d]; deck[d] = deck[j]; deck[j] = t;
+    }
+
+    var maxBottom = 0;
+    for(var i=0;i<n;i++){
+      var el = els[i], r = rng((el._seed ^ DEAL) >>> 0);
+      var cell = deck[i], cx = cell % cols, cy = Math.floor(cell / cols);
+      var sc = size * (0.80 + r()*0.36);
+
+      var x = cx*cellW + (cellW - sc)/2      + (r() - 0.5) * cellW * 0.52;
+      /* it may hang off an edge, but only by a little */
+      x = Math.min(Math.max(x, -0.10*W), W - sc + 0.10*W);
+      /* pulled low in its cell: the pile settles downwards, like a real one */
+      var y = cy*cellH + (cellH - sc*TALL)/2 + (0.22 + (r() - 0.5) * 0.5) * cellH;
+
+      el.style.left  = 'calc(' + x.toFixed(1) + ' * var(--cs))';
+      el.style.top   = 'calc(' + y.toFixed(1) + ' * var(--cs))';
+      el.style.width = 'calc(' + sc.toFixed(1) + ' * var(--cs))';
+      el.style.setProperty('--sw', sc.toFixed(1));
+      el.style.setProperty('--rot', (r()*30 - 15).toFixed(2) + 'deg');
+      el.style.zIndex = String(2 + Math.floor(r()*12));
+      maxBottom = Math.max(maxBottom, y + sc*TALL);
+    }
+    return maxBottom;
+  }
+
+  /* ---------------- build ---------------- */
+  /* The cut of each sticker is fixed to its slug — a project always looks like
+     itself. Where it lands is not: this seed is redrawn on every page load, so
+     the pile is dealt fresh each visit, and held steady through a resize. */
+  var DEAL = (Math.random() * 0xFFFFFFFF) >>> 0;
+
+  var stage   = document.querySelector('.stage');
+  var collage = document.getElementById('collage');
+  var FLOW    = window.matchMedia('(max-width:1199.98px),(orientation:portrait)');
+  var CURRENT = null;
+
+  function render(data){
+    var all = (data && data.projects) || [];
+    /* only shipped work gets a sticker — anything still in build stays off the
+       board, but it is still listed in the menu so the work in flight is visible */
+    var list = all.filter(function(p){ return p.status === 'live' && p.icon; });
+
+    collage.innerHTML = '';
+    var els = list.map(sticker);
+    els.forEach(function(el){ collage.appendChild(el); });
+    CURRENT = els;
+    reflow();
+
+    /* The menu is the index the board deliberately is not: grouped by what a
+       thing IS, with the groups themselves in alphabetical order and the projects
+       alphabetical inside each one. Nothing is hand-ranked, so a new type slots
+       itself into place. Work still in flight is a status rather than a type, so
+       it is gathered into its own group and kept last. */
+    var WIP = 'IN PROGRESS';
+    var groups = {};
+    all.forEach(function(p){
+      var live = p.status === 'live' && p.icon;
+      var label = live ? (CATEGORY[p.category] || CATEGORY.misc) : WIP;
+      (groups[label] = groups[label] || []).push(p);
+    });
+
+    document.getElementById('mProjects').innerHTML =
+      Object.keys(groups).sort(function(a,b){
+        if(a === WIP) return 1;
+        if(b === WIP) return -1;
+        return a.localeCompare(b);
+      }).map(function(label){
+        var rows = groups[label].sort(function(a,b){
+          return (a.name || a.slug).localeCompare(b.name || b.slug);
+        }).map(function(p){
+          var live = p.status === 'live' && p.icon;
+          return '<a role="menuitem" href="https://'+esc(p.host)+'" rel="noopener"'+
+                 ' title="'+esc(p.tagline || p.host)+'">'+
+                 '<span class="dot'+(live ? ' live' : '')+'"></span>'+
+                 esc(p.name || p.slug)+'</a>';
+        }).join('');
+        return '<div class="mg">'+esc(label)+'</div>' + rows;
+      }).join('');
+  }
+
+  /* How many stickers per row? Whichever row count leaves each sticker biggest
+     once the pile has been scaled to fit the band — fewer, larger rows on a wide
+     screen; more, narrower ones on a phone. Same arithmetic as layout + place. */
+  function plan(n, cuPx, bandPx){
+    var best = null;
+    for(var cap = 2; cap <= 4; cap++){
+      var cols   = Math.max(2, Math.min(cap, n));
+      var rows   = Math.ceil(n / cols);
+      var size   = Math.min(318, (1280 / cols) * 0.94);
+      var pileH  = rows * size * 1.21 * 0.88 + size * 1.21 * 0.40;
+      var byH    = bandPx / (pileH * cuPx);
+      var byW    = (window.innerWidth * 1.16) / (1280 * cuPx);
+      var px     = size * cuPx * Math.max(0.35, Math.min(1.9, byH, byW)) * 0.84;
+      if(!best || px > best.px) best = {cap:cap, px:px};
+    }
+    return best.cap;
+  }
+
+  function reflow(){
+    if(!CURRENT || !CURRENT.length) return;
+    collage.style.setProperty('--fit', 1);
+    var cuPx = collage.getBoundingClientRect().width / 1280;
+
+    var h = layout(CURRENT, plan(CURRENT.length, cuPx, band().size)).toFixed(1);
+    collage.style.height = 'calc(' + h + ' * var(--cs))';
+    collage.style.setProperty('--ch', 'calc(' + h + ' * var(--cs))');
+    place();
+    recover();
+  }
+
+  /* Two-pass fit: measure the pile at 1:1, then scale it so it fills the band left
+     under the header. Overflowing 1280 is the point — the pile bleeds off the
+     edges instead of floating in the middle of the page. */
+  function band(){
+    var headBottom = document.querySelector('.head').getBoundingClientRect().bottom;
+    var footTop    = document.querySelector('.foot').getBoundingClientRect().top;
+    return {top: headBottom, size: Math.max(120, footTop - headBottom - 18)};
+  }
+
+  /* Two-pass fit: measure the pile at 1:1, then scale it to the band between the
+     header and the footer and centre it there. */
+  function place(){
+    if(!collage.firstChild) return;
+    collage.style.setProperty('--fit', 1);
+
+    var rect = collage.getBoundingClientRect();
+    var base = rect.height;
+    if(!base) return;
+
+    var b = band();
+    var byHeight = b.size / base;
+    var byWidth  = (window.innerWidth * 1.16) / rect.width;
+    var fit = Math.max(0.35, Math.min(1.9, byHeight, byWidth)) * 0.84;
+
+    collage.style.setProperty('--fit', fit.toFixed(3));
+    /* bottom-aligned: the board hangs low, with the empty air above it */
+    collage.style.top = (b.top + Math.max(0, b.size - base*fit)) + 'px';
+    collage.style.bottom = 'auto';
+  }
+
+  render(FALLBACK);
+
+  /* the live manifest wins; scan.mjs rewrites it whenever a project appears */
+  fetch('projects.json', {cache:'no-store'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if(d && d.projects && d.projects.length) render(d); })
+    .catch(function(){});
+
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt); rt = setTimeout(reflow, 120);
+  });
+
+  /* ---------------- menus ----------------
+     Click to open, click anywhere else or press Escape to close, one at a time. */
+  (function(){
+    var items = [].slice.call(document.querySelectorAll('.mi'));
+
+    function close(except){
+      items.forEach(function(mi){
+        if(mi === except) return;
+        mi.classList.remove('open');
+        mi.querySelector('.mt').setAttribute('aria-expanded','false');
+      });
+    }
+
+    items.forEach(function(mi){
+      var btn = mi.querySelector('.mt');
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var open = !mi.classList.contains('open');
+        close(mi);
+        mi.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      mi.addEventListener('keydown', function(e){
+        if(e.key === 'Escape'){ close(); btn.focus(); }
+      });
+    });
+
+    document.addEventListener('click', function(e){
+      if(!e.target.closest('.mi')) close();
+    });
+    window.addEventListener('blur', function(){ close(); });
+  })();
+
+  /* ---------------- sticker board ---------------- */
+  var zTop = 60, armed = false, held = null, ox = 0, oy = 0, sx = 0, sy = 0, unit = 1, moved = 0;
+  var baseX = 0, baseY = 0, bw = 0, bh = 0;
+
+  setTimeout(function(){ armed = true; stage.classList.add('ready'); }, 1500);
+
+  function cu(){ return collage.getBoundingClientRect().width / 1280; }
+
+  /* A dropped sticker has to stay grabbable, so a drag can push it off an edge but
+     never past the point where there is nothing left to grab. */
+  var KEEP = 0.42;
+  function clamp(nox, noy){
+    var minX = (-bw*(1-KEEP) - baseX) / unit;
+    var maxX = (window.innerWidth  - bw*KEEP - baseX) / unit;
+    var minY = (-bh*(1-KEEP) - baseY) / unit;
+    var maxY = (window.innerHeight - bh*KEEP - baseY) / unit;
+    return [Math.min(Math.max(nox, minX), maxX), Math.min(Math.max(noy, minY), maxY)];
+  }
+
+  /* pull anything the new viewport left off-screen back into reach */
+  function recover(){
+    unit = cu();
+    CURRENT.forEach(function(el){
+      var nox = parseFloat(el.style.getPropertyValue('--ox')) || 0;
+      var noy = parseFloat(el.style.getPropertyValue('--oy')) || 0;
+      if(!nox && !noy) return;
+      var r = el.getBoundingClientRect();
+      bw = r.width; bh = r.height;
+      baseX = r.left - nox*unit; baseY = r.top - noy*unit;
+      var at = clamp(nox, noy);
+      el.style.setProperty('--ox', at[0]);
+      el.style.setProperty('--oy', at[1]);
+    });
+  }
+
+  collage.addEventListener('pointerdown', function(e){
+    var el = e.target.closest('.st');
+    if(!armed || !el || e.button) return;
+    e.preventDefault();
+    held = el; unit = cu(); moved = 0;
+    ox = parseFloat(el.style.getPropertyValue('--ox')) || 0;
+    oy = parseFloat(el.style.getPropertyValue('--oy')) || 0;
+    sx = e.clientX; sy = e.clientY;
+    var r = el.getBoundingClientRect();
+    bw = r.width; bh = r.height;
+    baseX = r.left - ox*unit; baseY = r.top - oy*unit;   /* where it sits at zero offset */
+    el.style.zIndex = ++zTop;                             /* comes to the front, and stays */
+    el.classList.add('held');
+    el.setPointerCapture(e.pointerId);
+  });
+
+  collage.addEventListener('pointermove', function(e){
+    if(!held) return;
+    var dx = e.clientX - sx, dy = e.clientY - sy;
+    moved = Math.max(moved, Math.abs(dx) + Math.abs(dy));
+    var at = clamp(ox + dx/unit, oy + dy/unit);
+    held.style.setProperty('--ox', at[0]);
+    held.style.setProperty('--oy', at[1]);
+  });
+
+  function drop(e){
+    if(!held) return;
+    held.classList.remove('held');
+    try{ held.releasePointerCapture(e.pointerId); }catch(err){}
+    held = null;
+  }
+  collage.addEventListener('pointerup', drop);
+  collage.addEventListener('pointercancel', drop);
+  collage.addEventListener('lostpointercapture', drop);
+
+  /* a drag is not a click */
+  collage.addEventListener('click', function(e){
+    if(moved > 5){ e.preventDefault(); moved = 0; }
+  });
+})();
+</script>
+</body>
+</html>
