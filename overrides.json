@@ -23,19 +23,13 @@
   "motionsites-demo": {
     "category": "misc"
   },
-  "sora-watermark": {
-    "category": "misc"
-  },
   "ai-web-activity-monitor": {
     "category": "chrome-extension"
   },
-  "true-me-in-browser": {
-    "category": "misc"
-  },
-  "videomark": {
-    "category": "misc"
-  },
-  "storyflow": {
-    "category": "misc"
+  "ai4all-20c-darkpatterns": {
+    "category": "misc",
+    "name": "dark patterns",
+    "tagline": "Detecting manipulative e-commerce language",
+    "icon": "icons/github.1bedd6a1.png"
   }
 }

@@ -15,8 +15,8 @@
  * here in code rather than asked of the model.
  *
  *   usable < 0.60                        -> skip, and never ask again
- *   usable >= 0.60, coursework <= 0.50   -> add
- *   usable >= 0.60, coursework >  0.50   -> open an issue and let a human say
+ *   usable >= 0.75, coursework <= 0.50   -> add
+ *   usable in between, or course work    -> open an issue and let a human say
  *
  * A repository with nothing deployed still goes on the board, pointing at the
  * repository and wearing GitHub's mark, since it has no logo of its own.
@@ -35,6 +35,7 @@ const STATE = resolve(HERE, '.judge-state.json');
 const EXTRAS = resolve(HERE, 'extras.json');
 const MANIFEST = resolve(HERE, 'projects.json');
 const REPORT = resolve(HERE, 'judge-verdicts.json');
+const PROPOSAL = resolve(HERE, 'judge-proposal.json');
 const OVERRIDES = resolve(HERE, 'overrides.json');
 
 /* Jev's answer about what a thing is, in the board's own vocabulary. Only the
@@ -48,10 +49,13 @@ const AS_CATEGORY = {
 
 const ARGS = process.argv.slice(2);
 const ALL = ARGS.includes('--all');
+const APPLY = ARGS.includes('--apply');   /* write the changes; default is to propose them */
 const DRY = ARGS.includes('--dry');
 const REPLAY = (() => { const i = ARGS.indexOf('--verdicts'); return i < 0 ? null : ARGS[i + 1]; })();
 
-const USABLE_ENOUGH = 0.60;
+const NL = String.fromCharCode(10);
+const USABLE_ENOUGH = 0.60;        /* below this: nobody else could use it */
+const CLEARLY_USABLE = 0.75;       /* above this: add it without asking */
 const TOO_MUCH_COURSEWORK = 0.50;
 
 /* Already on the board by another route, so there is nothing to decide. */
@@ -187,7 +191,13 @@ function decide(v) {
   if (v.coursework > TOO_MUCH_COURSEWORK) {
     return { verdict: 'ask', why: `usable (${v.usable}) but reads as course work (${v.coursework})` };
   }
-  return { verdict: 'add', why: `usable (${v.usable}), not course work (${v.coursework})` };
+  /* Between the two thresholds the model is not really saying yes, and the same
+     repository can land either side of 0.60 on different runs. Ask instead of
+     putting a coin toss on the board. */
+  if (v.usable < CLEARLY_USABLE) {
+    return { verdict: 'ask', why: `usable, but only just (${v.usable})` };
+  }
+  return { verdict: 'add', why: `clearly usable (${v.usable}), not course work (${v.coursework})` };
 }
 
 /* --------------------------------------------------------------- the asking */
@@ -246,7 +256,6 @@ for (const r of fresh) {
   const { text, bytes } = await readme(r.name);
   const c = {
     repo: r.name,
-    url: r.html_url,
     site: siteFor(r),
     description: r.description || '',
     topics: r.topics || [],
@@ -277,12 +286,34 @@ for (const r of fresh) {
 /* Additions go into extras.json as hosts, where the scanner picks them up like
    anything else: it reads their title, copy and favicon on the next run. */
 const additions = results.filter(r => r.verdict === 'add');
-if (additions.length && !DRY) {
-  const extras = JSON.parse(await readFile(EXTRAS, 'utf8'));
-  for (const a of additions) if (!extras.hosts.includes(a.site)) extras.hosts.push(a.site);
-  extras.hosts.sort();
-  await writeFile(EXTRAS, JSON.stringify(extras, null, 2) + '\n');
-}
+
+/* By default nothing is changed here. The run writes down what it would do and
+   a pull request carries it, so every judgement is reviewed as a diff before it
+   reaches the board — Jev's answers move a little between runs, and a threshold
+   is a line drawn through a probability, not a fact. --apply does the writing,
+   which is what the pull request branch runs. */
+if (!APPLY) {
+  if (!DRY) {
+    await writeFile(PROPOSAL, JSON.stringify({
+      judged: new Date().toISOString(),
+      add: additions.map(a => ({ repo: a.repo, site: a.site, kind: a.kind,
+                                 usable: a.usable, coursework: a.coursework })),
+      ask: results.filter(r => r.verdict === 'ask')
+                  .map(a => ({ repo: a.repo, site: a.site, kind: a.kind,
+                               usable: a.usable, coursework: a.coursework, why: a.why })),
+      skip: results.filter(r => r.verdict === 'skip')
+                   .map(a => ({ repo: a.repo, usable: a.usable, coursework: a.coursework }))
+    }, null, 2) + NL);
+  }
+  console.log(`${public_.length} public, ${fresh.length} judged`);
+  for (const r of results.sort((a, b) => (b.usable ?? 2) - (a.usable ?? 2))) {
+    const mark = { add: '+', ask: '?', listed: '=', skip: '-' }[r.verdict];
+    const nums = r.usable == null ? '' : `usable ${r.usable.toFixed(2)}  course ${r.coursework.toFixed(2)}  `;
+    console.log(`  ${mark} ${r.repo.padEnd(26)} ${nums}${r.why}`);
+  }
+  console.log(NL + `proposed: ${additions.length} to add, ` +
+              `${results.filter(r => r.verdict === 'ask').length} to look at`);
+} else {
 
 const asks = results.filter(r => r.verdict === 'ask');
 for (const a of asks) {
@@ -314,3 +345,5 @@ for (const r of results.sort((a, b) => (b.usable ?? 2) - (a.usable ?? 2))) {
   console.log(`  ${mark} ${r.repo.padEnd(26)} ${nums}${r.why}`);
 }
 if (DRY) console.log('\n--dry: nothing written, no issues opened');
+
+}

@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-20T13:04:38.465Z",
+  "generated": "2026-09-20T13:14:10.246Z",
   "projects": [
     {
       "slug": "ai-web-activity-monitor",
@@ -8,6 +8,15 @@
       "name": "ai web activity monitor",
       "tagline": "A Tampermonkey userscript that monitors your web browsing…",
       "category": "chrome-extension",
+      "icon": "icons/github.1bedd6a1.png",
+      "status": "live"
+    },
+    {
+      "slug": "ai4all-20c-darkpatterns",
+      "host": "radrebelsam.github.io/ai4all-20c-darkpatterns",
+      "name": "dark patterns",
+      "tagline": "Detecting manipulative e-commerce language",
+      "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
@@ -72,42 +81,6 @@
       "tagline": "Rick and Morty season hub",
       "category": "site",
       "icon": "icons/ricksanchez.9c8bd75e.png",
-      "status": "live"
-    },
-    {
-      "slug": "sora-watermark",
-      "host": "github.com/RadRebelSam/sora-watermark",
-      "name": "sora watermark",
-      "tagline": "Add Sora watermark to your video.",
-      "category": "misc",
-      "icon": "icons/github.1bedd6a1.png",
-      "status": "live"
-    },
-    {
-      "slug": "storyflow",
-      "host": "github.com/RadRebelSam/storyflow",
-      "name": "storyflow",
-      "tagline": "StoryFlow dissects long-form podcasts and videos (from YouTube…",
-      "category": "misc",
-      "icon": "icons/github.1bedd6a1.png",
-      "status": "live"
-    },
-    {
-      "slug": "true-me-in-browser",
-      "host": "github.com/RadRebelSam/true-me-in-browser",
-      "name": "true me in browser",
-      "tagline": "A privacy-first web application that analyzes your browser…",
-      "category": "misc",
-      "icon": "icons/github.1bedd6a1.png",
-      "status": "live"
-    },
-    {
-      "slug": "videomark",
-      "host": "github.com/RadRebelSam/videomark",
-      "name": "videomark",
-      "tagline": "Add transparent animated video watermark to your video.",
-      "category": "misc",
-      "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
     {

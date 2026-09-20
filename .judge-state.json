@@ -17,9 +17,10 @@
       "at": "2026-09-20"
     },
     "ai301-unit1-starter": {
-      "verdict": "ask",
+      "verdict": "skip",
       "usable": 0.82,
-      "at": "2026-09-20"
+      "at": "2026-09-20",
+      "by": "human"
     },
     "rick-sanchez": {
       "verdict": "listed",
@@ -27,9 +28,10 @@
       "at": "2026-09-20"
     },
     "ai4all-20c-darkpatterns": {
-      "verdict": "ask",
+      "verdict": "add",
       "usable": 0.88,
-      "at": "2026-09-20"
+      "at": "2026-09-20",
+      "by": "human"
     },
     "ai-support-agent": {
       "verdict": "skip",
@@ -57,24 +59,28 @@
       "at": "2026-09-20"
     },
     "storyflow": {
-      "verdict": "add",
-      "usable": 0.6,
-      "at": "2026-09-20"
+      "verdict": "skip",
+      "usable": null,
+      "at": "2026-09-20",
+      "by": "human"
     },
     "true-me-in-browser": {
-      "verdict": "add",
-      "usable": 0.71,
-      "at": "2026-09-20"
+      "verdict": "skip",
+      "usable": null,
+      "at": "2026-09-20",
+      "by": "human"
     },
     "videomark": {
-      "verdict": "add",
-      "usable": 0.62,
-      "at": "2026-09-20"
+      "verdict": "skip",
+      "usable": null,
+      "at": "2026-09-20",
+      "by": "human"
     },
     "sora-watermark": {
-      "verdict": "add",
-      "usable": 0.81,
-      "at": "2026-09-20"
+      "verdict": "skip",
+      "usable": null,
+      "at": "2026-09-20",
+      "by": "human"
     },
     "ai-web-activity-monitor": {
       "verdict": "add",
