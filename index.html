@@ -316,7 +316,7 @@ body{
     "skill"           :"CLAUDE SKILL",
     "directory"       :"DIRECTORY",
     "site"            :"SITE",
-    "misc"            :"PROJECT"
+    "misc"            :"MISCELLANEOUS"
   };
 
   /* ---------------- deterministic randomness ----------------
@@ -480,7 +480,11 @@ body{
        alphabetical inside each one. Nothing is hand-ranked, so a new type slots
        itself into place. Work still in flight is a status rather than a type, so
        it is gathered into its own group and kept last. */
-    var WIP = 'IN PROGRESS';
+    var WIP = 'IN PROGRESS', MISC = CATEGORY.misc;
+
+    /* Alphabetical, except the two that are not really types: a catch-all and a
+       status both belong at the bottom rather than wherever their initial falls. */
+    function rank(label){ return label === WIP ? 2 : label === MISC ? 1 : 0; }
     var groups = {};
     all.forEach(function(p){
       var live = p.status === 'live' && p.icon;
@@ -490,9 +494,7 @@ body{
 
     document.getElementById('mProjects').innerHTML =
       Object.keys(groups).sort(function(a,b){
-        if(a === WIP) return 1;
-        if(b === WIP) return -1;
-        return a.localeCompare(b);
+        return rank(a) - rank(b) || a.localeCompare(b);
       }).map(function(label){
         var rows = groups[label].sort(function(a,b){
           return (a.name || a.slug).localeCompare(b.name || b.slug);

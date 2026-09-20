@@ -63,6 +63,10 @@ jobs:
           FTP_PASS: ${{ secrets.FTP_PASS }}
           FTP_DIR: ${{ vars.FTP_DIR || '/public_html' }}
           FTP_PORT: ${{ vars.FTP_PORT || '21' }}
+          # Set the repository variable FTP_INSECURE to 1 only if the host serves
+          # a certificate for its own name: the upload stays encrypted, but stops
+          # verifying who answers.
+          FTP_INSECURE: ${{ vars.FTP_INSECURE }}
         run: |
           chmod +x deploy.sh
           ./deploy.sh ftp

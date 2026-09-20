@@ -51,6 +51,10 @@ of them straight off hPanel → Files → **FTP Accounts**:
 | Folder to upload files | variable `FTP_DIR` — skip if `/public_html` |
 | FTP port | variable `FTP_PORT` — skip if `21` |
 
+Use the **hostname**, not the IP: the upload demands FTPS, and a certificate cannot match
+a bare address. If the host still serves a certificate for its own name, set the variable
+`FTP_INSECURE` to `1` — the upload stays encrypted, it just stops checking who answers.
+
 By hand instead: `node scan.mjs`, then unzip `dist/radrebeldeveloper.com.zip` into
 `public_html`, or run `./deploy.sh ftp` with those values in the environment.
 

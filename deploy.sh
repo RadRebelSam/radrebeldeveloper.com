@@ -42,10 +42,13 @@ case "$mode" in
     esac
     base="ftp://${host}:${port}${FTP_DIR:-/public_html}"
 
-    # Explicit FTPS is required by default — an FTP password crossing the wire
-    # in clear text is not worth the convenience. FTP_INSECURE=1 relaxes it.
+    # Explicit FTPS is required: an FTP password crossing the wire in clear text
+    # is not worth the convenience. Shared hosts often present a certificate for
+    # their own server name rather than yours, so FTP_INSECURE=1 keeps the
+    # connection encrypted but stops verifying who is on the other end — worse
+    # than a matching certificate, far better than plain FTP.
     tls="--ssl-reqd"
-    [ "${FTP_INSECURE:-}" = "1" ] && tls="--ssl"
+    [ "${FTP_INSECURE:-}" = "1" ] && tls="--ssl-reqd --insecure"
 
     # Refuse to invent a directory tree. --ftp-create-dirs below will happily
     # create whatever path it is given, so if FTP_DIR is wrong the upload would
