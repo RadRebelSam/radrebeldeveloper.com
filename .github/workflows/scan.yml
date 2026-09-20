@@ -20,6 +20,7 @@ concurrency:
 
 permissions:
   contents: write                 # the scan commits its own results back
+  issues: write                   # the judge asks about what it should not decide
 
 jobs:
   scan:
@@ -30,6 +31,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+
+      # Puts every public repository that has appeared since the last run to
+      # Jev, adds what clears the bar to extras.json, and opens an issue for the
+      # ones a human should rule on. Allowed to fail: a judgement that does not
+      # happen should not stop the site from being rebuilt and deployed.
+      - name: Judge new repositories
+        continue-on-error: true
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node judge.mjs
 
       # Queries certificate transparency, probes every host, refreshes the
       # logos, rewrites projects.json and rebuilds dist/…zip.
