@@ -1,0 +1,85 @@
+{
+  "since": "2026-09-20T12:57:46.937Z",
+  "decided": {
+    "jev-decision-lab": {
+      "verdict": "listed",
+      "usable": null,
+      "at": "2026-09-20"
+    },
+    "awesome-jev": {
+      "verdict": "listed",
+      "usable": null,
+      "at": "2026-09-20"
+    },
+    "ai301-coursework": {
+      "verdict": "skip",
+      "usable": 0.22,
+      "at": "2026-09-20"
+    },
+    "ai301-unit1-starter": {
+      "verdict": "ask",
+      "usable": 0.82,
+      "at": "2026-09-20"
+    },
+    "motionsites-demo": {
+      "verdict": "ask",
+      "usable": 0.86,
+      "at": "2026-09-20"
+    },
+    "rick-sanchez": {
+      "verdict": "listed",
+      "usable": null,
+      "at": "2026-09-20"
+    },
+    "ai4all-20c-darkpatterns": {
+      "verdict": "ask",
+      "usable": 0.88,
+      "at": "2026-09-20"
+    },
+    "storyflow": {
+      "verdict": "ask",
+      "usable": 0.61,
+      "at": "2026-09-20"
+    },
+    "true-me-in-browser": {
+      "verdict": "ask",
+      "usable": 0.69,
+      "at": "2026-09-20"
+    },
+    "videomark": {
+      "verdict": "ask",
+      "usable": 0.63,
+      "at": "2026-09-20"
+    },
+    "sora-watermark": {
+      "verdict": "ask",
+      "usable": 0.82,
+      "at": "2026-09-20"
+    },
+    "ai-support-agent": {
+      "verdict": "skip",
+      "usable": 0.53,
+      "at": "2026-09-20"
+    },
+    "CodePath-WEB102-Project2": {
+      "verdict": "skip",
+      "usable": 0.31,
+      "at": "2026-09-20"
+    },
+    "CodePath-WEB102-Project1": {
+      "verdict": "skip",
+      "usable": 0.26,
+      "at": "2026-09-20"
+    },
+    "ai-web-activity-monitor": {
+      "verdict": "ask",
+      "usable": 0.8,
+      "at": "2026-09-20"
+    },
+    "CodePath-WEB102-Prework": {
+      "verdict": "skip",
+      "usable": 0.42,
+      "at": "2026-09-20"
+    }
+  }
+}
