@@ -15,11 +15,11 @@
  * here in code rather than asked of the model.
  *
  *   usable < 0.60                        -> skip, and never ask again
- *   usable >= 0.60, coursework <= 0.50   -> add, if it has a site to show
- *   anything else                        -> open an issue and let a human say
+ *   usable >= 0.60, coursework <= 0.50   -> add
+ *   usable >= 0.60, coursework >  0.50   -> open an issue and let a human say
  *
- * A repository with nothing deployed cannot be added whatever its scores: the
- * board is built from each project's own logo, and a bare repository has none.
+ * A repository with nothing deployed still goes on the board, pointing at the
+ * repository and wearing GitHub's mark, since it has no logo of its own.
  *
  * Environment: TYPESAFE_API_KEY for Jev, GITHUB_TOKEN (or GH_TOKEN) to read the
  * repositories and to open the issues.
@@ -83,14 +83,16 @@ async function readme(repo) {
   return { text: text.slice(0, 1200), bytes: raw.length };
 }
 
-/* Where a visitor would actually go. No site, nothing to put on the board. */
+/* Where a visitor would actually go: the site if there is one, the repository
+   itself if there is not. A repository has no logo of its own, so it goes on the
+   board wearing GitHub's — which is at least honest about what it is. */
 function siteFor(r) {
   if (r.homepage) {
     try { const u = new URL(r.homepage); return (u.host + u.pathname).replace(/\/$/, ''); }
-    catch { return ''; }
+    catch { /* fall through */ }
   }
   if (r.has_pages) return `${USER.toLowerCase()}.github.io/${r.name}`;
-  return '';
+  return `github.com/${USER}/${r.name}`;
 }
 
 /* ---------------------------------------------------------------------- jev */
@@ -170,12 +172,11 @@ async function alreadyListed() {
 
 /* -------------------------------------------------------------------- rules */
 
-function decide(v, site) {
+function decide(v) {
   if (v.usable < USABLE_ENOUGH) return { verdict: 'skip', why: `nobody else could use it (${v.usable})` };
   if (v.coursework > TOO_MUCH_COURSEWORK) {
     return { verdict: 'ask', why: `usable (${v.usable}) but reads as course work (${v.coursework})` };
   }
-  if (!site) return { verdict: 'ask', why: `usable (${v.usable}) but nothing is deployed, so it has no logo to show` };
   return { verdict: 'add', why: `usable (${v.usable}), not course work (${v.coursework})` };
 }
 
@@ -215,11 +216,12 @@ try { state = JSON.parse(await readFile(STATE, 'utf8')); } catch {}
 const repos = await gh(`/users/${USER}/repos?per_page=100&type=owner&sort=created&direction=desc`);
 const public_ = repos.filter(r => !r.private);
 
+/* Every repository that has been ruled on is recorded, so what is left is what
+   is new — and anything struck out of the record deliberately comes back for
+   another hearing, whenever it was created. */
 const fresh = public_.filter(r => {
   if (SKIP_REPOS.has(r.name)) return false;
-  if (state.decided[r.name]) return false;                 /* already ruled on */
-  if (ALL || !state.since) return true;
-  return r.created_at > state.since;                       /* new since last run */
+  return ALL || !state.decided[r.name];
 });
 
 let replay = null;
@@ -258,13 +260,13 @@ for (const r of fresh) {
 
   const v = replay ? replay.get(r.name) : await askJev(c);
   if (!v) continue;                                        /* replay has nothing for it */
-  const { verdict, why } = decide(v, c.site);
+  const { verdict, why } = decide(v);
   results.push({ ...c, ...v, verdict, why });
 }
 
 /* Additions go into extras.json as hosts, where the scanner picks them up like
    anything else: it reads their title, copy and favicon on the next run. */
-const additions = results.filter(r => r.verdict === 'add' && r.site);
+const additions = results.filter(r => r.verdict === 'add');
 if (additions.length && !DRY) {
   const extras = JSON.parse(await readFile(EXTRAS, 'utf8'));
   for (const a of additions) if (!extras.hosts.includes(a.site)) extras.hosts.push(a.site);

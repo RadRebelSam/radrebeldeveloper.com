@@ -417,7 +417,7 @@ body{
     var n = els.length;
     if(!n) return 0;
 
-    var W = 1280, CAP = 318, TALL = 1.21;          /* TALL = logo + its caption */
+    var W = 1280, CAP = 188, TALL = 1.21;          /* TALL = logo + its caption */
     var cols  = Math.max(2, Math.min(maxPerRow || 3, n));
     var rows  = Math.ceil(n / cols);
     var size  = Math.min(CAP, (W / cols) * 0.94);
@@ -524,7 +524,7 @@ body{
     for(var cap = 2; cap <= 4; cap++){
       var cols   = Math.max(2, Math.min(cap, n));
       var rows   = Math.ceil(n / cols);
-      var size   = Math.min(318, (1280 / cols) * 0.94);
+      var size   = Math.min(188, (1280 / cols) * 0.94);
       var pileH  = rows * size * 1.21 * 0.88 + size * 1.21 * 0.40;
       var byH    = bandPx / (pileH * cuPx);
       var byW    = (window.innerWidth * 1.16) / (1280 * cuPx);

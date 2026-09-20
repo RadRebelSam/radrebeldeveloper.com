@@ -21,11 +21,6 @@
       "usable": 0.82,
       "at": "2026-09-20"
     },
-    "motionsites-demo": {
-      "verdict": "ask",
-      "usable": 0.86,
-      "at": "2026-09-20"
-    },
     "rick-sanchez": {
       "verdict": "listed",
       "usable": null,
@@ -34,26 +29,6 @@
     "ai4all-20c-darkpatterns": {
       "verdict": "ask",
       "usable": 0.88,
-      "at": "2026-09-20"
-    },
-    "storyflow": {
-      "verdict": "ask",
-      "usable": 0.61,
-      "at": "2026-09-20"
-    },
-    "true-me-in-browser": {
-      "verdict": "ask",
-      "usable": 0.69,
-      "at": "2026-09-20"
-    },
-    "videomark": {
-      "verdict": "ask",
-      "usable": 0.63,
-      "at": "2026-09-20"
-    },
-    "sora-watermark": {
-      "verdict": "ask",
-      "usable": 0.82,
       "at": "2026-09-20"
     },
     "ai-support-agent": {
@@ -69,11 +44,6 @@
     "CodePath-WEB102-Project1": {
       "verdict": "skip",
       "usable": 0.26,
-      "at": "2026-09-20"
-    },
-    "ai-web-activity-monitor": {
-      "verdict": "ask",
-      "usable": 0.8,
       "at": "2026-09-20"
     },
     "CodePath-WEB102-Prework": {

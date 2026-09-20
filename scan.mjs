@@ -221,7 +221,15 @@ async function probe(target, named) {
     }
   }
 
-  const icon = await grabIcon(slug, iconCandidates(html, url));
+  /* A bare repository has no logo of its own, so it borrows GitHub's — one
+     shared file rather than a copy per repository, since the bytes are the same.
+     The title GitHub serves is "GitHub - user/repo: description", which is the
+     description twice over once the host is already saying where it lives. */
+  const onGitHub = host.startsWith('github.com/');
+  const icon = onGitHub
+    ? await grabIcon('github', [{ url: 'https://github.com/fluidicon.png', score: 1 }])
+    : await grabIcon(slug, iconCandidates(html, url));
+
   const title = tag(html, /<title[^>]*>([^<]*)<\/title>/i);
   const desc = tag(html, /<meta[^>]+name=["']description["'][^>]*content=["']([^"']*)["']/i)
             || tag(html, /<meta[^>]+content=["']([^"']*)["'][^>]*name=["']description["']/i);
@@ -229,6 +237,19 @@ async function probe(target, named) {
   /* No favicon of its own means nobody has shipped this subdomain yet. */
   if (!icon) {
     return { ...base, tagline: 'No favicon yet — still being built.' };
+  }
+
+  if (onGitHub) {
+    const repo = host.split('/').pop();
+    return {
+      slug,
+      host,
+      name: repo.replace(/[-_]+/g, ' ').toLowerCase(),
+      tagline: clip(desc.replace(/\s+-\s+[\w.-]+\/[\w.-]+\s*$/, ''), 64),
+      category: guessCategory(`${title} ${desc}`.toLowerCase()),
+      icon,
+      status: 'live'
+    };
   }
 
   /* "Decoder - What do they actually mean?" -> name + tagline */
