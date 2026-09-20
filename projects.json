@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-20T13:29:10.340Z",
+  "generated": "2026-09-20T20:40:22.158Z",
   "projects": [
     {
       "slug": "ai-web-activity-monitor",
@@ -21,6 +21,15 @@
       "status": "live"
     },
     {
+      "slug": "awesomejev",
+      "host": "awesomejev.radrebeldeveloper.com",
+      "name": "awesome jev",
+      "tagline": "directory",
+      "category": "directory",
+      "icon": "icons/awesomejev.53e1ba38.svg",
+      "status": "live"
+    },
+    {
       "slug": "clawconnected",
       "host": "clawconnected.com",
       "name": "clawconnected",
@@ -36,15 +45,6 @@
       "tagline": "What do they actually mean?",
       "category": "chrome-extension",
       "icon": "icons/decoder.fe24659d.png",
-      "status": "live"
-    },
-    {
-      "slug": "jev",
-      "host": "jev.radrebeldeveloper.com",
-      "name": "awesome jev",
-      "tagline": "A crawler-maintained directory of Jev projects",
-      "category": "directory",
-      "icon": "icons/jev.53e1ba38.svg",
       "status": "live"
     },
     {
@@ -99,6 +99,15 @@
       "tagline": "Add transparent animated video watermark to your video.",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
+      "status": "live"
+    },
+    {
+      "slug": "whichjudge",
+      "host": "whichjudge.dev",
+      "name": "whichjudge",
+      "tagline": "which model for this decision",
+      "category": "misc",
+      "icon": "icons/whichjudge.83acd6fd.svg",
       "status": "live"
     },
     {
@@ -160,15 +169,6 @@
       "host": "synapsecanvas.radrebeldeveloper.com",
       "name": "synapsecanvas",
       "tagline": "No favicon yet — still being built.",
-      "category": "misc",
-      "icon": "",
-      "status": "building"
-    },
-    {
-      "slug": "whichjudge",
-      "host": "whichjudge.dev",
-      "name": "whichjudge",
-      "tagline": "Not live yet.",
       "category": "misc",
       "icon": "",
       "status": "building"
