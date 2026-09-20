@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-20T13:25:44.214Z",
+  "generated": "2026-09-20T13:29:10.340Z",
   "projects": [
     {
       "slug": "ai-web-activity-monitor",
@@ -81,6 +81,15 @@
       "tagline": "Rick and Morty season hub",
       "category": "site",
       "icon": "icons/ricksanchez.9c8bd75e.png",
+      "status": "live"
+    },
+    {
+      "slug": "true-me-in-browser",
+      "host": "github.com/RadRebelSam/true-me-in-browser",
+      "name": "true me in browser",
+      "tagline": "A privacy-first web application that analyzes your browser…",
+      "category": "misc",
+      "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
     {
