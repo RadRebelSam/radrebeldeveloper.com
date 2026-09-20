@@ -126,9 +126,9 @@ body{
   opacity:0;transform:translateY(calc(-6 * var(--u))) scale(.985);transform-origin:100% 0;
   pointer-events:none;
   transition:opacity .17s ease, transform .17s cubic-bezier(.2,.8,.2,1);
-  /* the list grows with the work; past the height of the window it scrolls
-     rather than running off the bottom of it */
-  max-height:calc(100vh - var(--mp-top, 160px) - 24px);
+  /* the list grows with the work; it stops above the footer's rule and scrolls
+     the rest, rather than crossing a line the page has already drawn */
+  max-height:var(--mp-max, 60vh);
   overflow-y:auto;overscroll-behavior:contain;
   scrollbar-width:thin;scrollbar-color:rgba(22,24,29,.22) transparent;
 }
@@ -610,6 +610,17 @@ body{
   (function(){
     var items = [].slice.call(document.querySelectorAll('.mi'));
 
+    /* How far the panel may reach: down to the hairline above the footer, never
+       past it. Both edges are measured when the menu opens, because the header
+       and the footer both move with the viewport. */
+    function headroom(btn){
+      var foot = document.querySelector('.foot');
+      var rect = foot.getBoundingClientRect();
+      var rule = parseFloat(getComputedStyle(foot, '::before').top);
+      var line = rect.top + (isNaN(rule) ? -20 : rule);
+      return Math.max(160, line - btn.getBoundingClientRect().bottom - 14);
+    }
+
     function close(except){
       items.forEach(function(mi){
         if(mi === except) return;
@@ -624,9 +635,7 @@ body{
         e.stopPropagation();
         var open = !mi.classList.contains('open');
         close(mi);
-        /* how much room is left below the button, measured now rather than
-           guessed: the header moves with the viewport */
-        mi.style.setProperty('--mp-top', Math.round(btn.getBoundingClientRect().bottom) + 'px');
+        mi.style.setProperty('--mp-max', Math.round(headroom(btn)) + 'px');
         mi.classList.toggle('open', open);
         btn.setAttribute('aria-expanded', String(open));
       });
