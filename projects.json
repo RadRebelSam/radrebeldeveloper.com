@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-20T12:31:23.847Z",
+  "generated": "2026-09-20T12:56:44.487Z",
   "projects": [
     {
       "slug": "clawconnected",
@@ -55,6 +55,60 @@
       "category": "site",
       "icon": "icons/ricksanchez.9c8bd75e.png",
       "status": "live"
+    },
+    {
+      "slug": "ache",
+      "host": "ache.radrebeldeveloper.com",
+      "name": "ache",
+      "tagline": "No favicon yet — still being built.",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "bouncer",
+      "host": "bouncer.radrebeldeveloper.com",
+      "name": "bouncer",
+      "tagline": "No favicon yet — still being built.",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "catch",
+      "host": "catch.radrebeldeveloper.com",
+      "name": "catch",
+      "tagline": "No favicon yet — still being built.",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "nexusauditor",
+      "host": "nexusauditor.radrebeldeveloper.com",
+      "name": "nexusauditor",
+      "tagline": "No favicon yet — still being built.",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "sift",
+      "host": "sift.radrebeldeveloper.com",
+      "name": "sift",
+      "tagline": "No favicon yet — still being built.",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "swipe",
+      "host": "swipe.radrebeldeveloper.com",
+      "name": "swipe",
+      "tagline": "No favicon yet — still being built.",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
     },
     {
       "slug": "synapsecanvas",
