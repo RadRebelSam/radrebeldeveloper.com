@@ -33,10 +33,6 @@ jobs:
           node-version: 22
 
       # Puts every public repository that has appeared since the last run to
-      # Jev, adds what clears the bar to extras.json, and opens an issue for the
-      # ones a human should rule on. Allowed to fail: a judgement that does not
-      # happen should not stop the site from being rebuilt and deployed.
-      # Puts every public repository that has appeared since the last run to
       # Jev. It changes nothing here: it writes down what it would do, and the
       # next step carries that as a pull request to be looked at. Allowed to
       # fail — a judgement that cannot be made is no reason to stop the deploy.
@@ -57,40 +53,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          node - <<'JS' || exit 0
-          const p = require('./judge-proposal.json');
-          if (!p.add.length && !p.ask.length) process.exit(1);
-          JS
-
+          node propose.mjs any || exit 0
           branch="judge/$(date -u +%Y-%m-%d-%H%M)"
+          counts=$(node propose.mjs count)
           git config user.name "scan"
           git config user.email "scan@users.noreply.github.com"
           git checkout -q -b "$branch"
           node judge.mjs --apply
           git add -A
           git diff --staged --quiet && { git checkout -q main; exit 0; }
-          git commit -q -m "judge: propose $(node -p "require('./judge-proposal.json').add.length") additions"
+          git commit -q -m "judge: ${counts% *} to add"
           git push -q origin "$branch"
-          node - <<'JS' > /tmp/body.md
-          const p = require('./judge-proposal.json');
-          const row = r => `| ${r.repo} | ${r.usable} | ${r.coursework} | ${r.kind || ''} | ${r.site || ''} |`;
-          const out = [];
-          out.push('Jev judged the repositories that have appeared since the last run.',
-                   'Merging adds the ones below to the board. Delete anything you do not want',
-                   'from the diff before merging, or close this to leave it all off.', '');
-          if (p.add.length) out.push('### Adding', '',
-            '| repo | usable | course work | kind | goes to |', '| --- | --- | --- | --- | --- |',
-            ...p.add.map(row), '');
-          if (p.ask.length) out.push('### Held back', '',
-            '| repo | usable | course work | kind | why |', '| --- | --- | --- | --- | --- |',
-            ...p.ask.map(r => `| ${r.repo} | ${r.usable} | ${r.coursework} | ${r.kind} | ${r.why} |`),
-            '', 'To take one of these, add its host to `extras.json` on this branch.', '');
-          if (p.skip.length) out.push(`<details><summary>${p.skip.length} nobody else could use</summary>`, '',
-            ...p.skip.map(r => `- ${r.repo} — usable ${r.usable}`), '', '</details>');
-          console.log(out.join('
-'));
-          JS
-          gh pr create --base main --head "$branch"             --title "Judge: $(node -p "require('./judge-proposal.json').add.length") to add, $(node -p "require('./judge-proposal.json').ask.length") to look at"             --body-file /tmp/body.md
+          node propose.mjs body > body.md
+          gh pr create --base main --head "$branch" --body-file body.md --title "Judge: ${counts% *} to add, ${counts#* } to look at"
+          rm -f body.md
+          git checkout -q -- .
           git checkout -q main
 
       # Queries certificate transparency, probes every host, refreshes the
