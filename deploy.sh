@@ -29,7 +29,7 @@ case "$mode" in
     : "${FTP_HOST:?set FTP_HOST}"
     : "${FTP_USER:?set FTP_USER}"
     : "${FTP_PASS:?set FTP_PASS (for this command only)}"
-    base="ftp://${FTP_HOST}${FTP_DIR:-/public_html}"
+    base="ftp://${FTP_HOST}:${FTP_PORT:-21}${FTP_DIR:-/public_html}"
 
     # Explicit FTPS is required by default — an FTP password crossing the wire
     # in clear text is not worth the convenience. FTP_INSECURE=1 relaxes it.

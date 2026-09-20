@@ -97,12 +97,19 @@ Setting it up:
 
 1. Put this folder in a GitHub repository (`main` branch).
 2. hPanel → Files → **FTP Accounts** — note the host, username and password.
-3. GitHub → repo → Settings → Secrets and variables → **Actions** → New repository secret:
-   - `FTP_HOST` — e.g. `ftp.radrebeldeveloper.com`
-   - `FTP_USER` — e.g. `u123456789`
-   - `FTP_PASS` — the FTP password
-   - optionally a *variable* (not secret) `FTP_DIR` if your account doesn't land on
-     `/public_html`
+3. GitHub → repo → Settings → Secrets and variables → **Actions**. Everything below comes
+   straight off that hPanel page:
+
+   | hPanel row | Goes in as | Notes |
+   | --- | --- | --- |
+   | FTP IP (hostname) | secret `FTP_HOST` | an IP is fine, so is `ftp.yourdomain` |
+   | FTP username | secret `FTP_USER` | looks like `u123456789` |
+   | *Forgot your FTP password?* | secret `FTP_PASS` | set one there if you never have |
+   | Folder to upload files | **variable** `FTP_DIR` | skip it if the folder is `/public_html` |
+   | FTP port | **variable** `FTP_PORT` | skip it if the port is `21` |
+
+   Secrets are encrypted and unreadable afterwards; variables are plain text, which is why
+   only the password-ish values are secrets.
 4. Actions tab → **scan and deploy** → Run workflow, to prove it end to end.
 
 The password never appears in the workflow file or the logs — it is handed to curl over
