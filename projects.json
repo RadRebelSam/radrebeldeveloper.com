@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-20T11:06:40.858Z",
+  "generated": "2026-09-20T12:06:17.234Z",
   "projects": [
     {
       "slug": "clawconnected",
@@ -27,6 +27,15 @@
       "tagline": "A crawler-maintained directory of Jev projects",
       "category": "directory",
       "icon": "icons/jev.53e1ba38.svg",
+      "status": "live"
+    },
+    {
+      "slug": "jevdecisionlab",
+      "host": "jevdecisionlab.radrebeldeveloper.com",
+      "name": "jev decision lab",
+      "tagline": "A live benchmark showing where deterministic rules stop and Jev…",
+      "category": "misc",
+      "icon": "icons/jevdecisionlab.5907a19a.png",
       "status": "live"
     },
     {

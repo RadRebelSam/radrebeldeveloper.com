@@ -313,3 +313,11 @@ if (DRY) {
 for (const p of projects) {
   console.log(`  ${p.status === 'live' ? '●' : '○'} ${p.host.padEnd(38)} ${p.category.padEnd(17)} ${p.tagline}`);
 }
+if (dropped) console.log(`pruned ${dropped} stale icon file${dropped === 1 ? '' : 's'}`);
+
+/* The upload is only ever as fresh as the manifest, so rebuild it here rather
+   than leaving it to be remembered. */
+if (!DRY) {
+  const z = await pack();
+  console.log(`packed dist/radrebeldeveloper.com.zip — ${z.files} files, ${(z.packed / 1024).toFixed(0)} KB`);
+}
