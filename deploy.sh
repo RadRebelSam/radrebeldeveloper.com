@@ -29,7 +29,18 @@ case "$mode" in
     : "${FTP_HOST:?set FTP_HOST}"
     : "${FTP_USER:?set FTP_USER}"
     : "${FTP_PASS:?set FTP_PASS (for this command only)}"
-    base="ftp://${FTP_HOST}:${FTP_PORT:-21}${FTP_DIR:-/public_html}"
+    # Host panels state the host in whatever form they like — bare, with an
+    # ftp:// on the front, sometimes with a trailing path. Reduce it to a
+    # hostname before building a URL out of it, or curl ends up resolving "ftp".
+    host="${FTP_HOST#*://}"; host="${host%%/*}"
+    case "$FTP_HOST" in
+      sftp://*) echo "that is an SFTP address — use ./deploy.sh ssh instead" >&2; exit 2 ;;
+    esac
+    port="${FTP_PORT:-21}"
+    case "$host" in
+      *:*) port="${host##*:}"; host="${host%%:*}" ;;      # host carried its own port
+    esac
+    base="ftp://${host}:${port}${FTP_DIR:-/public_html}"
 
     # Explicit FTPS is required by default — an FTP password crossing the wire
     # in clear text is not worth the convenience. FTP_INSECURE=1 relaxes it.
@@ -44,7 +55,7 @@ case "$mode" in
 user = "${FTP_USER}:${FTP_PASS}"
 CFG
     then
-      echo "cannot list ${FTP_DIR:-/public_html} on ${FTP_HOST} — check FTP_DIR and the credentials" >&2
+      echo "cannot list ${FTP_DIR:-/public_html} on ${host}:${port} — check the host, folder and credentials" >&2
       exit 1
     fi
 
