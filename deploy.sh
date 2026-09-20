@@ -54,11 +54,18 @@ case "$mode" in
     # create whatever path it is given, so if FTP_DIR is wrong the upload would
     # silently build a stray site somewhere instead of failing. List the target
     # first: no such directory, no upload.
-    if ! curl $tls --disable-epsv -sS --fail --list-only "$base/" -o /dev/null --config - <<CFG
+    if curl $tls --disable-epsv -sS --fail --list-only "$base/" -o /dev/null --config - <<CFG
 user = "${FTP_USER}:${FTP_PASS}"
 CFG
-    then
-      echo "cannot list ${FTP_DIR:-/public_html} on ${host}:${port} — check the host, folder and credentials" >&2
+    then :; else
+      code=$?
+      case $code in
+        6)  echo "no such host: ${host} — hPanel states the FTP host on Files -> FTP Accounts" >&2 ;;
+        60) echo "the certificate at ${host} is for another name. Use the server's own hostname (hPanel shows it, typically srvNNNN.hstgr.io), or set FTP_INSECURE=1 to keep TLS without verifying it" >&2 ;;
+        67) echo "the server rejected ${FTP_USER} — check FTP_USER and FTP_PASS" >&2 ;;
+        9)  echo "cannot open ${FTP_DIR:-/public_html} — check FTP_DIR against 'Folder to upload files'" >&2 ;;
+        *)  echo "cannot reach ${FTP_DIR:-/public_html} on ${host}:${port} (curl $code)" >&2 ;;
+      esac
       exit 1
     fi
 

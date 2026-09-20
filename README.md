@@ -51,9 +51,11 @@ of them straight off hPanel → Files → **FTP Accounts**:
 | Folder to upload files | variable `FTP_DIR` — skip if `/public_html` |
 | FTP port | variable `FTP_PORT` — skip if `21` |
 
-Use the **hostname**, not the IP: the upload demands FTPS, and a certificate cannot match
-a bare address. If the host still serves a certificate for its own name, set the variable
-`FTP_INSECURE` to `1` — the upload stays encrypted, it just stops checking who answers.
+The upload demands FTPS, so `FTP_HOST` has to be a name the server's certificate covers.
+Hostinger presents a `*.hstgr.io` certificate, so use the server hostname hPanel shows for
+your account (`srvNNNN.hstgr.io`). There is no `ftp.yourdomain` record, and an IP can
+never match a certificate. If you would rather not chase the name, set the variable
+`FTP_INSECURE` to `1`: the upload stays encrypted, it just stops checking who answers.
 
 By hand instead: `node scan.mjs`, then unzip `dist/radrebeldeveloper.com.zip` into
 `public_html`, or run `./deploy.sh ftp` with those values in the environment.
