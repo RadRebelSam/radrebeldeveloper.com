@@ -1,13 +1,13 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-20T13:01:06.074Z",
+  "generated": "2026-09-20T13:04:38.465Z",
   "projects": [
     {
       "slug": "ai-web-activity-monitor",
       "host": "github.com/RadRebelSam/ai-web-activity-monitor",
       "name": "ai web activity monitor",
       "tagline": "A Tampermonkey userscript that monitors your web browsing…",
-      "category": "site",
+      "category": "chrome-extension",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
@@ -51,8 +51,8 @@
       "slug": "motionsites-demo",
       "host": "github.com/RadRebelSam/motionsites-demo",
       "name": "motionsites demo",
-      "tagline": "Contribute to RadRebelSam/motionsites-demo development by…",
-      "category": "site",
+      "tagline": "",
+      "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
@@ -78,8 +78,8 @@
       "slug": "sora-watermark",
       "host": "github.com/RadRebelSam/sora-watermark",
       "name": "sora watermark",
-      "tagline": "Add Sora watermark to your video. Contribute to…",
-      "category": "site",
+      "tagline": "Add Sora watermark to your video.",
+      "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
@@ -88,7 +88,7 @@
       "host": "github.com/RadRebelSam/storyflow",
       "name": "storyflow",
       "tagline": "StoryFlow dissects long-form podcasts and videos (from YouTube…",
-      "category": "site",
+      "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
@@ -97,7 +97,7 @@
       "host": "github.com/RadRebelSam/true-me-in-browser",
       "name": "true me in browser",
       "tagline": "A privacy-first web application that analyzes your browser…",
-      "category": "site",
+      "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
@@ -106,7 +106,7 @@
       "host": "github.com/RadRebelSam/videomark",
       "name": "videomark",
       "tagline": "Add transparent animated video watermark to your video.",
-      "category": "site",
+      "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },

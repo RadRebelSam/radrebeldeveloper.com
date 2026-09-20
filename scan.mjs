@@ -245,7 +245,12 @@ async function probe(target, named) {
       slug,
       host,
       name: repo.replace(/[-_]+/g, ' ').toLowerCase(),
-      tagline: clip(desc.replace(/\s+-\s+[\w.-]+\/[\w.-]+\s*$/, ''), 64),
+      /* GitHub pads the description with its own sales line and the repository
+         path; both say nothing the board is not already showing. */
+      tagline: clip(desc
+        .replace(/Contribute to [\w.-]+\/[\w.-]+ development by creating an account on GitHub\.?/i, '')
+        .replace(/\s+-\s+[\w.-]+\/[\w.-]+\s*$/, '')
+        .trim(), 64),
       category: guessCategory(`${title} ${desc}`.toLowerCase()),
       icon,
       status: 'live'

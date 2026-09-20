@@ -35,6 +35,16 @@ const STATE = resolve(HERE, '.judge-state.json');
 const EXTRAS = resolve(HERE, 'extras.json');
 const MANIFEST = resolve(HERE, 'projects.json');
 const REPORT = resolve(HERE, 'judge-verdicts.json');
+const OVERRIDES = resolve(HERE, 'overrides.json');
+
+/* Jev's answer about what a thing is, in the board's own vocabulary. Only the
+   unambiguous ones map across; the rest land in misc, where they are at least
+   honestly filed rather than confidently mislabelled. */
+const AS_CATEGORY = {
+  'browser-extension': 'chrome-extension',
+  'directory-or-dataset': 'directory',
+  'static-site': 'site'
+};
 
 const ARGS = process.argv.slice(2);
 const ALL = ARGS.includes('--all');
