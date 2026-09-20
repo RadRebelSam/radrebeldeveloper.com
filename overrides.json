@@ -31,5 +31,8 @@
     "name": "dark patterns",
     "tagline": "Detecting manipulative e-commerce language",
     "icon": "icons/github.1bedd6a1.png"
+  },
+  "videomark": {
+    "category": "misc"
   }
 }

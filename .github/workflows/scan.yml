@@ -20,7 +20,6 @@ concurrency:
 
 permissions:
   contents: write                 # the scan commits its own results back
-  issues: write                   # the judge asks about what it should not decide
 
 jobs:
   scan:
@@ -31,44 +30,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      # Puts every public repository that has appeared since the last run to
-      # Jev. It changes nothing here: it writes down what it would do, and the
-      # next step carries that as a pull request to be looked at. Allowed to
-      # fail — a judgement that cannot be made is no reason to stop the deploy.
-      - name: Judge new repositories
-        id: judge
-        continue-on-error: true
-        env:
-          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node judge.mjs
-
-      # One pull request per run: merging it is the approval, and nothing
-      # reaches the board until it is merged. The working tree is put back
-      # before the scan, so an unmerged proposal never rides along with it.
-      - name: Propose the changes
-        if: steps.judge.outcome == 'success'
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          node propose.mjs any || exit 0
-          branch="judge/$(date -u +%Y-%m-%d-%H%M)"
-          counts=$(node propose.mjs count)
-          git config user.name "scan"
-          git config user.email "scan@users.noreply.github.com"
-          git checkout -q -b "$branch"
-          node judge.mjs --apply
-          git add -A
-          git diff --staged --quiet && { git checkout -q main; exit 0; }
-          git commit -q -m "judge: ${counts% *} to add"
-          git push -q origin "$branch"
-          node propose.mjs body > body.md
-          gh pr create --base main --head "$branch" --body-file body.md --title "Judge: ${counts% *} to add, ${counts#* } to look at"
-          rm -f body.md
-          git checkout -q -- .
-          git checkout -q main
 
       # Queries certificate transparency, probes every host, refreshes the
       # logos, rewrites projects.json and rebuilds dist/…zip.

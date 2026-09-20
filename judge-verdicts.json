@@ -1,5 +1,0 @@
-{
-  "judged": "2026-09-20T13:06:25.134Z",
-  "rule": "add when usable >= 0.6 and coursework <= 0.5 and a site exists; ask otherwise",
-  "verdicts": []
-}

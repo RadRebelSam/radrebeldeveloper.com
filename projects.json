@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-20T13:14:10.246Z",
+  "generated": "2026-09-20T13:25:44.214Z",
   "projects": [
     {
       "slug": "ai-web-activity-monitor",
@@ -81,6 +81,15 @@
       "tagline": "Rick and Morty season hub",
       "category": "site",
       "icon": "icons/ricksanchez.9c8bd75e.png",
+      "status": "live"
+    },
+    {
+      "slug": "videomark",
+      "host": "github.com/RadRebelSam/videomark",
+      "name": "videomark",
+      "tagline": "Add transparent animated video watermark to your video.",
+      "category": "misc",
+      "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
     {

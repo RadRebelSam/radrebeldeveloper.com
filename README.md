@@ -22,8 +22,16 @@ before deploy, never on the server.
 
 ## Adding a project
 
-Ship it with a favicon, then `node scan.mjs`. That's it — subdomains are discovered through
-certificate transparency, so nothing is maintained by hand.
+A subdomain finds itself: ship it with a favicon and the next scan picks it up through
+certificate transparency. Anything else — another domain, or a repository with nothing
+deployed — goes in `extras.json` by hand, one line:
+
+```json
+{ "hosts": ["clawconnected.com", "github.com/RadRebelSam/videomark"] }
+```
+
+A repository with no site of its own is listed wearing GitHub's mark, since it has no
+logo to show.
 
 **No favicon of its own = still being built.** It is listed in the menu under IN PROGRESS
 with a grey dot, and kept off the board. A host that has stopped answering is dropped
