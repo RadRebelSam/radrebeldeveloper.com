@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-21T08:48:52.008Z",
+  "generated": "2026-09-21T09:04:17.073Z",
   "projects": [
     {
       "slug": "ache",
@@ -153,6 +153,15 @@
       "tagline": "which model for this decision",
       "category": "misc",
       "icon": "icons/whichjudge.83acd6fd.svg",
+      "status": "live"
+    },
+    {
+      "slug": "worth",
+      "host": "worth.radrebeldeveloper.com",
+      "name": "worth",
+      "tagline": "job and event checker",
+      "category": "misc",
+      "icon": "icons/worth.67a41725.png",
       "status": "live"
     },
     {
