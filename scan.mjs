@@ -177,14 +177,25 @@ async function pruneIcons(keep) {
   return removed;
 }
 
-/* A first guess only — overrides.json is where categories are really decided. */
-function guessCategory(blob) {
-  if (/chrome extension|browser extension|add-?on|web store/.test(blob)) return 'chrome-extension';
-  if (/obsidian/.test(blob)) return 'obsidian-plugin';
-  if (/claude skill|agent skill|\bskill\b/.test(blob)) return 'skill';
-  if (/directory|curated list|awesome list|catalog/.test(blob)) return 'directory';
-  if (/pricing|subscribe|free trial|sign ?up|dashboard/.test(blob)) return 'saas';
-  if (/fan site|fan-made|concept|hub/.test(blob)) return 'site';
+/* What a project IS, read from structure rather than from its copy.
+
+   The first version of this matched keywords in the title and description, and
+   got it wrong in both directions: six Chrome extensions were filed as misc
+   because their taglines ("demand finder", "reading triage") never say
+   "extension", while one of them was filed as SaaS because its tagline says
+   "pricing page" - which is what it inspects, not how it is sold. Copy describes
+   the subject; it cannot be trusted to describe the kind of thing.
+
+   So only unmistakable structure counts: a link into the Chrome Web Store or an
+   "Add to Chrome" button is an extension, a link into Obsidian's plugin
+   directory is a plugin. Nothing else is inferred. Directory, SaaS, site and
+   the rest are said by a person in overrides.json, and until they are, the
+   project is misc - never a confident wrong answer. */
+function detectCategory(html) {
+  if (/chromewebstore\.google\.com|chrome\.google\.com\/webstore|add to chrome/i.test(html)) {
+    return 'chrome-extension';
+  }
+  if (/obsidian\.md\/plugins|obsidian:\/\/show-plugin/i.test(html)) return 'obsidian-plugin';
   return 'misc';
 }
 
@@ -251,7 +262,7 @@ async function probe(target, named) {
         .replace(/Contribute to [\w.-]+\/[\w.-]+ development by creating an account on GitHub\.?/i, '')
         .replace(/\s+-\s+[\w.-]+\/[\w.-]+\s*$/, '')
         .trim(), 64),
-      category: guessCategory(`${title} ${desc}`.toLowerCase()),
+      category: detectCategory(html),
       icon,
       status: 'live'
     };
@@ -266,7 +277,7 @@ async function probe(target, named) {
     host,
     name: (parts[0] || slug).trim().toLowerCase(),
     tagline: clip(rest || desc, 64),
-    category: guessCategory(`${title} ${desc}`.toLowerCase()),
+    category: detectCategory(html),
     icon,
     status: 'live'
   };
@@ -297,8 +308,25 @@ let overrides = {};
 try { overrides = JSON.parse(await readFile(OVERRIDES, 'utf8')); } catch {}
 for (const p of projects) {
   Object.assign(p, overrides[p.slug] || {});
-  /* a hand-supplied logo counts as shipped — some hosts just never set a favicon */
+  /* a hand-supplied logo counts as shipped - some hosts just never set a favicon */
   if (p.icon && p.status !== 'live' && !(overrides[p.slug] || {}).status) p.status = 'live';
+}
+
+/* An override is keyed by slug, and a slug follows the hostname. Rename a
+   subdomain - jev became awesomejev - and its override silently stops applying,
+   so the project falls back to whatever the scan could work out. Say so. */
+const slugs_ = new Set(projects.map(p => p.slug));
+const orphans = Object.keys(overrides).filter(k => !k.startsWith('_') && !slugs_.has(k));
+for (const k of orphans) {
+  console.warn(`  ! overrides.json has "${k}", which matches no project - renamed or removed?`);
+}
+
+/* A live project nobody has categorised is worth knowing about: misc is a
+   holding answer, not a decision. */
+const unsorted = projects.filter(p => p.status === 'live' && p.category === 'misc' &&
+                                      !(overrides[p.slug] && overrides[p.slug].category));
+for (const p of unsorted) {
+  console.warn(`  ? ${p.slug} is misc only because nothing said otherwise - give it a category in overrides.json`);
 }
 
 /* live first, then alphabetical: an unbuilt subdomain never takes the front row */

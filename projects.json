@@ -1,13 +1,13 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-21T09:04:17.073Z",
+  "generated": "2026-09-21T09:08:45.393Z",
   "projects": [
     {
       "slug": "ache",
       "host": "ache.radrebeldeveloper.com",
       "name": "ache",
       "tagline": "demand finder",
-      "category": "misc",
+      "category": "chrome-extension",
       "icon": "icons/ache.7c236d82.png",
       "status": "live"
     },
@@ -16,7 +16,7 @@
       "host": "github.com/RadRebelSam/ai-web-activity-monitor",
       "name": "ai web activity monitor",
       "tagline": "A Tampermonkey userscript that monitors your web browsing…",
-      "category": "chrome-extension",
+      "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
@@ -33,7 +33,7 @@
       "slug": "awesomejev",
       "host": "awesomejev.radrebeldeveloper.com",
       "name": "awesome jev",
-      "tagline": "directory",
+      "tagline": "A crawler-maintained directory of Jev projects",
       "category": "directory",
       "icon": "icons/awesomejev.53e1ba38.svg",
       "status": "live"
@@ -43,7 +43,7 @@
       "host": "bouncer.radrebeldeveloper.com",
       "name": "bouncer",
       "tagline": "reading triage",
-      "category": "misc",
+      "category": "chrome-extension",
       "icon": "icons/bouncer.034dd986.png",
       "status": "live"
     },
@@ -52,7 +52,7 @@
       "host": "catch.radrebeldeveloper.com",
       "name": "catch",
       "tagline": "pricing page and terms check",
-      "category": "saas",
+      "category": "chrome-extension",
       "icon": "icons/catch.6c1e9eda.png",
       "status": "live"
     },
@@ -115,7 +115,7 @@
       "host": "sift.radrebeldeveloper.com",
       "name": "sift",
       "tagline": "comment triage",
-      "category": "misc",
+      "category": "chrome-extension",
       "icon": "icons/sift.0e8dcd3b.png",
       "status": "live"
     },
@@ -124,7 +124,7 @@
       "host": "swipe.radrebeldeveloper.com",
       "name": "swipe",
       "tagline": "swipe file that judges what you save",
-      "category": "misc",
+      "category": "chrome-extension",
       "icon": "icons/swipe.9ae28040.png",
       "status": "live"
     },
@@ -160,7 +160,7 @@
       "host": "worth.radrebeldeveloper.com",
       "name": "worth",
       "tagline": "job and event checker",
-      "category": "misc",
+      "category": "chrome-extension",
       "icon": "icons/worth.67a41725.png",
       "status": "live"
     },
