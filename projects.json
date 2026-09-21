@@ -1,7 +1,16 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-20T20:40:22.158Z",
+  "generated": "2026-09-21T08:48:52.008Z",
   "projects": [
+    {
+      "slug": "ache",
+      "host": "ache.radrebeldeveloper.com",
+      "name": "ache",
+      "tagline": "demand finder",
+      "category": "misc",
+      "icon": "icons/ache.7c236d82.png",
+      "status": "live"
+    },
     {
       "slug": "ai-web-activity-monitor",
       "host": "github.com/RadRebelSam/ai-web-activity-monitor",
@@ -30,6 +39,24 @@
       "status": "live"
     },
     {
+      "slug": "bouncer",
+      "host": "bouncer.radrebeldeveloper.com",
+      "name": "bouncer",
+      "tagline": "reading triage",
+      "category": "misc",
+      "icon": "icons/bouncer.034dd986.png",
+      "status": "live"
+    },
+    {
+      "slug": "catch",
+      "host": "catch.radrebeldeveloper.com",
+      "name": "catch",
+      "tagline": "pricing page and terms check",
+      "category": "saas",
+      "icon": "icons/catch.6c1e9eda.png",
+      "status": "live"
+    },
+    {
       "slug": "clawconnected",
       "host": "clawconnected.com",
       "name": "clawconnected",
@@ -42,9 +69,9 @@
       "slug": "decoder",
       "host": "decoder.radrebeldeveloper.com",
       "name": "decoder",
-      "tagline": "What do they actually mean?",
+      "tagline": "what social posts really mean",
       "category": "chrome-extension",
-      "icon": "icons/decoder.fe24659d.png",
+      "icon": "icons/decoder.30d8f325.png",
       "status": "live"
     },
     {
@@ -69,9 +96,9 @@
       "slug": "rewordly",
       "host": "rewordly.radrebeldeveloper.com",
       "name": "rewordly",
-      "tagline": "replace the words clogging your screen",
+      "tagline": "swap words on any page",
       "category": "chrome-extension",
-      "icon": "icons/rewordly.0a57543e.png",
+      "icon": "icons/rewordly.1f69236b.png",
       "status": "live"
     },
     {
@@ -81,6 +108,24 @@
       "tagline": "Rick and Morty season hub",
       "category": "site",
       "icon": "icons/ricksanchez.9c8bd75e.png",
+      "status": "live"
+    },
+    {
+      "slug": "sift",
+      "host": "sift.radrebeldeveloper.com",
+      "name": "sift",
+      "tagline": "comment triage",
+      "category": "misc",
+      "icon": "icons/sift.0e8dcd3b.png",
+      "status": "live"
+    },
+    {
+      "slug": "swipe",
+      "host": "swipe.radrebeldeveloper.com",
+      "name": "swipe",
+      "tagline": "swipe file that judges what you save",
+      "category": "misc",
+      "icon": "icons/swipe.9ae28040.png",
       "status": "live"
     },
     {
@@ -111,55 +156,10 @@
       "status": "live"
     },
     {
-      "slug": "ache",
-      "host": "ache.radrebeldeveloper.com",
-      "name": "ache",
-      "tagline": "No favicon yet — still being built.",
-      "category": "misc",
-      "icon": "",
-      "status": "building"
-    },
-    {
-      "slug": "bouncer",
-      "host": "bouncer.radrebeldeveloper.com",
-      "name": "bouncer",
-      "tagline": "No favicon yet — still being built.",
-      "category": "misc",
-      "icon": "",
-      "status": "building"
-    },
-    {
-      "slug": "catch",
-      "host": "catch.radrebeldeveloper.com",
-      "name": "catch",
-      "tagline": "No favicon yet — still being built.",
-      "category": "misc",
-      "icon": "",
-      "status": "building"
-    },
-    {
       "slug": "nexusauditor",
       "host": "nexusauditor.radrebeldeveloper.com",
       "name": "nexusauditor",
-      "tagline": "No favicon yet — still being built.",
-      "category": "misc",
-      "icon": "",
-      "status": "building"
-    },
-    {
-      "slug": "sift",
-      "host": "sift.radrebeldeveloper.com",
-      "name": "sift",
-      "tagline": "No favicon yet — still being built.",
-      "category": "misc",
-      "icon": "",
-      "status": "building"
-    },
-    {
-      "slug": "swipe",
-      "host": "swipe.radrebeldeveloper.com",
-      "name": "swipe",
-      "tagline": "No favicon yet — still being built.",
+      "tagline": "Not serving yet (HTTP 403).",
       "category": "misc",
       "icon": "",
       "status": "building"
@@ -168,7 +168,7 @@
       "slug": "synapsecanvas",
       "host": "synapsecanvas.radrebeldeveloper.com",
       "name": "synapsecanvas",
-      "tagline": "No favicon yet — still being built.",
+      "tagline": "Not serving yet (HTTP 403).",
       "category": "misc",
       "icon": "",
       "status": "building"
