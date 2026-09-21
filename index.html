@@ -307,7 +307,7 @@ body{
   /* ---------------- data ----------------
      Inline copy so the file still works opened straight from disk (file:// blocks
      fetch). projects.json is the live source and wins whenever it can be fetched.
-     Both are written by scan.mjs — don't hand-edit the block below. */
+     Both are written by scan.mjs - don't hand-edit the block below. */
   /* @generated:fallback — rewritten by scan.mjs, do not edit by hand */
   var FALLBACK = {projects:[
     {"slug":"ache","host":"ache.radrebeldeveloper.com","name":"ache","tagline":"demand finder","category":"chrome-extension","icon":"icons/ache.7c236d82.png","status":"live"},
@@ -406,8 +406,8 @@ body{
     a.className = 'st';
     a.href = 'https://' + p.host;
     a.rel  = 'noopener';
-    a.setAttribute('aria-label', name + ' — ' + (CATEGORY[p.category] || '').toLowerCase() +
-                                 ' — ' + (p.tagline || ''));
+    a.setAttribute('aria-label', name + ' - ' + (CATEGORY[p.category] || '').toLowerCase() +
+                                 ' - ' + (p.tagline || ''));
     a.setAttribute('title', p.tagline || p.host);
     a.style.setProperty('--seq', i);
 
@@ -477,7 +477,7 @@ body{
   }
 
   /* ---------------- build ---------------- */
-  /* The cut of each sticker is fixed to its slug — a project always looks like
+  /* The cut of each sticker is fixed to its slug - a project always looks like
      itself. Where it lands is not: this seed is redrawn on every page load, so
      the pile is dealt fresh each visit, and held steady through a resize. */
   var DEAL = (Math.random() * 0xFFFFFFFF) >>> 0;
@@ -489,7 +489,7 @@ body{
 
   function render(data){
     var all = (data && data.projects) || [];
-    /* only shipped work gets a sticker — anything still in build stays off the
+    /* only shipped work gets a sticker - anything still in build stays off the
        board, but it is still listed in the menu so the work in flight is visible */
     var list = all.filter(function(p){ return p.status === 'live' && p.icon; });
 
@@ -534,7 +534,7 @@ body{
   }
 
   /* How many stickers per row? Whichever row count leaves each sticker biggest
-     once the pile has been scaled to fit the band — fewer, larger rows on a wide
+     once the pile has been scaled to fit the band - fewer, larger rows on a wide
      screen; more, narrower ones on a phone. Same arithmetic as layout + place. */
   function plan(n, cuPx, bandPx){
     var best = null;
@@ -564,7 +564,7 @@ body{
   }
 
   /* Two-pass fit: measure the pile at 1:1, then scale it so it fills the band left
-     under the header. Overflowing 1280 is the point — the pile bleeds off the
+     under the header. Overflowing 1280 is the point - the pile bleeds off the
      edges instead of floating in the middle of the page. */
   function band(){
     var headBottom = document.querySelector('.head').getBoundingClientRect().bottom;

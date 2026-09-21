@@ -8,8 +8,8 @@
  * Unzip it straight into public_html: the paths inside are already relative to
  * the site root.
  *
- * The toolchain — scan.mjs, pack.mjs, overrides.json, extras.json, deploy.sh,
- * README.md — is deliberately left out. It is not part of the site.
+ * The toolchain - scan.mjs, pack.mjs, overrides.json, extras.json, deploy.sh,
+ * README.md - is deliberately left out. It is not part of the site.
  *
  * No dependencies: this writes the ZIP container by hand over zlib.
  */
@@ -158,6 +158,6 @@ if (import.meta.url === `file://${process.argv[1]}` ||
     process.argv[1] === fileURLToPath(import.meta.url)) {
   const r = await pack();
   const kb = n => (n / 1024).toFixed(0) + ' KB';
-  console.log(`packed ${r.files} files — ${kb(r.raw)} → ${kb(r.packed)}`);
+  console.log(`packed ${r.files} files - ${kb(r.raw)} → ${kb(r.packed)}`);
   console.log(`  ${r.out}`);
 }

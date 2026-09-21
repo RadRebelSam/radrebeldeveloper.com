@@ -5,7 +5,7 @@ a shape generated from its name, dealt into a pile you can drag around.
 
 **Live:** https://radrebeldeveloper.com
 
-One static HTML file — no framework, no build step, no dependencies. The Node scripts run
+One static HTML file - no framework, no build step, no dependencies. The Node scripts run
 before deploy, never on the server.
 
 ## Files
@@ -13,7 +13,7 @@ before deploy, never on the server.
 | | |
 | --- | --- |
 | `index.html` | The whole page. |
-| `projects.json` | What the page reads. **Generated — don't hand-edit.** |
+| `projects.json` | What the page reads. **Generated - don't hand-edit.** |
 | `scan.mjs` | Rebuilds the manifest, the icons and the zip from what is live. |
 | `pack.mjs` | Zips the uploadable files into `dist/`. |
 | `deploy.sh` | Uploads them to Hostinger over FTPS. |
@@ -23,8 +23,8 @@ before deploy, never on the server.
 ## Adding a project
 
 A subdomain finds itself: ship it with a favicon and the next scan picks it up through
-certificate transparency. Anything else — another domain, or a repository with nothing
-deployed — goes in `extras.json` by hand, one line:
+certificate transparency. Anything else - another domain, or a repository with nothing
+deployed - goes in `extras.json` by hand, one line:
 
 ```json
 { "hosts": ["clawconnected.com", "github.com/RadRebelSam/videomark"] }
@@ -48,7 +48,7 @@ Categories are guessed from the page copy and settled in `overrides.json`:
 ## Deploying
 
 `.github/workflows/scan.yml` scans daily, commits what changed and uploads to Hostinger.
-It needs three secrets and, where your host differs from the defaults, two variables — all
+It needs three secrets and, where your host differs from the defaults, two variables - all
 of them straight off hPanel → Files → **FTP Accounts**:
 
 | hPanel row | Add as |
@@ -56,8 +56,8 @@ of them straight off hPanel → Files → **FTP Accounts**:
 | FTP IP (hostname) | secret `FTP_HOST` |
 | FTP username | secret `FTP_USER` |
 | *Forgot your FTP password?* | secret `FTP_PASS` |
-| Folder to upload files | variable `FTP_DIR` — skip if `/public_html` |
-| FTP port | variable `FTP_PORT` — skip if `21` |
+| Folder to upload files | variable `FTP_DIR` - skip if `/public_html` |
+| FTP port | variable `FTP_PORT` - skip if `21` |
 
 The upload demands FTPS, so `FTP_HOST` has to be a name the server's certificate covers.
 Hostinger presents a `*.hstgr.io` certificate, so use the server hostname hPanel shows for
@@ -68,7 +68,7 @@ never match a certificate. If you would rather not chase the name, set the varia
 By hand instead: `node scan.mjs`, then unzip `dist/radrebeldeveloper.com.zip` into
 `public_html`, or run `./deploy.sh ftp` with those values in the environment.
 
-Subdomains are untouched either way — they have their own document roots, and the upload
+Subdomains are untouched either way - they have their own document roots, and the upload
 only ever writes `index.html`, `projects.json`, `assets/` and `icons/` into the apex one.
 
 ## Notes

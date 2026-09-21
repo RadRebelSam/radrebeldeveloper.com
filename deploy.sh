@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Uploads the site to Hostinger. Nothing is built — these files are the site.
+# Uploads the site to Hostinger. Nothing is built - these files are the site.
 #
 #   FTP (shared hosting):
 #     FTP_HOST=ftp.radrebeldeveloper.com FTP_USER=uXXXXXXXX FTP_DIR=/public_html \
@@ -18,7 +18,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 # What actually gets served. scan.mjs, overrides.json, extras.json and README.md
-# stay on your machine — they are the toolchain, not the site.
+# stay on your machine - they are the toolchain, not the site.
 FILES=(index.html projects.json)
 DIRS=(icons assets)
 
@@ -29,12 +29,12 @@ case "$mode" in
     : "${FTP_HOST:?set FTP_HOST}"
     : "${FTP_USER:?set FTP_USER}"
     : "${FTP_PASS:?set FTP_PASS (for this command only)}"
-    # Host panels state the host in whatever form they like — bare, with an
+    # Host panels state the host in whatever form they like - bare, with an
     # ftp:// on the front, sometimes with a trailing path. Reduce it to a
     # hostname before building a URL out of it, or curl ends up resolving "ftp".
     host="${FTP_HOST#*://}"; host="${host%%/*}"
     case "$FTP_HOST" in
-      sftp://*) echo "that is an SFTP address — use ./deploy.sh ssh instead" >&2; exit 2 ;;
+      sftp://*) echo "that is an SFTP address - use ./deploy.sh ssh instead" >&2; exit 2 ;;
     esac
     port="${FTP_PORT:-21}"
     case "$host" in
@@ -51,7 +51,7 @@ case "$mode" in
     # Explicit FTPS is required: an FTP password crossing the wire in clear text
     # is not worth the convenience. Shared hosts often present a certificate for
     # their own server name rather than yours, so FTP_INSECURE=1 keeps the
-    # connection encrypted but stops verifying who is on the other end — worse
+    # connection encrypted but stops verifying who is on the other end - worse
     # than a matching certificate, far better than plain FTP.
     tls="--ssl-reqd"
     [ "${FTP_INSECURE:-}" = "1" ] && tls="--ssl-reqd --insecure"
@@ -66,10 +66,10 @@ CFG
     then :; else
       code=$?
       case $code in
-        6)  echo "no such host: ${host} — hPanel states the FTP host on Files -> FTP Accounts" >&2 ;;
+        6)  echo "no such host: ${host} - hPanel states the FTP host on Files -> FTP Accounts" >&2 ;;
         60) echo "the certificate at ${host} is for another name. Use the server's own hostname (hPanel shows it, typically srvNNNN.hstgr.io), or set FTP_INSECURE=1 to keep TLS without verifying it" >&2 ;;
-        67) echo "the server rejected ${FTP_USER} — check FTP_USER and FTP_PASS" >&2 ;;
-        9)  echo "the server will not open ${dir:-/} — set FTP_DIR to the 'Folder to upload files' hPanel states; an account rooted at its own site wants FTP_DIR=/" >&2 ;;
+        67) echo "the server rejected ${FTP_USER} - check FTP_USER and FTP_PASS" >&2 ;;
+        9)  echo "the server will not open ${dir:-/} - set FTP_DIR to the 'Folder to upload files' hPanel states; an account rooted at its own site wants FTP_DIR=/" >&2 ;;
         *)  echo "cannot reach ${dir:-/} on ${host}:${port} (curl $code)" >&2 ;;
       esac
       exit 1
@@ -108,4 +108,4 @@ CFG
     ;;
 esac
 
-echo "done — if the page looks stale, purge the cache in hPanel (Websites → Advanced → Cache Manager)."
+echo "done - if the page looks stale, purge the cache in hPanel (Websites → Advanced → Cache Manager)."

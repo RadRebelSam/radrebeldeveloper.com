@@ -53,12 +53,12 @@ async function discover() {
     const url = `https://api.certspotter.com/v1/issuances?domain=${DOMAIN}` +
                 `&include_subdomains=true&expand=dns_names${after ? `&after=${after}` : ''}`;
     /* The CT API rate-limits an impatient caller. Back off and wait rather than
-       failing the run — a half-finished discovery would mean a half-empty board. */
+       failing the run - a half-finished discovery would mean a half-empty board. */
     let res;
     for (let tries = 0; ; tries++) {
       res = await fetch(url, { headers: { 'User-Agent': `${DOMAIN}-scan` } });
       if (res.status !== 429) break;
-      if (tries === 3) throw new Error('certspotter is rate-limiting us — try again in a few minutes');
+      if (tries === 3) throw new Error('certspotter is rate-limiting us - try again in a few minutes');
       const wait = Number(res.headers.get('retry-after')) || (20 * (tries + 1));
       console.log(`  rate-limited, waiting ${wait}s…`);
       await new Promise(r => setTimeout(r, wait * 1000));
@@ -136,8 +136,8 @@ const EXT = {
 
 /* Downloads the best icon that is actually the project's own.
    The file is named after a hash of its CONTENT, so when a site changes its
-   favicon the sticker points at a new filename and no cache anywhere — browser,
-   CDN or host — can keep serving the old picture. An unchanged favicon keeps its
+   favicon the sticker points at a new filename and no cache anywhere - browser,
+   CDN or host - can keep serving the old picture. An unchanged favicon keeps its
    name and nothing downstream re-downloads it. */
 async function grabIcon(slug, candidates) {
   for (const c of candidates) {
@@ -211,8 +211,8 @@ async function probe(target, named) {
   const base = { slug, host, name: slug, tagline: '', category: 'misc', icon: '', status: 'building' };
 
   /* Certificate transparency remembers a host forever, so a subdomain that has
-     since been deleted keeps turning up here. One that does not answer at all —
-     no DNS, no connection — is gone rather than unfinished, and is dropped from
+     since been deleted keeps turning up here. One that does not answer at all -
+     no DNS, no connection - is gone rather than unfinished, and is dropped from
      the manifest entirely. Tried twice, so one flaky moment can't erase a
      project that is really still there.
      A host you named yourself in extras.json is the exception: you meant it, so
@@ -232,7 +232,7 @@ async function probe(target, named) {
     }
   }
 
-  /* A bare repository has no logo of its own, so it borrows GitHub's — one
+  /* A bare repository has no logo of its own, so it borrows GitHub's - one
      shared file rather than a copy per repository, since the bytes are the same.
      The title GitHub serves is "GitHub - user/repo: description", which is the
      description twice over once the host is already saying where it lives. */
@@ -247,7 +247,7 @@ async function probe(target, named) {
 
   /* No favicon of its own means nobody has shipped this subdomain yet. */
   if (!icon) {
-    return { ...base, tagline: 'No favicon yet — still being built.' };
+    return { ...base, tagline: 'No favicon yet - still being built.' };
   }
 
   if (onGitHub) {
@@ -269,8 +269,11 @@ async function probe(target, named) {
   }
 
   /* "Decoder - What do they actually mean?" -> name + tagline */
-  const parts = title.split(/\s+[—–|-]\s+/);
-  const rest = parts.slice(1).join(' — ').trim();
+  /* Sites title themselves "Name - tagline" with a hyphen, an en dash or an em
+     dash. The dashes are written as escapes so this file carries no literal em
+     dash, but they are still recognised in the titles it reads. */
+  const parts = title.split(/\s+[\u2014\u2013|-]\s+/);
+  const rest = parts.slice(1).join(' - ').trim();
 
   return {
     slug,
@@ -287,7 +290,7 @@ async function probe(target, named) {
 
 const slugs = await discover();
 if (!slugs.length) {
-  console.error('no subdomains found — refusing to overwrite projects.json');
+  console.error('no subdomains found - refusing to overwrite projects.json');
   process.exit(1);
 }
 
@@ -354,7 +357,7 @@ async function syncFallback() {
     category: p.category, icon: p.icon, status: p.status
   })).join(',\n');
 
-  const block = open + ' — rewritten by scan.mjs, do not edit by hand */\n' +
+  const block = open + ' - rewritten by scan.mjs, do not edit by hand */\n' +
                 '  var FALLBACK = {projects:[\n' + body + '\n  ]};\n  ' + close;
 
   const out = html.slice(0, a) + block + html.slice(b + close.length);
@@ -366,10 +369,10 @@ async function syncFallback() {
 if (DRY) {
   console.log(JSON.stringify(next, null, 2));
 } else if (same) {
-  console.log(`no change — ${projects.length} projects`);
+  console.log(`no change - ${projects.length} projects`);
 } else {
   await writeFile(OUT, JSON.stringify(next, null, 2) + '\n');
-  console.log(`wrote projects.json — ${projects.length} projects`);
+  console.log(`wrote projects.json - ${projects.length} projects`);
   if (await syncFallback()) console.log('synced the inline copy in index.html');
 }
 for (const p of projects) {
@@ -381,5 +384,5 @@ if (dropped) console.log(`pruned ${dropped} stale icon file${dropped === 1 ? '' 
    than leaving it to be remembered. */
 if (!DRY) {
   const z = await pack();
-  console.log(`packed dist/radrebeldeveloper.com.zip — ${z.files} files, ${(z.packed / 1024).toFixed(0)} KB`);
+  console.log(`packed dist/radrebeldeveloper.com.zip - ${z.files} files, ${(z.packed / 1024).toFixed(0)} KB`);
 }
