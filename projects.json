@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-21T09:08:45.393Z",
+  "generated": "2026-09-25T10:42:17.076Z",
   "projects": [
     {
       "slug": "ache",
@@ -8,7 +8,7 @@
       "name": "ache",
       "tagline": "demand finder",
       "category": "chrome-extension",
-      "icon": "icons/ache.7c236d82.png",
+      "icon": "icons/ache.982a3428.png",
       "status": "live"
     },
     {
@@ -44,7 +44,7 @@
       "name": "bouncer",
       "tagline": "reading triage",
       "category": "chrome-extension",
-      "icon": "icons/bouncer.034dd986.png",
+      "icon": "icons/bouncer.ea658d5e.png",
       "status": "live"
     },
     {
@@ -53,7 +53,7 @@
       "name": "catch",
       "tagline": "pricing page and terms check",
       "category": "chrome-extension",
-      "icon": "icons/catch.6c1e9eda.png",
+      "icon": "icons/catch.53d01ae2.png",
       "status": "live"
     },
     {
@@ -71,7 +71,7 @@
       "name": "decoder",
       "tagline": "what social posts really mean",
       "category": "chrome-extension",
-      "icon": "icons/decoder.30d8f325.png",
+      "icon": "icons/decoder.4102b8f5.png",
       "status": "live"
     },
     {
@@ -98,7 +98,7 @@
       "name": "rewordly",
       "tagline": "swap words on any page",
       "category": "chrome-extension",
-      "icon": "icons/rewordly.1f69236b.png",
+      "icon": "icons/rewordly.86720efb.png",
       "status": "live"
     },
     {
@@ -116,7 +116,7 @@
       "name": "sift",
       "tagline": "comment triage",
       "category": "chrome-extension",
-      "icon": "icons/sift.0e8dcd3b.png",
+      "icon": "icons/sift.adda5eb3.png",
       "status": "live"
     },
     {
@@ -125,7 +125,7 @@
       "name": "swipe",
       "tagline": "swipe file that judges what you save",
       "category": "chrome-extension",
-      "icon": "icons/swipe.9ae28040.png",
+      "icon": "icons/swipe.66b38f0d.png",
       "status": "live"
     },
     {
@@ -161,7 +161,7 @@
       "name": "worth",
       "tagline": "job and event checker",
       "category": "chrome-extension",
-      "icon": "icons/worth.67a41725.png",
+      "icon": "icons/worth.b194affd.png",
       "status": "live"
     },
     {
