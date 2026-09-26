@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-25T10:42:17.076Z",
+  "generated": "2026-09-26T10:25:22.491Z",
   "projects": [
     {
       "slug": "ache",
@@ -8,7 +8,7 @@
       "name": "ache",
       "tagline": "demand finder",
       "category": "chrome-extension",
-      "icon": "icons/ache.982a3428.png",
+      "icon": "icons/ache.7c236d82.png",
       "status": "live"
     },
     {
@@ -71,7 +71,7 @@
       "name": "decoder",
       "tagline": "what social posts really mean",
       "category": "chrome-extension",
-      "icon": "icons/decoder.4102b8f5.png",
+      "icon": "icons/decoder.30d8f325.png",
       "status": "live"
     },
     {
