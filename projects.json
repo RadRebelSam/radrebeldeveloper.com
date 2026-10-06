@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-09-27T10:56:07.660Z",
+  "generated": "2026-10-06T12:19:32.497Z",
   "projects": [
     {
       "slug": "ache",
@@ -116,7 +116,7 @@
       "name": "sift",
       "tagline": "comment triage",
       "category": "chrome-extension",
-      "icon": "icons/sift.adda5eb3.png",
+      "icon": "icons/sift.59276b4b.png",
       "status": "live"
     },
     {
