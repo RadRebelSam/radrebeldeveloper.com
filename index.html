@@ -45,7 +45,7 @@ body{
   top:calc(240 * var(--u));
   width:calc(1280 * var(--cs));
   transform:translateX(-50%);
-  z-index:1;
+  z-index:3;      /* above the header: a sticker dragged up there stays on top and grabbable */
 }
 
 /* A sticker is the project's own logo, die-cut: no card, no panel behind it.
@@ -103,6 +103,7 @@ body{
 
 /* A menu bar, not a directory: two buttons that each open a panel, so the header
    stays one line and the board gets the room. */
+.head:has(.mi.open){z-index:4}      /* an open menu still sits over the stickers */
 .menu{position:absolute;right:0;top:calc(104 * var(--u));display:flex;gap:calc(10 * var(--u))}
 .mi{position:relative}
 .mt{
