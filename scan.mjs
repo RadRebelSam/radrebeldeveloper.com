@@ -38,7 +38,7 @@ const ICON_DIR = resolve(HERE, 'icons');
 const DRY = process.argv.includes('--dry');
 
 /* Subdomains that are infrastructure or private tools, not projects. */
-const IGNORE = new Set(['www', 'mail', 'webmail', 'cpanel', 'ftp', 'autodiscover', 'autoconfig', 'mcp', 'clawmagic']);
+const IGNORE = new Set(['www', 'mail', 'webmail', 'cpanel', 'ftp', 'autodiscover', 'autoconfig', 'mcp', 'clawmagic', 'intake']);
 
 /* Icons served from somewhere else are the host's placeholder, not the project's. */
 const PLACEHOLDER_HOSTS = [/hostinger\.com$/i, /hpanel\./i];
