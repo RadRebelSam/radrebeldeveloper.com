@@ -433,50 +433,46 @@ body{
   /* ---------------- layout ----------------
      Reference space is 1280 wide and every number is multiplied by --cs at paint
      time, so the pile scales as one object and a moved sticker keeps its place. */
-  function layout(els, maxPerRow){
+  function layout(els, H){
     var n = els.length;
     if(!n) return 0;
 
-    var W = 1280, CAP = 188, TALL = 1.21;          /* TALL = logo + its caption */
-    var cols  = Math.max(2, Math.min(maxPerRow || 4, n));
-    var rows  = Math.ceil(n / cols);
-    var size  = Math.min(CAP, (W / cols) * 0.94);
-    var cellW = W / cols;
-    var cellH = size * TALL * (n > 8 ? 1.0 : 0.88);   /* rows overlap, but not the captions */
+    var W = 1280, TALL = 1.21;                     /* TALL = logo + its caption */
+    /* H is the arena: the band between the tagline and the footer, at the viewport's
+       own aspect. */
+    var size = Math.min(188, Math.max(60, Math.sqrt(W * H * 0.34 / n / TALL)));
 
-    /* Cells are a scaffold, not a grid: the deck is shuffled, every sticker lands
-       somewhere inside the cell it drew, and the jitter is wide enough that
-       neighbours pile onto each other instead of lining up. */
-    var deck = [];
-    for(var k=0;k<rows*cols;k++) deck.push(k);
-
-    var shuffle = rng(DEAL || 7);
+    /* Random, but never bunched: the arena is cut into about one cell per sticker, the
+       cells are dealt out at random, and each sticker lands anywhere near its cell
+       (the jitter is wider than the cell, so neighbours still overlap and nothing
+       lines up). Sizes run from about two thirds to one and a third of the base. Redrawn on
+       every page load. */
+    var pick = rng(DEAL || 7);
+    var cols = Math.max(2, Math.round(Math.sqrt(n * W / H))), rows = Math.ceil(n / cols);
+    var cellW = W / cols, cellH = H / rows, deck = [];
+    for(var c=0;c<cols*rows;c++) deck.push(c);
     for(var d=deck.length-1; d>0; d--){
-      var j = Math.floor(shuffle() * (d+1));
-      var t = deck[d]; deck[d] = deck[j]; deck[j] = t;
+      var j = Math.floor(pick() * (d+1)), tmp = deck[d]; deck[d] = deck[j]; deck[j] = tmp;
     }
-
-    var maxBottom = 0;
     for(var i=0;i<n;i++){
       var el = els[i], r = rng((el._seed ^ DEAL) >>> 0);
-      var cell = deck[i], cx = cell % cols, cy = Math.floor(cell / cols);
-      var sc = size * (0.80 + r()*0.36);
-
-      var x = cx*cellW + (cellW - sc)/2      + (r() - 0.5) * cellW * 0.52;
-      /* it may hang off an edge, but only by a little */
-      x = Math.min(Math.max(x, -0.10*W), W - sc + 0.10*W);
-      /* pulled low in its cell: the pile settles downwards, like a real one */
-      var y = cy*cellH + (cellH - sc*TALL)/2 + (0.22 + (r() - 0.5) * 0.5) * cellH;
+      var sc = size * (0.65 + r()*0.7);
+      var cell = deck[i];
+      var x = (cell % cols + 0.5) * cellW + (pick() - 0.5) * cellW * 1.4 - sc/2;
+      var y = (Math.floor(cell / cols) + 0.5) * cellH + (pick() - 0.5) * cellH * 1.4 - sc*TALL/2;
+      /* every sticker stays fully on screen: the margin leaves room for its tilt and shadow */
+      var pad = 0.015*W + 0.12*sc;
+      x = Math.min(Math.max(x, pad), W - sc - pad);
+      y = Math.min(Math.max(y, pad*0.6), Math.max(pad*0.6, H - sc*TALL - pad*0.6));
 
       el.style.left  = 'calc(' + x.toFixed(1) + ' * var(--cs))';
       el.style.top   = 'calc(' + y.toFixed(1) + ' * var(--cs))';
       el.style.width = 'calc(' + sc.toFixed(1) + ' * var(--cs))';
       el.style.setProperty('--sw', sc.toFixed(1));
-      el.style.setProperty('--rot', (r()*30 - 15).toFixed(2) + 'deg');
+      el.style.setProperty('--rot', (r()*50 - 25).toFixed(2) + 'deg');
       el.style.zIndex = String(2 + Math.floor(r()*12));
-      maxBottom = Math.max(maxBottom, y + sc*TALL);
     }
-    return maxBottom;
+    return H;
   }
 
   /* ---------------- build ---------------- */
@@ -536,30 +532,21 @@ body{
       }).join('');
   }
 
-  /* How many stickers per row? Whichever row count leaves each sticker biggest
-     once the pile has been scaled to fit the band - fewer, larger rows on a wide
-     screen; more, narrower ones on a phone. Same arithmetic as layout + place. */
-  function plan(n, cuPx, bandPx){
-    var best = null;
-    for(var cap = 2; cap <= 6; cap++){
-      var cols   = Math.max(2, Math.min(cap, n));
-      var rows   = Math.ceil(n / cols);
-      var size   = Math.min(188, (1280 / cols) * 0.94);
-      var pileH  = rows * size * 1.21 * (n > 8 ? 1.0 : 0.88) + size * 1.21 * 0.40;
-      var byH    = bandPx / (pileH * cuPx);
-      var byW    = (window.innerWidth * 1.16) / (1280 * cuPx);
-      var px     = size * cuPx * Math.max(0.35, Math.min(1.9, byH, byW)) * 0.84;
-      if(!best || px > best.px) best = {cap:cap, px:px};
-    }
-    return best.cap;
-  }
-
+  var waiting = null;
   function reflow(){
+    var vw = stage.getBoundingClientRect().width;
     if(!CURRENT || !CURRENT.length) return;
+    if(!vw){                                  /* not laid out yet (hidden pane): retry once it has a size */
+      if(!waiting && window.ResizeObserver){
+        waiting = new ResizeObserver(function(){
+          if(stage.getBoundingClientRect().width){ waiting.disconnect(); waiting = null; reflow(); }
+        });
+        waiting.observe(stage);
+      }
+      return;
+    }
     collage.style.setProperty('--fit', 1);
-    var cuPx = collage.getBoundingClientRect().width / 1280;
-
-    var h = layout(CURRENT, plan(CURRENT.length, cuPx, band().size)).toFixed(1);
+    var h = layout(CURRENT, band().size * 1280 / vw).toFixed(1);   /* band: under the tagline, above the footer */
     collage.style.height = 'calc(' + h + ' * var(--cs))';
     collage.style.setProperty('--ch', 'calc(' + h + ' * var(--cs))');
     place();
@@ -586,13 +573,10 @@ body{
     if(!base) return;
 
     var b = band();
-    var byHeight = b.size / base;
-    var byWidth  = (window.innerWidth * 1.16) / rect.width;
-    var fit = Math.max(0.35, Math.min(1.9, byHeight, byWidth)) * 0.84;
-
+    /* the arena is laid out at the viewport's own aspect, so fit it to the width */
+    var fit = stage.getBoundingClientRect().width / rect.width;
     collage.style.setProperty('--fit', fit.toFixed(3));
-    /* bottom-aligned: the board hangs low, with the empty air above it */
-    collage.style.top = (b.top + Math.max(0, b.size - base*fit)) + 'px';
+    collage.style.top = b.top + 'px';
     collage.style.bottom = 'auto';
   }
 
