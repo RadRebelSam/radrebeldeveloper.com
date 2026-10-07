@@ -122,6 +122,7 @@ body{
 
 /* ---------- a service sticker: same cut, no logo, the name set inside ---------- */
 dialog.sheet{
+  --u : min(calc(100vw / 1280), calc(100vh / 600));
   border:0;padding:0;background:transparent;
   width:calc(520 * var(--u));max-width:calc(100vw - 32 * var(--u));
 }
@@ -160,6 +161,11 @@ dialog.sheet::backdrop{background:rgba(22,24,29,.42)}
   font-size:calc(13 * var(--u));font-weight:600;
 }
 .sheet .shut:hover{border-color:rgba(22,24,29,.28);color:var(--ink)}
+.sheet .alt{display:block;margin:calc(16 * var(--u)) 0 0;text-align:center;
+  font-size:calc(12.5 * var(--u));font-weight:600;color:var(--ink-soft);
+  text-decoration:underline;text-underline-offset:3px}
+.sheet .alt:hover{color:var(--ink)}
+.sheet .alt[hidden]{display:none}
 .chev{width:calc(9 * var(--u));height:calc(9 * var(--u));flex:none;
   transition:transform .2s cubic-bezier(.2,.8,.2,1)}
 /* On the services pile, PROJECTS is a tab rather than a menu, so it drops the
@@ -364,6 +370,7 @@ dialog.sheet::backdrop{background:rgba(22,24,29,.42)}
       <a class="go" href="mailto:contact@radrebeldeveloper.com">Start a conversation</a>
       <button class="shut" type="button" id="sShut">Close</button>
     </div>
+    <a class="alt" id="sIntake" href="#" hidden>Or start the project intake</a>
   </div>
 </dialog>
 
@@ -591,6 +598,7 @@ dialog.sheet::backdrop{background:rgba(22,24,29,.42)}
       quote:'"Our product only works while someone is sitting on our site."',
       deliver:'A published Manifest V3 extension, the source, the store listing with screenshots, and a demo clip for your launch.' },
     { slug:'mcp-servers', lines:['MCP','SERVERS'], price:'From $500',
+      intake:'https://intake.radrebeldeveloper.com/deployment-0815c5ef-24a2-4be5-a356-375b37ed1c70',
       quote:'"People want to use us from inside Claude, and there is no door."',
       deliver:'An MCP server over the API you already have, a skill file so agents use it correctly rather than guessing, and a test run against a real account.' },
     { slug:'automation', lines:['AUTOMATION'], price:'From $500',
@@ -882,6 +890,9 @@ dialog.sheet::backdrop{background:rgba(22,24,29,.42)}
     document.getElementById('sQuote').textContent   = s.quote;
     document.getElementById('sDeliver').textContent = s.deliver;
     document.getElementById('sPrice').textContent   = s.price;
+    var intake = document.getElementById('sIntake');
+    intake.hidden = !s.intake;
+    if(s.intake) intake.href = s.intake;
     if(sheet.showModal) sheet.showModal(); else sheet.setAttribute('open','');
   }
   document.getElementById('sShut').addEventListener('click', function(){ sheet.close(); });
