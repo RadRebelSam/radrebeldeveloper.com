@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-10-07T12:11:10.849Z",
+  "generated": "2026-10-07T13:09:09.907Z",
   "projects": [
     {
       "slug": "ache",
@@ -172,6 +172,15 @@
       "category": "chrome-extension",
       "icon": "icons/worth.b194affd.png",
       "status": "live"
+    },
+    {
+      "slug": "awesomex",
+      "host": "awesomex.radrebeldeveloper.com",
+      "name": "awesomex",
+      "tagline": "Not live yet.",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
     },
     {
       "slug": "nexusauditor",
