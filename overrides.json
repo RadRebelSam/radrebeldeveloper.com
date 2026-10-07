@@ -23,7 +23,7 @@
   },
   "ai4all-20c-darkpatterns": {
     "category": "misc",
-    "name": "dark patterns",
+    "name": "darkpatterns",
     "tagline": "Detecting manipulative e-commerce language",
     "icon": "icons/github.1bedd6a1.png"
   },
@@ -35,11 +35,12 @@
   },
   "awesomejev": {
     "category": "directory",
-    "name": "awesome jev",
+    "name": "awesome-jev",
     "tagline": "A crawler-maintained directory of Jev projects"
   },
   "jevdecisionlab": {
-    "category": "misc"
+    "category": "misc",
+    "name": "jev-decisionlab"
   },
   "awesomex": {
     "category": "misc"

@@ -255,7 +255,7 @@ async function probe(target, named) {
     return {
       slug,
       host,
-      name: repo.replace(/[-_]+/g, ' ').toLowerCase(),
+      name: repo.replace(/_+/g, '-').toLowerCase(),
       /* GitHub pads the description with its own sales line and the repository
          path; both say nothing the board is not already showing. */
       tagline: clip(desc
@@ -311,6 +311,8 @@ let overrides = {};
 try { overrides = JSON.parse(await readFile(OVERRIDES, 'utf8')); } catch {}
 for (const p of projects) {
   Object.assign(p, overrides[p.slug] || {});
+  /* house style: all lower case, no spaces - words are joined with hyphens */
+  p.name = String(p.name || p.slug).trim().toLowerCase().replace(/[\s_]+/g, '-');
   /* a hand-supplied logo counts as shipped - some hosts just never set a favicon */
   if (p.icon && p.status !== 'live' && !(overrides[p.slug] || {}).status) p.status = 'live';
 }

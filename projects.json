@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-10-07T13:09:09.907Z",
+  "generated": "2026-10-07T13:14:40.856Z",
   "projects": [
     {
       "slug": "ache",
@@ -14,7 +14,7 @@
     {
       "slug": "ai-web-activity-monitor",
       "host": "github.com/RadRebelSam/ai-web-activity-monitor",
-      "name": "ai web activity monitor",
+      "name": "ai-web-activity-monitor",
       "tagline": "A Tampermonkey userscript that monitors your web browsing…",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
@@ -23,7 +23,7 @@
     {
       "slug": "ai4all-20c-darkpatterns",
       "host": "radrebelsam.github.io/ai4all-20c-darkpatterns",
-      "name": "dark patterns",
+      "name": "darkpatterns",
       "tagline": "Detecting manipulative e-commerce language",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
@@ -32,7 +32,7 @@
     {
       "slug": "awesomejev",
       "host": "awesomejev.radrebeldeveloper.com",
-      "name": "awesome jev",
+      "name": "awesome-jev",
       "tagline": "A crawler-maintained directory of Jev projects",
       "category": "directory",
       "icon": "icons/awesomejev.53e1ba38.svg",
@@ -77,7 +77,7 @@
     {
       "slug": "jevdecisionlab",
       "host": "jevdecisionlab.radrebeldeveloper.com",
-      "name": "jev decision lab",
+      "name": "jev-decisionlab",
       "tagline": "A live benchmark showing where deterministic rules stop and Jev…",
       "category": "misc",
       "icon": "icons/jevdecisionlab.5907a19a.png",
@@ -86,7 +86,7 @@
     {
       "slug": "motionsites-demo",
       "host": "github.com/RadRebelSam/motionsites-demo",
-      "name": "motionsites demo",
+      "name": "motionsites-demo",
       "tagline": "",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
@@ -140,7 +140,7 @@
     {
       "slug": "true-me-in-browser",
       "host": "github.com/RadRebelSam/true-me-in-browser",
-      "name": "true me in browser",
+      "name": "true-me-in-browser",
       "tagline": "A privacy-first web application that analyzes your browser…",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",

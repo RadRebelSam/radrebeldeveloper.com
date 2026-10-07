@@ -33,6 +33,8 @@ deployed - goes in `extras.json` by hand, one line:
 A repository with no site of its own is listed wearing GitHub's mark, since it has no
 logo to show.
 
+**Naming: ask first.** Names are all lower case with hyphens, never spaces (`true-me-in-browser`). The scan guesses one from the repo name or page title, but the guess is often clumsy, so before a new project goes on this site, ask the owner what it should be called and set it in `overrides.json`.
+
 **No favicon of its own = still being built.** It is listed in the menu under IN PROGRESS
 with a grey dot, and kept off the board. A host that has stopped answering is dropped
 entirely.
