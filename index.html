@@ -897,6 +897,14 @@ dialog.sheet::backdrop{background:rgba(22,24,29,.42)}
     if(sheet.showModal) sheet.showModal(); else sheet.setAttribute('open','');
   }
   document.getElementById('sShut').addEventListener('click', function(){ sheet.close(); });
+  /* mailto does nothing without a default mail app, so also copy the address and say so */
+  var go = document.querySelector('.sheet .go');
+  go.addEventListener('click', function(){
+    var addr = go.getAttribute('href').replace('mailto:', '');
+    try{ navigator.clipboard.writeText(addr); }catch(err){}
+    go.textContent = addr + ' (copied)';
+    setTimeout(function(){ go.textContent = 'Start a conversation'; }, 3000);
+  });
   sheet.addEventListener('click', function(e){ if(e.target === sheet) sheet.close(); });
 
   var svcBtn = document.getElementById('svcToggle');
