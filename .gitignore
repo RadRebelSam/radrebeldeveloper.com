@@ -5,3 +5,10 @@ dist/
 node_modules/
 .DS_Store
 Thumbs.db
+
+# Secrets: never commit. The RobinReach key grants full control of the
+# connected social accounts, including publishing.
+.robinreach.key
+*.key
+.env
+.env.*

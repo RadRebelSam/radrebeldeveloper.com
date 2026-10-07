@@ -52,6 +52,7 @@ body{
    The white stroke is the cut line; the caption is printed under it. */
 .st{
   position:absolute;display:block;text-decoration:none;
+  border:0;padding:0;background:none;font:inherit;color:inherit;  /* a service sticker is a button */
   transform-origin:50% 42%;
   transform:translate(calc(var(--ox,0) * var(--cs)),calc(var(--oy,0) * var(--cs))) rotate(var(--rot));
   filter:drop-shadow(0 calc(5 * var(--cs)) calc(14 * var(--cs)) rgba(20,24,40,.18));
@@ -107,7 +108,7 @@ body{
 .menu{position:absolute;right:0;top:calc(104 * var(--u));display:flex;gap:calc(10 * var(--u))}
 .mi{position:relative}
 .mt{
-  appearance:none;font:inherit;cursor:pointer;
+  appearance:none;font:inherit;cursor:pointer;text-decoration:none;
   display:flex;align-items:center;gap:calc(9 * var(--u));white-space:nowrap;
   padding:calc(10 * var(--u)) calc(16 * var(--u));
   font-size:calc(11.4 * var(--u));font-weight:700;
@@ -116,9 +117,54 @@ body{
   transition:color .18s ease, border-color .18s ease, background-color .18s ease;
 }
 .mt:hover{color:var(--ink);border-color:rgba(22,24,29,.28)}
-.mi.open .mt{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.mi.open .mt,
+.mt[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+/* ---------- a service sticker: same cut, no logo, the name set inside ---------- */
+dialog.sheet{
+  border:0;padding:0;background:transparent;
+  width:calc(520 * var(--u));max-width:calc(100vw - 32 * var(--u));
+}
+dialog.sheet::backdrop{background:rgba(22,24,29,.42)}
+.sheet .box{
+  background:#FFFFFF;border:1px solid var(--rule);border-radius:calc(20 * var(--u));
+  padding:calc(34 * var(--u)) calc(34 * var(--u)) calc(28 * var(--u));
+  box-shadow:0 calc(30 * var(--u)) calc(80 * var(--u)) rgba(20,24,40,.22);
+}
+.sheet h2{
+  margin:0;font-size:calc(11.4 * var(--u));font-weight:700;
+  letter-spacing:calc(.1 * 11.4 * var(--u));text-transform:uppercase;color:var(--live);
+}
+.sheet .quote{
+  margin:calc(18 * var(--u)) 0 0;font-size:calc(23 * var(--u));line-height:1.3;
+  font-weight:600;letter-spacing:calc(-.024 * 23 * var(--u));color:var(--ink);
+}
+.sheet .lab{
+  margin:calc(26 * var(--u)) 0 0;font-size:calc(9.6 * var(--u));font-weight:700;
+  letter-spacing:calc(.12 * 9.6 * var(--u));text-transform:uppercase;color:var(--meta);
+}
+.sheet .deliver{
+  margin:calc(10 * var(--u)) 0 0;font-size:calc(14.5 * var(--u));line-height:1.5;color:var(--ink-soft);
+}
+.sheet .price{margin:calc(24 * var(--u)) 0 0;font-size:calc(15 * var(--u));font-weight:700;color:var(--ink)}
+.sheet .acts{margin:calc(28 * var(--u)) 0 0;display:flex;gap:calc(10 * var(--u))}
+.sheet .go{
+  flex:1;text-align:center;padding:calc(13 * var(--u)) calc(18 * var(--u));border-radius:999px;
+  background:var(--ink);color:var(--paper);text-decoration:none;
+  font-size:calc(13 * var(--u));font-weight:700;
+}
+.sheet .shut{
+  appearance:none;font:inherit;cursor:pointer;
+  padding:calc(13 * var(--u)) calc(18 * var(--u));border-radius:999px;
+  background:transparent;border:1px solid var(--rule);color:var(--ink-soft);
+  font-size:calc(13 * var(--u));font-weight:600;
+}
+.sheet .shut:hover{border-color:rgba(22,24,29,.28);color:var(--ink)}
 .chev{width:calc(9 * var(--u));height:calc(9 * var(--u));flex:none;
   transition:transform .2s cubic-bezier(.2,.8,.2,1)}
+/* On the services pile, PROJECTS is a tab rather than a menu, so it drops the
+   chevron that would promise a panel it is not going to open. */
+.mt[aria-haspopup="false"] .chev{display:none}
 .mi.open .chev{transform:rotate(180deg)}
 
 .mp{
@@ -269,8 +315,12 @@ body{
 
     <nav class="menu" aria-label="Site">
       <div class="mi">
+        <button class="mt" type="button" id="svcToggle" aria-pressed="false">SERVICES</button>
+      </div>
+
+      <div class="mi">
         <button class="mt" type="button" aria-expanded="false" aria-haspopup="true"
-                aria-controls="mProjects">PROJECTS
+                aria-controls="mProjects" id="projTab">PROJECTS
           <svg class="chev" viewBox="0 0 10 10" aria-hidden="true">
             <path d="M2 4l3 3 3-3" fill="none" stroke="currentColor"
                   stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -302,6 +352,20 @@ body{
     <span>Build in public.</span>
   </footer>
 </main>
+
+<dialog class="sheet" id="sheet">
+  <div class="box">
+    <h2 id="sTitle"></h2>
+    <p class="quote" id="sQuote"></p>
+    <p class="lab">What you get</p>
+    <p class="deliver" id="sDeliver"></p>
+    <p class="price" id="sPrice"></p>
+    <div class="acts">
+      <a class="go" href="mailto:contact@radrebeldeveloper.com">Start a conversation</a>
+      <button class="shut" type="button" id="sShut">Close</button>
+    </div>
+  </div>
+</dialog>
 
 <script>
 (function(){
@@ -518,17 +582,78 @@ body{
   var FLOW    = window.matchMedia('(max-width:1199.98px),(orientation:portrait)');
   var CURRENT = null;
 
+  /* ---------------- services ----------------
+     The same board, a different pile. A service has no logo, so its sticker is
+     the bare cut with the name set inside it and the price printed underneath,
+     exactly where a project's caption goes. */
+  var SERVICES = [
+    { slug:'chrome-extensions', lines:['CHROME','EXTENSIONS'], price:'From $500',
+      quote:'"Our product only works while someone is sitting on our site."',
+      deliver:'A published Manifest V3 extension, the source, the store listing with screenshots, and a demo clip for your launch.' },
+    { slug:'mcp-servers', lines:['MCP','SERVERS'], price:'From $500',
+      quote:'"People want to use us from inside Claude, and there is no door."',
+      deliver:'An MCP server over the API you already have, a skill file so agents use it correctly rather than guessing, and a test run against a real account.' },
+    { slug:'automation', lines:['AUTOMATION'], price:'From $500',
+      quote:'"Someone here does this by hand every single week."',
+      deliver:'The job running on a schedule, a written record of every system it touches, and an alert that reaches a human when it fails.' },
+    { slug:'online-stores', lines:['ONLINE','STORES'], price:'From $1,000',
+      quote:'"We need to sell online without assembling twelve plugins."',
+      deliver:'A live store with payments, shipping and inventory set up, your own domain and certificate, and a walkthrough so your team can run it without me.' }
+  ];
+
+  function svcSticker(s, i){
+    var seed = hash(s.slug);
+    var d    = cut(seed);
+
+    var b = document.createElement('button');
+    b.className = 'st';
+    b.type = 'button';
+    b.setAttribute('aria-label', s.lines.join(' ') + ' - ' + s.price);
+    b.style.setProperty('--seq', i);
+
+    var two     = s.lines.length > 1;
+    var longest = s.lines.reduce(function(a,x){ return x.length > a.length ? x : a; }).length;
+    /* Inter 800 runs about .62em per character, and the cut is only ~198 units
+       wide where the text sits, so a long word has to set smaller or it bleeds
+       past its own sticker. */
+    var size    = Math.min(two ? 34 : 40, 198 / (longest * 0.62));
+    var y0      = two ? C - 10 : C + size * 0.34;
+    var tspans  = s.lines.map(function(line, k){
+      return '<tspan x="'+C+'" dy="'+(k === 0 ? 0 : size * 1.08)+'">'+esc(line)+'</tspan>';
+    }).join('');
+
+    b.innerHTML =
+      '<svg viewBox="0 0 '+S+' '+S+'" aria-hidden="true">'+
+        '<path d="'+d+'" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26" stroke-linejoin="round"/>'+
+        '<text x="'+C+'" y="'+y0+'" text-anchor="middle" fill="#16181D" '+
+          'font-family="Inter,Helvetica,Arial,sans-serif" font-weight="800" '+
+          'font-size="'+size+'" letter-spacing="-1">'+tspans+'</text>'+
+      '</svg>'+
+      '<span class="cap"><b>'+esc(s.price)+'</b></span>';
+
+    b._seed = seed;
+    b._svc  = s;
+    return b;
+  }
+
+  var MODE = 'projects', LIVE = [];
+
+  function paint(){
+    collage.innerHTML = '';
+    var els = MODE === 'services' ? SERVICES.map(svcSticker) : LIVE.map(sticker);
+    els.forEach(function(el){ collage.appendChild(el); });
+    CURRENT = els;
+    reflow();
+  }
+
   function render(data){
     var all = (data && data.projects) || [];
     /* only shipped work gets a sticker - anything still in build stays off the
        board, but it is still listed in the menu so the work in flight is visible */
     var list = all.filter(function(p){ return p.status === 'live' && p.icon; });
 
-    collage.innerHTML = '';
-    var els = list.map(sticker);
-    els.forEach(function(el){ collage.appendChild(el); });
-    CURRENT = els;
-    reflow();
+    LIVE = list;
+    paint();
 
     /* The menu is the index the board deliberately is not: grouped by what a
        thing IS, with the groups themselves in alphabetical order and the projects
@@ -651,6 +776,7 @@ body{
 
     items.forEach(function(mi){
       var btn = mi.querySelector('.mt');
+      if(!mi.querySelector('.mp')) return;      /* SERVICES is a tab, not a panel */
       btn.addEventListener('click', function(e){
         e.stopPropagation();
         var open = !mi.classList.contains('open');
@@ -742,8 +868,61 @@ body{
 
   /* a drag is not a click */
   collage.addEventListener('click', function(e){
-    if(moved > 5){ e.preventDefault(); moved = 0; }
+    if(moved > 5){ e.preventDefault(); moved = 0; return; }
+    var el = e.target.closest('.st');
+    if(el && el._svc){ e.preventDefault(); openSheet(el._svc); }
   });
+
+  /* ---------------- the services toggle ----------------
+     One page, two piles. PROJECTS keeps its dropdown; SERVICES swaps what the
+     board is showing rather than navigating away from it. */
+  var sheet = document.getElementById('sheet');
+  function openSheet(s){
+    document.getElementById('sTitle').textContent   = s.lines.join(' ');
+    document.getElementById('sQuote').textContent   = s.quote;
+    document.getElementById('sDeliver').textContent = s.deliver;
+    document.getElementById('sPrice').textContent   = s.price;
+    if(sheet.showModal) sheet.showModal(); else sheet.setAttribute('open','');
+  }
+  document.getElementById('sShut').addEventListener('click', function(){ sheet.close(); });
+  sheet.addEventListener('click', function(e){ if(e.target === sheet) sheet.close(); });
+
+  var svcBtn = document.getElementById('svcToggle');
+  function setMode(m, push){
+    MODE = m;
+    svcBtn.setAttribute('aria-pressed', m === 'services' ? 'true' : 'false');
+    var projTab = document.getElementById('projTab');
+    if(m === 'services'){
+      projTab.closest('.mi').classList.remove('open');
+      projTab.setAttribute('aria-haspopup', 'false');
+      projTab.removeAttribute('aria-expanded');
+    }else{
+      projTab.setAttribute('aria-haspopup', 'true');
+      projTab.setAttribute('aria-expanded', 'false');
+    }
+    document.querySelector('.tagline').textContent = m === 'services'
+      ? 'Four things I build for other people.'
+      : "Everything I've shipped, in one pile.";
+    if(push) history.replaceState(null, '', m === 'services' ? '#services' : location.pathname);
+    paint();
+  }
+  svcBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(MODE !== 'services') setMode('services', true);
+  });
+
+  /* PROJECTS is the other tab. Clicking it while the services pile is showing
+     brings the projects back instead of opening the dropdown over the wrong
+     board. Captured on the menu so this runs before the dropdown's own handler,
+     which is bound to the button itself. */
+  document.querySelector('.menu').addEventListener('click', function(e){
+    if(MODE !== 'services') return;
+    if(!e.target.closest('#projTab')) return;
+    e.stopPropagation();
+    setMode('projects', true);
+  }, true);
+
+  if(location.hash === '#services') setMode('services', false);
 })();
 </script>
 </body>
