@@ -454,24 +454,54 @@ body{
     for(var d=deck.length-1; d>0; d--){
       var j = Math.floor(pick() * (d+1)), tmp = deck[d]; deck[d] = deck[j]; deck[j] = tmp;
     }
+    var items = [];
     for(var i=0;i<n;i++){
       var el = els[i], r = rng((el._seed ^ DEAL) >>> 0);
       var sc = size * (0.65 + r()*0.7);
       var cell = deck[i];
-      var x = (cell % cols + 0.5) * cellW + (pick() - 0.5) * cellW * 1.4 - sc/2;
-      var y = (Math.floor(cell / cols) + 0.5) * cellH + (pick() - 0.5) * cellH * 1.4 - sc*TALL/2;
-      /* every sticker stays fully on screen: the margin leaves room for its tilt and shadow */
-      var pad = 0.015*W + 0.12*sc;
-      x = Math.min(Math.max(x, pad), W - sc - pad);
-      y = Math.min(Math.max(y, pad*0.6), Math.max(pad*0.6, H - sc*TALL - pad*0.6));
+      /* wobble less when the sticker nearly fills its cell (phones), so none gets buried */
+      var jx = Math.max(0.5, Math.min(1.4, (cellW - sc*0.7)/cellW + 0.4));
+      var jy = Math.max(0.5, Math.min(1.4, (cellH - sc*TALL*0.7)/cellH + 0.4));
+      items.push({
+        el: el, r: r, w: sc, h: sc*TALL, pad: 0.015*W + 0.12*sc,
+        x: (cell % cols + 0.5) * cellW + (pick() - 0.5) * cellW * jx - sc/2,
+        y: (Math.floor(cell / cols) + 0.5) * cellH + (pick() - 0.5) * cellH * jy - sc*TALL/2
+      });
+    }
 
-      el.style.left  = 'calc(' + x.toFixed(1) + ' * var(--cs))';
-      el.style.top   = 'calc(' + y.toFixed(1) + ' * var(--cs))';
-      el.style.width = 'calc(' + sc.toFixed(1) + ' * var(--cs))';
-      el.style.setProperty('--sw', sc.toFixed(1));
+    /* every sticker stays fully on screen: the margin leaves room for its tilt and shadow */
+    function keep(s){
+      s.x = Math.min(Math.max(s.x, s.pad), W - s.w - s.pad);
+      s.y = Math.min(Math.max(s.y, s.pad*0.6), Math.max(s.pad*0.6, H - s.h - s.pad*0.6));
+    }
+    items.forEach(keep);
+
+    /* Overlap is fine, burying one is not: push apart any pair where more than a third
+       of the smaller sticker is covered. */
+    for(var pass=0; pass<60; pass++){
+      var moved = false;
+      for(var a=0;a<n;a++) for(var b=a+1;b<n;b++){
+        var A = items[a], B = items[b];
+        var ow = Math.min(A.x + A.w, B.x + B.w) - Math.max(A.x, B.x);
+        var oh = Math.min(A.y + A.h, B.y + B.h) - Math.max(A.y, B.y);
+        if(ow <= 0 || oh <= 0 || ow*oh / Math.min(A.w*A.h, B.w*B.h) < 0.33) continue;
+        moved = true;
+        if(ow < oh){ var sx = (A.x + A.w/2 < B.x + B.w/2 ? -1 : 1) * (ow/2 + 1); A.x += sx; B.x -= sx; }
+        else       { var sy = (A.y + A.h/2 < B.y + B.h/2 ? -1 : 1) * (oh/2 + 1); A.y += sy; B.y -= sy; }
+        keep(A); keep(B);
+      }
+      if(!moved) break;
+    }
+
+    items.forEach(function(s){
+      var el = s.el, r = s.r;
+      el.style.left  = 'calc(' + s.x.toFixed(1) + ' * var(--cs))';
+      el.style.top   = 'calc(' + s.y.toFixed(1) + ' * var(--cs))';
+      el.style.width = 'calc(' + s.w.toFixed(1) + ' * var(--cs))';
+      el.style.setProperty('--sw', s.w.toFixed(1));
       el.style.setProperty('--rot', (r()*50 - 25).toFixed(2) + 'deg');
       el.style.zIndex = String(2 + Math.floor(r()*12));
-    }
+    });
     return H;
   }
 
