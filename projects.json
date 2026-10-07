@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-10-06T12:19:32.497Z",
+  "generated": "2026-10-07T12:11:10.849Z",
   "projects": [
     {
       "slug": "ache",
@@ -93,6 +93,15 @@
       "status": "live"
     },
     {
+      "slug": "reposcout",
+      "host": "reposcout.radrebeldeveloper.com",
+      "name": "reposcout",
+      "tagline": "what to do with this repo",
+      "category": "chrome-extension",
+      "icon": "icons/reposcout.94db9dd4.png",
+      "status": "live"
+    },
+    {
       "slug": "rewordly",
       "host": "rewordly.radrebeldeveloper.com",
       "name": "rewordly",
@@ -116,7 +125,7 @@
       "name": "sift",
       "tagline": "comment triage",
       "category": "chrome-extension",
-      "icon": "icons/sift.59276b4b.png",
+      "icon": "icons/sift.adda5eb3.png",
       "status": "live"
     },
     {
