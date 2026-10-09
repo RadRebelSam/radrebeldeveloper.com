@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-10-09T12:11:58.972Z",
+  "generated": "2026-10-09T13:36:18.923Z",
   "projects": [
     {
       "slug": "ache",
@@ -36,15 +36,6 @@
       "tagline": "A crawler-maintained directory of Jev projects",
       "category": "directory",
       "icon": "icons/awesomejev.53e1ba38.svg",
-      "status": "live"
-    },
-    {
-      "slug": "awesomex",
-      "host": "awesomex.radrebeldeveloper.com",
-      "name": "awesome-x",
-      "tagline": "awesome lists that maintain themselves",
-      "category": "misc",
-      "icon": "icons/awesomex.8634426d.svg",
       "status": "live"
     },
     {

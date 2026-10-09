@@ -201,12 +201,20 @@ function detectCategory(html) {
 
 /* ------------------------------------------------------------------ probing */
 
+/* The slug for a target, whether it is a bare subdomain or a full
+   "host[/path]" out of extras.json. Lifted out of probe() so the extras loop
+   can tell a duplicate from a new host without paying for a probe first. */
+function slugOf(target) {
+  const external = target.includes('.');
+  const tail = target.split('/').filter(Boolean).pop() || target;
+  return (external && tail === target.split('/')[0] ? tail.split('.')[0] : tail).toLowerCase();
+}
+
 async function probe(target, named) {
   /* target is either a subdomain slug or a full "host[/path]" from extras.json */
   const external = target.includes('.');
   const host = external ? target : `${target}.${DOMAIN}`;
-  const tail = target.split('/').filter(Boolean).pop() || target;
-  const slug = (external && tail === target.split('/')[0] ? tail.split('.')[0] : tail).toLowerCase();
+  const slug = slugOf(target);
   const url = `https://${host}`;
   const base = { slug, host, name: slug, tagline: '', category: 'misc', icon: '', status: 'building' };
 
@@ -298,13 +306,23 @@ let extras = [];
 try { extras = (JSON.parse(await readFile(EXTRAS, 'utf8')).hosts || []); } catch {}
 
 const projects = [];
+const seen = new Set();
 for (const t of slugs) {
   const p = await probe(t, false);                    /* serial: be polite */
-  if (p) projects.push(p);
+  if (p && !seen.has(p.slug)) { seen.add(p.slug); projects.push(p); }
 }
 for (const t of extras) {
+  /* A subdomain named in extras.json while it was still unreachable starts
+     arriving from certificate transparency on the day it ships, and without
+     this it lands in the list twice - which is how awesome-x came to appear on
+     the home page twice. The discovered probe wins: it is the better record of
+     a host that is actually answering. */
+  if (seen.has(slugOf(t))) {
+    console.error(`extras: ${t} is already discovered as "${slugOf(t)}" - skipping the duplicate`);
+    continue;
+  }
   const p = await probe(t, true);                     /* named by hand: never dropped */
-  if (p) projects.push(p);
+  if (p && !seen.has(p.slug)) { seen.add(p.slug); projects.push(p); }
 }
 
 let overrides = {};
