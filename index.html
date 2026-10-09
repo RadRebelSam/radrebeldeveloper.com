@@ -305,6 +305,12 @@ dialog.sheet::backdrop{background:rgba(22,24,29,.42)}
   .foot{bottom:10px;font-size:10px}
 }
 </style>
+
+<!-- Pagemetry. Loaded deferred and at low priority so it never competes with
+     the page itself; data-cfasync keeps Cloudflare's Rocket Loader from
+     rewriting it. scan.mjs only rewrites the @generated:fallback block in
+     the body, so this tag survives a refresh. -->
+<script defer fetchpriority="low" data-cfasync="false" src="https://rest.pagemetry.com/v3/script?clientId=gkRmYtAUmAot7wzLEzbazG"></script>
 </head>
 <body>
 <main class="stage">
