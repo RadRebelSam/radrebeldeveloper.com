@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-10-07T13:14:40.856Z",
+  "generated": "2026-10-09T12:11:58.972Z",
   "projects": [
     {
       "slug": "ache",
@@ -36,6 +36,24 @@
       "tagline": "A crawler-maintained directory of Jev projects",
       "category": "directory",
       "icon": "icons/awesomejev.53e1ba38.svg",
+      "status": "live"
+    },
+    {
+      "slug": "awesomex",
+      "host": "awesomex.radrebeldeveloper.com",
+      "name": "awesome-x",
+      "tagline": "awesome lists that maintain themselves",
+      "category": "misc",
+      "icon": "icons/awesomex.8634426d.svg",
+      "status": "live"
+    },
+    {
+      "slug": "awesomex",
+      "host": "awesomex.radrebeldeveloper.com",
+      "name": "awesome-x",
+      "tagline": "awesome lists that maintain themselves",
+      "category": "misc",
+      "icon": "icons/awesomex.8634426d.svg",
       "status": "live"
     },
     {
@@ -172,15 +190,6 @@
       "category": "chrome-extension",
       "icon": "icons/worth.b194affd.png",
       "status": "live"
-    },
-    {
-      "slug": "awesomex",
-      "host": "awesomex.radrebeldeveloper.com",
-      "name": "awesomex",
-      "tagline": "Not live yet.",
-      "category": "misc",
-      "icon": "",
-      "status": "building"
     },
     {
       "slug": "nexusauditor",
