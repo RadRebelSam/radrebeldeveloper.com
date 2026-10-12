@@ -1,0 +1,6 @@
+# deploy.sh runs on an Ubuntu runner: a CRLF line ending there is a syntax error,
+# so text files are normalised to LF regardless of what Windows checks them out as.
+* text=auto eol=lf
+*.jpg binary
+*.png binary
+*.ico binary

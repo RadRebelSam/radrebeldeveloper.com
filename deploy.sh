@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+# Uploads the site to Hostinger. Nothing is built - these files are the site.
+#
+#   FTP (shared hosting):
+#     FTP_HOST=ftp.radrebeldeveloper.com FTP_USER=uXXXXXXXX FTP_DIR=/public_html \
+#     ./deploy.sh ftp
+#
+#   SSH (VPS, or shared plans with SSH):
+#     SSH_TARGET=root@1.2.3.4 SSH_DIR=/var/www/radrebeldeveloper.com ./deploy.sh ssh
+#
+# The password / passphrase is never passed on the command line: FTP reads it
+# from the FTP_PASS environment variable and hands it to curl over stdin, SSH
+# uses your key. Set FTP_PASS in the shell for one command only:
+#
+#     FTP_PASS='…' FTP_HOST=… FTP_USER=… ./deploy.sh ftp
+#
+set -euo pipefail
+cd "$(dirname "$0")"
+
+# What actually gets served. scan.mjs, overrides.json, extras.json and README.md
+# stay on your machine - they are the toolchain, not the site.
+FILES=(index.html projects.json)
+DIRS=(icons assets)
+
+mode="${1:-}"
+
+case "$mode" in
+  ftp)
+    : "${FTP_HOST:?set FTP_HOST}"
+    : "${FTP_USER:?set FTP_USER}"
+    : "${FTP_PASS:?set FTP_PASS (for this command only)}"
+    # Host panels state the host in whatever form they like - bare, with an
+    # ftp:// on the front, sometimes with a trailing path. Reduce it to a
+    # hostname before building a URL out of it, or curl ends up resolving "ftp".
+    host="${FTP_HOST#*://}"; host="${host%%/*}"
+    case "$FTP_HOST" in
+      sftp://*) echo "that is an SFTP address - use ./deploy.sh ssh instead" >&2; exit 2 ;;
+    esac
+    port="${FTP_PORT:-21}"
+    case "$host" in
+      *:*) port="${host##*:}"; host="${host%%:*}" ;;      # host carried its own port
+    esac
+    # An FTP account is often already rooted at the folder it may write to, in
+    # which case the remote path is just "/". Normalise whatever is given: one
+    # leading slash, no trailing one, so "public_html/" and "/public_html" and
+    # "/" all build the same URL.
+    dir="${FTP_DIR:-/public_html}"
+    dir="/${dir#/}"; dir="${dir%/}"
+    base="ftp://${host}:${port}${dir}"
+
+    # Explicit FTPS is required: an FTP password crossing the wire in clear text
+    # is not worth the convenience. Shared hosts often present a certificate for
+    # their own server name rather than yours, so FTP_INSECURE=1 keeps the
+    # connection encrypted but stops verifying who is on the other end - worse
+    # than a matching certificate, far better than plain FTP.
+    tls="--ssl-reqd"
+    [ "${FTP_INSECURE:-}" = "1" ] && tls="--ssl-reqd --insecure"
+
+    # Refuse to invent a directory tree. --ftp-create-dirs below will happily
+    # create whatever path it is given, so if FTP_DIR is wrong the upload would
+    # silently build a stray site somewhere instead of failing. List the target
+    # first: no such directory, no upload.
+    if curl $tls --disable-epsv -sS --fail --list-only "$base/" -o /dev/null --config - <<CFG
+user = "${FTP_USER}:${FTP_PASS}"
+CFG
+    then :; else
+      code=$?
+      case $code in
+        6)  echo "no such host: ${host} - hPanel states the FTP host on Files -> FTP Accounts" >&2 ;;
+        60) echo "the certificate at ${host} is for another name. Use the server's own hostname (hPanel shows it, typically srvNNNN.hstgr.io), or set FTP_INSECURE=1 to keep TLS without verifying it" >&2 ;;
+        67) echo "the server rejected ${FTP_USER} - check FTP_USER and FTP_PASS" >&2 ;;
+        9)  echo "the server will not open ${dir:-/} - set FTP_DIR to the 'Folder to upload files' hPanel states; an account rooted at its own site wants FTP_DIR=/" >&2 ;;
+        *)  echo "cannot reach ${dir:-/} on ${host}:${port} (curl $code)" >&2 ;;
+      esac
+      exit 1
+    fi
+
+    upload() {   # upload <local> <remote-path>
+      curl $tls --ftp-create-dirs --disable-epsv -sS --fail \
+           -T "$1" "$base/$2" --config - <<CFG
+user = "${FTP_USER}:${FTP_PASS}"
+CFG
+      echo "  ↑ $2"
+    }
+
+    for f in "${FILES[@]}"; do upload "$f" "$f"; done
+    for d in "${DIRS[@]}"; do
+      [ -d "$d" ] || continue
+      while IFS= read -r f; do upload "$f" "$f"; done < <(find "$d" -type f)
+    done
+    ;;
+
+  ssh)
+    : "${SSH_TARGET:?set SSH_TARGET, e.g. root@1.2.3.4}"
+    : "${SSH_DIR:?set SSH_DIR, e.g. /var/www/radrebeldeveloper.com}"
+
+    if command -v rsync >/dev/null 2>&1; then
+      rsync -av --delete-after \
+        "${FILES[@]}" "${DIRS[@]}" "${SSH_TARGET}:${SSH_DIR}/"
+    else
+      scp -r "${FILES[@]}" "${DIRS[@]}" "${SSH_TARGET}:${SSH_DIR}/"
+    fi
+    ;;
+
+  *)
+    echo "usage: ./deploy.sh ftp|ssh" >&2
+    exit 2
+    ;;
+esac
+
+echo "done - if the page looks stale, purge the cache in hPanel (Websites → Advanced → Cache Manager)."

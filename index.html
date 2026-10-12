@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#F7F6F2">
+<title>RadRebelDeveloper</title>
+<meta name="description" content="A sticker board of everything RadRebelDeveloper has shipped. Drag them around.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F6F2;
+  --ink:#16181D;
+  --ink-soft:#33343A;
+  --muted:#6E6E73;
+  --meta:#7A7A7E;
+  --rule:rgba(22,24,29,.10);
+  --live:#3E9B63;                 /* shipped: it has a favicon of its own */
+  --wip:#C4C4C9;                  /* still being built */
+}
+*{box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--paper);margin:0}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;color:var(--ink);
+}
+
+/* ---------- stage: one scaling system for the whole composition ---------- */
+.stage{
+  --u : min(calc(100vw / 1280), calc(100vh / 600));
+  --cu: max(calc(100vw / 1280), calc(100vh / 940));
+  position:fixed;inset:0;overflow:hidden;background:var(--paper);isolation:isolate;
+}
+
+/* ---------- the board ---------- */
+.collage{
+  --cs:calc(var(--cu) * var(--fit, 1));
+  position:absolute;left:50%;
+  top:calc(240 * var(--u));
+  width:calc(1280 * var(--cs));
+  transform:translateX(-50%);
+  z-index:3;      /* above the header: a sticker dragged up there stays on top and grabbable */
+}
+
+/* A sticker is the project's own logo, die-cut: no card, no panel behind it.
+   The white stroke is the cut line; the caption is printed under it. */
+.st{
+  position:absolute;display:block;text-decoration:none;
+  border:0;padding:0;background:none;font:inherit;color:inherit;  /* a service sticker is a button */
+  transform-origin:50% 42%;
+  transform:translate(calc(var(--ox,0) * var(--cs)),calc(var(--oy,0) * var(--cs))) rotate(var(--rot));
+  filter:drop-shadow(0 calc(5 * var(--cs)) calc(14 * var(--cs)) rgba(20,24,40,.18));
+  -webkit-user-select:none;user-select:none;-webkit-user-drag:none;
+  touch-action:none;scale:1;
+  transition:scale .18s cubic-bezier(.2,.8,.2,1), filter .18s cubic-bezier(.2,.8,.2,1);
+}
+.st svg{display:block;width:100%;height:auto;pointer-events:none}
+.cap{
+  display:block;text-align:center;pointer-events:none;
+  margin-top:calc(var(--sw) * var(--cs) * 0.03);
+}
+.cap b{
+  display:block;font-weight:800;color:var(--ink);
+  font-size:calc(var(--sw) * var(--cs) * 0.085);
+  letter-spacing:-.02em;line-height:1.05;
+}
+.cap i{
+  display:block;font-style:normal;font-weight:600;color:var(--meta);
+  font-size:calc(var(--sw) * var(--cs) * 0.037);
+  letter-spacing:.17em;line-height:1.7;
+}
+.stage.ready .st{cursor:grab}
+.stage.ready .st:hover{scale:1.035}
+.stage.ready .st.held{cursor:grabbing;scale:1.07;
+  filter:drop-shadow(0 calc(16 * var(--cs)) calc(32 * var(--cs)) rgba(20,24,40,.28))}
+.st:focus-visible{outline:none;filter:drop-shadow(0 0 calc(3 * var(--cs)) var(--ink))}
+
+/* ---------- header ---------- */
+.head{
+  position:absolute;top:0;left:50%;width:calc(1078 * var(--u));
+  height:calc(236 * var(--u));transform:translateX(-50%);z-index:2;
+}
+.brand{position:absolute;left:0;top:calc(66 * var(--u))}
+.lock{display:flex;align-items:center;gap:calc(14 * var(--u))}
+.chip{
+  width:calc(112 * var(--u));height:calc(112 * var(--u));flex:none;display:block;
+  border-radius:calc(31 * var(--u));object-fit:cover;
+}
+.word{
+  font-size:calc(31 * var(--u));line-height:1;font-weight:800;letter-spacing:calc(-.035 * 31 * var(--u));
+  color:var(--ink);white-space:nowrap;
+}
+.word em{font-style:normal;font-weight:500;color:var(--muted)}
+.tagline{
+  margin:calc(18 * var(--u)) 0 0 calc(130 * var(--u));
+  font-size:calc(12.4 * var(--u));line-height:1;font-weight:400;color:var(--muted);white-space:nowrap;
+}
+
+/* A menu bar, not a directory: two buttons that each open a panel, so the header
+   stays one line and the board gets the room. */
+.head:has(.mi.open){z-index:4}      /* an open menu still sits over the stickers */
+.menu{position:absolute;right:0;top:calc(104 * var(--u));display:flex;gap:calc(10 * var(--u))}
+.mi{position:relative}
+.mt{
+  appearance:none;font:inherit;cursor:pointer;text-decoration:none;
+  display:flex;align-items:center;gap:calc(9 * var(--u));white-space:nowrap;
+  padding:calc(10 * var(--u)) calc(16 * var(--u));
+  font-size:calc(11.4 * var(--u));font-weight:700;
+  letter-spacing:calc(.09 * 11.4 * var(--u));color:var(--ink-soft);
+  background:transparent;border:1px solid var(--rule);border-radius:999px;
+  transition:color .18s ease, border-color .18s ease, background-color .18s ease;
+}
+.mt:hover{color:var(--ink);border-color:rgba(22,24,29,.28)}
+.mi.open .mt,
+.mt[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+/* ---------- a service sticker: same cut, no logo, the name set inside ---------- */
+dialog.sheet{
+  --u : min(calc(100vw / 1280), calc(100vh / 600));
+  border:0;padding:0;background:transparent;
+  width:calc(520 * var(--u));max-width:calc(100vw - 32 * var(--u));
+}
+dialog.sheet::backdrop{background:rgba(22,24,29,.42)}
+.sheet .box{
+  background:#FFFFFF;border:1px solid var(--rule);border-radius:calc(20 * var(--u));
+  padding:calc(34 * var(--u)) calc(34 * var(--u)) calc(28 * var(--u));
+  box-shadow:0 calc(30 * var(--u)) calc(80 * var(--u)) rgba(20,24,40,.22);
+}
+.sheet h2{
+  margin:0;font-size:calc(11.4 * var(--u));font-weight:700;
+  letter-spacing:calc(.1 * 11.4 * var(--u));text-transform:uppercase;color:var(--live);
+}
+.sheet .quote{
+  margin:calc(18 * var(--u)) 0 0;font-size:calc(23 * var(--u));line-height:1.3;
+  font-weight:600;letter-spacing:calc(-.024 * 23 * var(--u));color:var(--ink);
+}
+.sheet .lab{
+  margin:calc(26 * var(--u)) 0 0;font-size:calc(9.6 * var(--u));font-weight:700;
+  letter-spacing:calc(.12 * 9.6 * var(--u));text-transform:uppercase;color:var(--meta);
+}
+.sheet .deliver{
+  margin:calc(10 * var(--u)) 0 0;font-size:calc(14.5 * var(--u));line-height:1.5;color:var(--ink-soft);
+}
+.sheet .price{margin:calc(24 * var(--u)) 0 0;font-size:calc(15 * var(--u));font-weight:700;color:var(--ink)}
+.sheet .acts{margin:calc(28 * var(--u)) 0 0;display:flex;gap:calc(10 * var(--u))}
+.sheet .go{
+  flex:1;text-align:center;padding:calc(13 * var(--u)) calc(18 * var(--u));border-radius:999px;
+  background:var(--ink);color:var(--paper);text-decoration:none;
+  font-size:calc(13 * var(--u));font-weight:700;
+}
+.sheet .shut{
+  appearance:none;font:inherit;cursor:pointer;
+  padding:calc(13 * var(--u)) calc(18 * var(--u));border-radius:999px;
+  background:transparent;border:1px solid var(--rule);color:var(--ink-soft);
+  font-size:calc(13 * var(--u));font-weight:600;
+}
+.sheet .shut:hover{border-color:rgba(22,24,29,.28);color:var(--ink)}
+.sheet .alt{display:block;margin:calc(16 * var(--u)) 0 0;text-align:center;
+  font-size:calc(12.5 * var(--u));font-weight:600;color:var(--ink-soft);
+  text-decoration:underline;text-underline-offset:3px}
+.sheet .alt:hover{color:var(--ink)}
+.sheet .alt[hidden]{display:none}
+.chev{width:calc(9 * var(--u));height:calc(9 * var(--u));flex:none;
+  transition:transform .2s cubic-bezier(.2,.8,.2,1)}
+/* On the services pile, PROJECTS is a tab rather than a menu, so it drops the
+   chevron that would promise a panel it is not going to open. */
+.mt[aria-haspopup="false"] .chev{display:none}
+.mi.open .chev{transform:rotate(180deg)}
+
+.mp{
+  position:absolute;top:calc(100% + 10 * var(--u));right:0;z-index:6;
+  min-width:calc(236 * var(--u));padding:calc(8 * var(--u));
+  background:#FFFFFF;border:1px solid var(--rule);border-radius:calc(16 * var(--u));
+  box-shadow:0 calc(18 * var(--u)) calc(40 * var(--u)) rgba(20,24,40,.16);
+  opacity:0;transform:translateY(calc(-6 * var(--u))) scale(.985);transform-origin:100% 0;
+  pointer-events:none;
+  transition:opacity .17s ease, transform .17s cubic-bezier(.2,.8,.2,1);
+  /* the list grows with the work; it stops above the footer's rule and scrolls
+     the rest, rather than crossing a line the page has already drawn */
+  max-height:var(--mp-max, 60vh);
+  overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-color:rgba(22,24,29,.22) transparent;
+}
+.mp::-webkit-scrollbar{width:calc(9 * var(--u))}
+.mp::-webkit-scrollbar-thumb{
+  background:rgba(22,24,29,.22);border-radius:999px;
+  border:calc(3 * var(--u)) solid #FFFFFF;
+}
+.mp::-webkit-scrollbar-track{background:transparent}
+.mi.open .mp{opacity:1;transform:none;pointer-events:auto}
+.mp a{
+  display:flex;align-items:center;gap:calc(10 * var(--u));
+  padding:calc(10 * var(--u)) calc(12 * var(--u));border-radius:calc(10 * var(--u));
+  font-size:calc(12.4 * var(--u));line-height:1.2;color:var(--muted);text-decoration:none;
+  transition:background-color .14s ease, color .14s ease;
+}
+.mp a:hover,.mp a:focus-visible{background:rgba(22,24,29,.055);color:var(--ink);outline:none}
+.mp .dot{width:calc(6 * var(--u));height:calc(6 * var(--u));flex:none;border-radius:50%;
+  background:var(--wip)}
+.mp .dot.live{background:var(--live)}
+.mp .k{margin-left:auto;font-size:calc(9.2 * var(--u));font-weight:600;
+  letter-spacing:calc(.14 * 9.2 * var(--u));color:var(--meta)}
+.mg{
+  padding:calc(12 * var(--u)) calc(12 * var(--u)) calc(6 * var(--u));
+  font-size:calc(9.2 * var(--u));font-weight:700;
+  letter-spacing:calc(.16 * 9.2 * var(--u));color:var(--meta);
+}
+.mg + a{margin-top:0}
+.mp > .mg:first-child{padding-top:calc(6 * var(--u))}
+.mp > .mg:not(:first-child){
+  margin-top:calc(6 * var(--u));border-top:1px solid var(--rule);
+  padding-top:calc(12 * var(--u));
+}
+
+.foot{
+  position:absolute;left:50%;bottom:calc(30 * var(--u));width:calc(1078 * var(--u));
+  transform:translateX(-50%);
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:calc(11.8 * var(--u));line-height:1;color:var(--meta);white-space:nowrap;z-index:3;
+}
+.foot::before{
+  content:"";position:absolute;left:0;right:0;top:calc(-19 * var(--u));
+  height:1px;background:var(--rule);
+}
+
+/* ---------- entrance ---------- */
+@keyframes riseMask{
+  from{opacity:0;transform:translateY(100%);clip-path:inset(0 -4% 0 -4%)}
+  to  {opacity:1;transform:translateY(0);clip-path:inset(-70% -4% -70% -4%)}
+}
+@keyframes softRise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes settle{
+  from{opacity:0;transform:translateY(20px) scale(.97) rotate(var(--rot))}
+  to  {opacity:1;transform:translateY(0) scale(1) rotate(var(--rot))}
+}
+.lock    {animation:riseMask .9s cubic-bezier(.16,1,.3,1) .08s backwards}
+.tagline {animation:riseMask .7s cubic-bezier(.16,1,.3,1) .34s backwards}
+.mt,.foot{animation:softRise .55s cubic-bezier(.22,1,.36,1) backwards}
+.mi:nth-child(1) .mt{animation-delay:.52s}
+.mi:nth-child(2) .mt{animation-delay:.60s}
+.foot{animation-duration:.62s;animation-delay:1.02s}
+.st{animation:settle .95s cubic-bezier(.19,1,.22,1) backwards;
+    animation-delay:calc(.44s + var(--seq) * .07s)}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important}
+  .lock,.tagline,.mt,.foot,.st{animation:none}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:1199.98px),(orientation:portrait){
+  .stage{--cu:max(calc(100vw / 1240), calc(100vh / 1500));display:block}
+  .head{position:static;transform:none;width:100%;height:auto;
+        padding:clamp(28px,6vh,74px) clamp(24px,4.6vw,70px) 0;
+        display:flex;flex-wrap:wrap;align-items:flex-start;
+        column-gap:clamp(28px,5vw,88px);row-gap:clamp(22px,3.4vh,44px)}
+  .brand{position:static;flex:0 1 auto;min-width:0}
+  .chip{width:clamp(76px,7.8vw,112px);height:clamp(76px,7.8vw,112px);border-radius:28px}
+  .lock{gap:clamp(11px,1.1vw,14px)}
+  .word{font-size:clamp(23px,2.5vw,31px);letter-spacing:-.035em}
+  .tagline{margin:clamp(10px,1.4vh,16px) 0 0 0;font-size:clamp(11.6px,1.05vw,12.6px);white-space:normal}
+  .menu{position:static;margin-left:auto;gap:10px}
+  .mt{padding:10px 16px;font-size:clamp(10.8px,1.05vw,11.4px);letter-spacing:.09em;gap:9px}
+  .chev{width:10px;height:10px}
+  .mp{min-width:236px;padding:8px;border-radius:16px;top:calc(100% + 10px)}
+  .mp a{padding:10px 12px;border-radius:10px;font-size:clamp(11.6px,1.05vw,12.6px);gap:10px}
+  .mp .dot{width:6px;height:6px}
+  .mp .k{font-size:9.2px;letter-spacing:.14em}
+  .mg{padding:12px 12px 6px;font-size:9.2px;letter-spacing:.16em}
+  .mp > .mg:first-child{padding-top:6px}
+  .mp > .mg:not(:first-child){margin-top:6px;padding-top:12px}
+  .foot{left:0;right:0;width:auto;transform:none;bottom:clamp(16px,2.6vh,30px);
+        padding:0 clamp(24px,4.6vw,70px);font-size:clamp(11px,1vw,12px)}
+  .foot::before{left:clamp(24px,4.6vw,70px);right:clamp(24px,4.6vw,70px);top:-14px}
+}
+@media (max-width:559.98px){
+  .stage{--cu:max(calc(100vw / 760), calc(100dvh / 1800));height:100dvh}
+  .head{padding:clamp(26px,6vh,70px) max(7vw,env(safe-area-inset-right)) 0 max(7vw,env(safe-area-inset-left));
+        row-gap:clamp(24px,4.6vh,54px);column-gap:0}
+  .brand{flex:0 0 100%}
+  .word{font-size:clamp(22px,6.4vw,30px)}
+  .tagline{font-size:clamp(11.8px,3.1vw,13.2px)}
+  .menu{margin-left:0;flex:0 0 100%;gap:8px}
+  .mi{flex:1 1 0;min-width:0}
+  .mt{width:100%;justify-content:center;padding:11px 10px;font-size:clamp(10px,2.7vw,11.4px)}
+  .mp{left:0;right:0;min-width:0}
+  .foot{padding:0 max(7vw,env(safe-area-inset-left));font-size:clamp(10.6px,2.7vw,12px)}
+  .foot::before{left:max(7vw,env(safe-area-inset-left));right:max(7vw,env(safe-area-inset-right))}
+}
+@media (max-width:1199.98px) and (max-height:560px) and (min-aspect-ratio:1/1){
+  .stage{--cu:max(calc(100vw / 1280), calc(100vh / 1560))}
+  .head{padding:12px 5vw 0;row-gap:12px}
+  .brand{flex:0 1 auto}
+  .word{font-size:20px}.chip{width:62px;height:62px;border-radius:18px}
+  .tagline{margin-top:6px;font-size:11px}
+  .menu{margin-left:auto;gap:8px}
+  .mt{padding:7px 12px;font-size:10px}
+  .mp{min-width:210px}
+  .foot{bottom:10px;font-size:10px}
+}
+</style>
+
+<!-- Pagemetry. Loaded deferred and at low priority so it never competes with
+     the page itself; data-cfasync keeps Cloudflare's Rocket Loader from
+     rewriting it. scan.mjs only rewrites the @generated:fallback block in
+     the body, so this tag survives a refresh. -->
+<script defer fetchpriority="low" data-cfasync="false" src="https://rest.pagemetry.com/v3/script?clientId=gkRmYtAUmAot7wzLEzbazG"></script>
+</head>
+<body>
+<main class="stage">
+  <div class="collage" id="collage"></div>
+
+  <header class="head">
+    <div class="brand">
+      <div class="lock">
+        <img class="chip" src="assets/logo.svg" alt="RadRebelDeveloper" width="112" height="112">
+        <span class="word">RadRebel<em>Developer</em></span>
+      </div>
+      <p class="tagline">Everything I've shipped, in one pile.</p>
+    </div>
+
+    <nav class="menu" aria-label="Site">
+      <div class="mi">
+        <button class="mt" type="button" id="svcToggle" aria-pressed="false">SERVICES</button>
+      </div>
+
+      <div class="mi">
+        <button class="mt" type="button" aria-expanded="false" aria-haspopup="true"
+                aria-controls="mProjects" id="projTab">PROJECTS
+          <svg class="chev" viewBox="0 0 10 10" aria-hidden="true">
+            <path d="M2 4l3 3 3-3" fill="none" stroke="currentColor"
+                  stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="mp" id="mProjects" role="menu"></div>
+      </div>
+
+      <div class="mi">
+        <button class="mt" type="button" aria-expanded="false" aria-haspopup="true"
+                aria-controls="mElsewhere">ELSEWHERE
+          <svg class="chev" viewBox="0 0 10 10" aria-hidden="true">
+            <path d="M2 4l3 3 3-3" fill="none" stroke="currentColor"
+                  stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="mp" id="mElsewhere" role="menu">
+          <a role="menuitem" href="https://x.com/RadRebelDev" target="_blank" rel="noopener">X<span class="k">RADREBELDEV</span></a>
+          <a role="menuitem" href="https://github.com/RadRebelSam" target="_blank" rel="noopener">GitHub<span class="k">RADREBELSAM</span></a>
+          <a role="menuitem" href="mailto:contact@radrebeldeveloper.com">Email<span class="k">CONTACT@</span></a>
+        </div>
+      </div>
+    </nav>
+
+  </header>
+
+  <footer class="foot">
+    <span>RadRebelDeveloper &copy; 2026</span>
+    <span>Build in public.</span>
+  </footer>
+</main>
+
+<dialog class="sheet" id="sheet">
+  <div class="box">
+    <h2 id="sTitle"></h2>
+    <p class="quote" id="sQuote"></p>
+    <p class="lab">What you get</p>
+    <p class="deliver" id="sDeliver"></p>
+    <p class="price" id="sPrice"></p>
+    <div class="acts">
+      <a class="go" href="mailto:contact@radrebeldeveloper.com">Start a conversation</a>
+      <button class="shut" type="button" id="sShut">Close</button>
+    </div>
+    <a class="alt" id="sIntake" href="#" target="_blank" rel="noopener" hidden>Or start the project intake</a>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------------- data ----------------
+     Inline copy so the file still works opened straight from disk (file:// blocks
+     fetch). projects.json is the live source and wins whenever it can be fetched.
+     Both are written by scan.mjs - don't hand-edit the block below. */
+  /* @generated:fallback - rewritten by scan.mjs, do not edit by hand */
+  var FALLBACK = {projects:[
+    {"slug":"ache","host":"ache.radrebeldeveloper.com","name":"ache","tagline":"demand finder","category":"chrome-extension","icon":"icons/ache.982a3428.png","status":"live"},
+    {"slug":"ai-web-activity-monitor","host":"github.com/RadRebelSam/ai-web-activity-monitor","name":"ai-web-activity-monitor","tagline":"A Tampermonkey userscript that monitors your web browsing…","category":"misc","icon":"icons/github.1bedd6a1.png","status":"live"},
+    {"slug":"ai4all-20c-darkpatterns","host":"radrebelsam.github.io/ai4all-20c-darkpatterns","name":"darkpatterns","tagline":"Detecting manipulative e-commerce language","category":"misc","icon":"icons/github.1bedd6a1.png","status":"live"},
+    {"slug":"awesomejev","host":"awesomejev.radrebeldeveloper.com","name":"awesome-jev","tagline":"A crawler-maintained directory of Jev projects","category":"directory","icon":"icons/awesomejev.53e1ba38.svg","status":"live"},
+    {"slug":"awesomex","host":"awesomex.radrebeldeveloper.com","name":"awesome-x","tagline":"awesome lists that maintain themselves","category":"misc","icon":"icons/awesomex.8634426d.svg","status":"live"},
+    {"slug":"bouncer","host":"bouncer.radrebeldeveloper.com","name":"bouncer","tagline":"reading triage","category":"chrome-extension","icon":"icons/bouncer.ea658d5e.png","status":"live"},
+    {"slug":"catch","host":"catch.radrebeldeveloper.com","name":"catch","tagline":"pricing page and terms check","category":"chrome-extension","icon":"icons/catch.53d01ae2.png","status":"live"},
+    {"slug":"clawconnected","host":"clawconnected.com","name":"clawconnected","tagline":"The OpenClaw Agent-to-Agent Freelance Gig Marketplace","category":"saas","icon":"icons/clawconnected.24b1b715.jpg","status":"live"},
+    {"slug":"decoder","host":"decoder.radrebeldeveloper.com","name":"decoder","tagline":"what social posts really mean","category":"chrome-extension","icon":"icons/decoder.4102b8f5.png","status":"live"},
+    {"slug":"jevdecisionlab","host":"jevdecisionlab.radrebeldeveloper.com","name":"jev-decisionlab","tagline":"A live benchmark showing where deterministic rules stop and Jev…","category":"misc","icon":"icons/jevdecisionlab.5907a19a.png","status":"live"},
+    {"slug":"motionsites-demo","host":"github.com/RadRebelSam/motionsites-demo","name":"motionsites-demo","tagline":"","category":"misc","icon":"icons/github.1bedd6a1.png","status":"live"},
+    {"slug":"reposcout","host":"reposcout.radrebeldeveloper.com","name":"reposcout","tagline":"what to do with this repo","category":"chrome-extension","icon":"icons/reposcout.94db9dd4.png","status":"live"},
+    {"slug":"rewordly","host":"rewordly.radrebeldeveloper.com","name":"rewordly","tagline":"swap words on any page","category":"chrome-extension","icon":"icons/rewordly.86720efb.png","status":"live"},
+    {"slug":"ricksanchez","host":"ricksanchez.radrebeldeveloper.com","name":"ricksanchez","tagline":"Rick and Morty season hub","category":"site","icon":"icons/ricksanchez.9c8bd75e.png","status":"live"},
+    {"slug":"sift","host":"sift.radrebeldeveloper.com","name":"sift","tagline":"comment triage","category":"chrome-extension","icon":"icons/sift.adda5eb3.png","status":"live"},
+    {"slug":"swipe","host":"swipe.radrebeldeveloper.com","name":"swipe","tagline":"swipe file that judges what you save","category":"chrome-extension","icon":"icons/swipe.66b38f0d.png","status":"live"},
+    {"slug":"true-me-in-browser","host":"github.com/RadRebelSam/true-me-in-browser","name":"true-me-in-browser","tagline":"A privacy-first web application that analyzes your browser…","category":"misc","icon":"icons/github.1bedd6a1.png","status":"live"},
+    {"slug":"videomark","host":"github.com/RadRebelSam/videomark","name":"videomark","tagline":"Add transparent animated video watermark to your video.","category":"misc","icon":"icons/github.1bedd6a1.png","status":"live"},
+    {"slug":"whichjudge","host":"whichjudge.dev","name":"whichjudge","tagline":"which model for this decision","category":"misc","icon":"icons/whichjudge.83acd6fd.svg","status":"live"},
+    {"slug":"worth","host":"worth.radrebeldeveloper.com","name":"worth","tagline":"job and event checker","category":"chrome-extension","icon":"icons/worth.b194affd.png","status":"live"},
+    {"slug":"nexusauditor","host":"nexusauditor.radrebeldeveloper.com","name":"nexusauditor","tagline":"Not serving yet (HTTP 403).","category":"misc","icon":"","status":"building"},
+    {"slug":"synapsecanvas","host":"synapsecanvas.radrebeldeveloper.com","name":"synapsecanvas","tagline":"Not serving yet (HTTP 403).","category":"misc","icon":"","status":"building"}
+  ]};
+  /* @end:fallback */
+
+  var CATEGORY = {
+    "chrome-extension":"CHROME EXTENSION",
+    "obsidian-plugin" :"OBSIDIAN PLUGIN",
+    "saas"            :"SAAS",
+    "skill"           :"CLAUDE SKILL",
+    "directory"       :"DIRECTORY",
+    "site"            :"SITE",
+    "misc"            :"MISCELLANEOUS"
+  };
+
+  /* ---------------- deterministic randomness ----------------
+     Every cut is derived from the slug, so a sticker looks identical on every
+     load and a NEW project gets its own shape without anyone drawing it. */
+  function hash(str){
+    var h = 2166136261 >>> 0;
+    for(var i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h,16777619) >>> 0; }
+    return h >>> 0;
+  }
+  function rng(seed){
+    var s = (seed || 1) >>> 0;
+    return function(){ s ^= s<<13; s>>>=0; s ^= s>>>17; s ^= s<<5; s>>>=0; return s/4294967296; };
+  }
+
+  /* ---------------- the cut ----------------
+     One closed path per sticker, cut freehand around the logo: a ring of radii
+     wobbled by the slug's own noise, so no two projects are cut the same way and
+     none of them reads as a rounded-rectangle template. */
+  var S = 300, C = 150;
+
+  function fx(n){ return Math.round(n*10)/10; }
+
+  function cut(seed){
+    var r = rng(seed);
+    var pts  = 7 + Math.floor(r()*4);        /* 7–10 corners */
+    var hard = r() < 0.45;                   /* some cut sharp, some cut soft */
+    var wob  = hard ? 0.06 : 0.13;
+    var spin = r() * Math.PI * 2;
+    var P = [];
+
+    for(var i=0;i<pts;i++){
+      var a = spin + (i/pts) * Math.PI * 2;
+      var rad = 133 * (1 - wob/2 + r()*wob);
+      P.push([C + Math.cos(a)*rad, C + Math.sin(a)*rad]);
+    }
+
+    /* Catmull-Rom through those points, emitted as cubics: one closed smooth cut. */
+    var t = hard ? 0.16 : 0.42;              /* tension = how round the corners are */
+    var d = 'M' + fx(P[0][0]) + ' ' + fx(P[0][1]);
+    for(var j=0;j<pts;j++){
+      var p0 = P[(j-1+pts)%pts], p1 = P[j], p2 = P[(j+1)%pts], p3 = P[(j+2)%pts];
+      d += 'C' + fx(p1[0] + (p2[0]-p0[0])*t/3) + ' ' + fx(p1[1] + (p2[1]-p0[1])*t/3) +
+           ' '  + fx(p2[0] - (p3[0]-p1[0])*t/3) + ' ' + fx(p2[1] - (p3[1]-p1[1])*t/3) +
+           ' '  + fx(p2[0]) + ' ' + fx(p2[1]);
+    }
+    return d + 'Z';
+  }
+
+  function esc(s){
+    return String(s).replace(/[&<>"]/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; });
+  }
+
+  /* ---------------- one sticker ---------------- */
+  function sticker(p,i){
+    var seed = hash(p.slug || p.host);
+    var d    = cut(seed);
+    var id   = 'cut-' + (p.slug || i);
+    var name = p.name || p.slug;
+
+    var a = document.createElement('a');
+    a.className = 'st';
+    a.href = 'https://' + p.host;
+    a.rel  = 'noopener';
+    a.target = '_blank';
+    a.setAttribute('aria-label', name + ' - ' + (CATEGORY[p.category] || '').toLowerCase() +
+                                 ' - ' + (p.tagline || ''));
+    a.setAttribute('title', p.tagline || p.host);
+    a.style.setProperty('--seq', i);
+
+    a.innerHTML =
+      '<svg viewBox="0 0 '+S+' '+S+'" aria-hidden="true">'+
+        '<defs><clipPath id="'+id+'"><path d="'+d+'"/></clipPath></defs>'+
+        /* the white cut line goes down first; the logo then covers its inner half */
+        '<path d="'+d+'" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26" stroke-linejoin="round"/>'+
+        '<g clip-path="url(#'+id+')">'+
+          '<image href="'+esc(p.icon)+'" x="0" y="0" width="'+S+'" height="'+S+'" '+
+            'preserveAspectRatio="xMidYMid slice"/>'+
+        '</g>'+
+      '</svg>'+
+      '<span class="cap"><b>'+esc(name)+'</b><i>'+esc(CATEGORY[p.category] || CATEGORY.misc)+'</i></span>';
+
+    a._seed = seed;
+    return a;
+  }
+
+  /* ---------------- layout ----------------
+     Reference space is 1280 wide and every number is multiplied by --cs at paint
+     time, so the pile scales as one object and a moved sticker keeps its place. */
+  function layout(els, H){
+    var n = els.length;
+    if(!n) return 0;
+
+    var W = 1280, TALL = 1.21;                     /* TALL = logo + its caption */
+    /* H is the arena: the band between the tagline and the footer, at the viewport's
+       own aspect. */
+    var size = Math.min(188, Math.max(60, Math.sqrt(W * H * 0.34 / n / TALL)));
+
+    /* Random, but never bunched: the arena is cut into about one cell per sticker, the
+       cells are dealt out at random, and each sticker lands anywhere near its cell
+       (the jitter is wider than the cell, so neighbours still overlap and nothing
+       lines up). Sizes run from about two thirds to one and a third of the base. Redrawn on
+       every page load. */
+    var pick = rng(DEAL || 7);
+    var cols = Math.max(2, Math.round(Math.sqrt(n * W / H))), rows = Math.ceil(n / cols);
+    var cellW = W / cols, cellH = H / rows, deck = [];
+    for(var c=0;c<cols*rows;c++) deck.push(c);
+    for(var d=deck.length-1; d>0; d--){
+      var j = Math.floor(pick() * (d+1)), tmp = deck[d]; deck[d] = deck[j]; deck[j] = tmp;
+    }
+    var items = [];
+    for(var i=0;i<n;i++){
+      var el = els[i], r = rng((el._seed ^ DEAL) >>> 0);
+      var sc = size * (0.65 + r()*0.7);
+      var cell = deck[i];
+      /* wobble less when the sticker nearly fills its cell (phones), so none gets buried */
+      var jx = Math.max(0.5, Math.min(1.4, (cellW - sc*0.7)/cellW + 0.4));
+      var jy = Math.max(0.5, Math.min(1.4, (cellH - sc*TALL*0.7)/cellH + 0.4));
+      items.push({
+        el: el, r: r, w: sc, h: sc*TALL, pad: 0.015*W + 0.12*sc,
+        x: (cell % cols + 0.5) * cellW + (pick() - 0.5) * cellW * jx - sc/2,
+        y: (Math.floor(cell / cols) + 0.5) * cellH + (pick() - 0.5) * cellH * jy - sc*TALL/2
+      });
+    }
+
+    /* every sticker stays fully on screen: the margin leaves room for its tilt and shadow */
+    function keep(s){
+      s.x = Math.min(Math.max(s.x, s.pad), W - s.w - s.pad);
+      s.y = Math.min(Math.max(s.y, s.pad*0.6), Math.max(s.pad*0.6, H - s.h - s.pad*0.6));
+    }
+    items.forEach(keep);
+
+    /* Overlap is fine, burying one is not: push apart any pair where more than a third
+       of the smaller sticker is covered. */
+    for(var pass=0; pass<60; pass++){
+      var moved = false;
+      for(var a=0;a<n;a++) for(var b=a+1;b<n;b++){
+        var A = items[a], B = items[b];
+        var ow = Math.min(A.x + A.w, B.x + B.w) - Math.max(A.x, B.x);
+        var oh = Math.min(A.y + A.h, B.y + B.h) - Math.max(A.y, B.y);
+        if(ow <= 0 || oh <= 0 || ow*oh / Math.min(A.w*A.h, B.w*B.h) < 0.33) continue;
+        moved = true;
+        if(ow < oh){ var sx = (A.x + A.w/2 < B.x + B.w/2 ? -1 : 1) * (ow/2 + 1); A.x += sx; B.x -= sx; }
+        else       { var sy = (A.y + A.h/2 < B.y + B.h/2 ? -1 : 1) * (oh/2 + 1); A.y += sy; B.y -= sy; }
+        keep(A); keep(B);
+      }
+      if(!moved) break;
+    }
+
+    items.forEach(function(s){
+      var el = s.el, r = s.r;
+      el.style.left  = 'calc(' + s.x.toFixed(1) + ' * var(--cs))';
+      el.style.top   = 'calc(' + s.y.toFixed(1) + ' * var(--cs))';
+      el.style.width = 'calc(' + s.w.toFixed(1) + ' * var(--cs))';
+      el.style.setProperty('--sw', s.w.toFixed(1));
+      el.style.setProperty('--rot', (r()*50 - 25).toFixed(2) + 'deg');
+      el.style.zIndex = String(2 + Math.floor(r()*12));
+    });
+    return H;
+  }
+
+  /* ---------------- build ---------------- */
+  /* The cut of each sticker is fixed to its slug - a project always looks like
+     itself. Where it lands is not: this seed is redrawn on every page load, so
+     the pile is dealt fresh each visit, and held steady through a resize. */
+  var DEAL = (Math.random() * 0xFFFFFFFF) >>> 0;
+
+  var stage   = document.querySelector('.stage');
+  var collage = document.getElementById('collage');
+  var FLOW    = window.matchMedia('(max-width:1199.98px),(orientation:portrait)');
+  var CURRENT = null;
+
+  /* ---------------- services ----------------
+     The same board, a different pile. A service has no logo, so its sticker is
+     the bare cut with the name set inside it and the price printed underneath,
+     exactly where a project's caption goes. */
+  var SERVICES = [
+    { slug:'chrome-extensions', lines:['CHROME','EXTENSIONS'], price:'From $500',
+      quote:'"Our product only works while someone is sitting on our site."',
+      deliver:'A published Manifest V3 extension, the source, the store listing with screenshots, and a demo clip for your launch.' },
+    { slug:'mcp-servers', lines:['MCP','SERVERS'], price:'From $500',
+      intake:'https://intake.radrebeldeveloper.com/deployment-0815c5ef-24a2-4be5-a356-375b37ed1c70',
+      quote:'"People want to use us from inside Claude, and there is no door."',
+      deliver:'An MCP server over the API you already have, a skill file so agents use it correctly rather than guessing, and a test run against a real account.' },
+    { slug:'automation', lines:['AUTOMATION'], price:'From $500',
+      quote:'"Someone here does this by hand every single week."',
+      deliver:'The job running on a schedule, a written record of every system it touches, and an alert that reaches a human when it fails.' },
+    { slug:'online-stores', lines:['ONLINE','STORES'], price:'From $1,000',
+      quote:'"We need to sell online without assembling twelve plugins."',
+      deliver:'A live store with payments, shipping and inventory set up, your own domain and certificate, and a walkthrough so your team can run it without me.' }
+  ];
+
+  function svcSticker(s, i){
+    var seed = hash(s.slug);
+    var d    = cut(seed);
+
+    var b = document.createElement('button');
+    b.className = 'st';
+    b.type = 'button';
+    b.setAttribute('aria-label', s.lines.join(' ') + ' - ' + s.price);
+    b.style.setProperty('--seq', i);
+
+    var two     = s.lines.length > 1;
+    var longest = s.lines.reduce(function(a,x){ return x.length > a.length ? x : a; }).length;
+    /* Inter 800 runs about .62em per character, and the cut is only ~198 units
+       wide where the text sits, so a long word has to set smaller or it bleeds
+       past its own sticker. */
+    var size    = Math.min(two ? 34 : 40, 198 / (longest * 0.62));
+    var y0      = two ? C - 10 : C + size * 0.34;
+    var tspans  = s.lines.map(function(line, k){
+      return '<tspan x="'+C+'" dy="'+(k === 0 ? 0 : size * 1.08)+'">'+esc(line)+'</tspan>';
+    }).join('');
+
+    b.innerHTML =
+      '<svg viewBox="0 0 '+S+' '+S+'" aria-hidden="true">'+
+        '<path d="'+d+'" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26" stroke-linejoin="round"/>'+
+        '<text x="'+C+'" y="'+y0+'" text-anchor="middle" fill="#16181D" '+
+          'font-family="Inter,Helvetica,Arial,sans-serif" font-weight="800" '+
+          'font-size="'+size+'" letter-spacing="-1">'+tspans+'</text>'+
+      '</svg>'+
+      '<span class="cap"><b>'+esc(s.price)+'</b></span>';
+
+    b._seed = seed;
+    b._svc  = s;
+    return b;
+  }
+
+  var MODE = 'projects', LIVE = [];
+
+  function paint(){
+    collage.innerHTML = '';
+    var els = MODE === 'services' ? SERVICES.map(svcSticker) : LIVE.map(sticker);
+    els.forEach(function(el){ collage.appendChild(el); });
+    CURRENT = els;
+    reflow();
+  }
+
+  function render(data){
+    var all = (data && data.projects) || [];
+    /* only shipped work gets a sticker - anything still in build stays off the
+       board, but it is still listed in the menu so the work in flight is visible */
+    var list = all.filter(function(p){ return p.status === 'live' && p.icon; });
+
+    LIVE = list;
+    paint();
+
+    /* The menu is the index the board deliberately is not: grouped by what a
+       thing IS, with the groups themselves in alphabetical order and the projects
+       alphabetical inside each one. Nothing is hand-ranked, so a new type slots
+       itself into place. Work still in flight is a status rather than a type, so
+       it is gathered into its own group and kept last. */
+    var WIP = 'IN PROGRESS', MISC = CATEGORY.misc;
+
+    /* Alphabetical, except the two that are not really types: a catch-all and a
+       status both belong at the bottom rather than wherever their initial falls. */
+    function rank(label){ return label === WIP ? 2 : label === MISC ? 1 : 0; }
+    var groups = {};
+    all.forEach(function(p){
+      var live = p.status === 'live' && p.icon;
+      var label = live ? (CATEGORY[p.category] || CATEGORY.misc) : WIP;
+      (groups[label] = groups[label] || []).push(p);
+    });
+
+    document.getElementById('mProjects').innerHTML =
+      Object.keys(groups).sort(function(a,b){
+        return rank(a) - rank(b) || a.localeCompare(b);
+      }).map(function(label){
+        var rows = groups[label].sort(function(a,b){
+          return (a.name || a.slug).localeCompare(b.name || b.slug);
+        }).map(function(p){
+          var live = p.status === 'live' && p.icon;
+          return '<a role="menuitem" href="https://'+esc(p.host)+'" target="_blank" rel="noopener"'+
+                 ' title="'+esc(p.tagline || p.host)+'">'+
+                 '<span class="dot'+(live ? ' live' : '')+'"></span>'+
+                 esc(p.name || p.slug)+'</a>';
+        }).join('');
+        return '<div class="mg">'+esc(label)+'</div>' + rows;
+      }).join('');
+  }
+
+  var waiting = null;
+  function reflow(){
+    var vw = stage.getBoundingClientRect().width;
+    if(!CURRENT || !CURRENT.length) return;
+    if(!vw){                                  /* not laid out yet (hidden pane): retry once it has a size */
+      if(!waiting && window.ResizeObserver){
+        waiting = new ResizeObserver(function(){
+          if(stage.getBoundingClientRect().width){ waiting.disconnect(); waiting = null; reflow(); }
+        });
+        waiting.observe(stage);
+      }
+      return;
+    }
+    collage.style.setProperty('--fit', 1);
+    var h = layout(CURRENT, band().size * 1280 / vw).toFixed(1);   /* band: under the tagline, above the footer */
+    collage.style.height = 'calc(' + h + ' * var(--cs))';
+    collage.style.setProperty('--ch', 'calc(' + h + ' * var(--cs))');
+    place();
+    recover();
+  }
+
+  /* Two-pass fit: measure the pile at 1:1, then scale it so it fills the band left
+     under the header. Overflowing 1280 is the point - the pile bleeds off the
+     edges instead of floating in the middle of the page. */
+  function band(){
+    var headBottom = document.querySelector('.head').getBoundingClientRect().bottom;
+    var footTop    = document.querySelector('.foot').getBoundingClientRect().top;
+    return {top: headBottom, size: Math.max(120, footTop - headBottom - 18)};
+  }
+
+  /* Two-pass fit: measure the pile at 1:1, then scale it to the band between the
+     header and the footer and centre it there. */
+  function place(){
+    if(!collage.firstChild) return;
+    collage.style.setProperty('--fit', 1);
+
+    var rect = collage.getBoundingClientRect();
+    var base = rect.height;
+    if(!base) return;
+
+    var b = band();
+    /* the arena is laid out at the viewport's own aspect, so fit it to the width */
+    var fit = stage.getBoundingClientRect().width / rect.width;
+    collage.style.setProperty('--fit', fit.toFixed(3));
+    collage.style.top = b.top + 'px';
+    collage.style.bottom = 'auto';
+  }
+
+  render(FALLBACK);
+
+  /* the live manifest wins; scan.mjs rewrites it whenever a project appears */
+  fetch('projects.json', {cache:'no-store'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if(d && d.projects && d.projects.length) render(d); })
+    .catch(function(){});
+
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt); rt = setTimeout(reflow, 120);
+  });
+
+  /* ---------------- menus ----------------
+     Click to open, click anywhere else or press Escape to close, one at a time. */
+  (function(){
+    var items = [].slice.call(document.querySelectorAll('.mi'));
+
+    /* How far the panel may reach: down to the hairline above the footer, never
+       past it. Both edges are measured when the menu opens, because the header
+       and the footer both move with the viewport. */
+    function headroom(btn){
+      var foot = document.querySelector('.foot');
+      var rect = foot.getBoundingClientRect();
+      var rule = parseFloat(getComputedStyle(foot, '::before').top);
+      var line = rect.top + (isNaN(rule) ? -20 : rule);
+      return Math.max(160, line - btn.getBoundingClientRect().bottom - 14);
+    }
+
+    function close(except){
+      items.forEach(function(mi){
+        if(mi === except) return;
+        mi.classList.remove('open');
+        mi.querySelector('.mt').setAttribute('aria-expanded','false');
+      });
+    }
+
+    items.forEach(function(mi){
+      var btn = mi.querySelector('.mt');
+      if(!mi.querySelector('.mp')) return;      /* SERVICES is a tab, not a panel */
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var open = !mi.classList.contains('open');
+        close(mi);
+        mi.style.setProperty('--mp-max', Math.round(headroom(btn)) + 'px');
+        mi.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      mi.addEventListener('keydown', function(e){
+        if(e.key === 'Escape'){ close(); btn.focus(); }
+      });
+    });
+
+    document.addEventListener('click', function(e){
+      if(!e.target.closest('.mi')) close();
+    });
+    window.addEventListener('blur', function(){ close(); });
+  })();
+
+  /* ---------------- sticker board ---------------- */
+  var zTop = 60, armed = false, held = null, ox = 0, oy = 0, sx = 0, sy = 0, unit = 1, moved = 0;
+  var baseX = 0, baseY = 0, bw = 0, bh = 0;
+
+  setTimeout(function(){ armed = true; stage.classList.add('ready'); }, 1500);
+
+  function cu(){ return collage.getBoundingClientRect().width / 1280; }
+
+  /* A dropped sticker has to stay grabbable, so a drag can push it off an edge but
+     never past the point where there is nothing left to grab. */
+  var KEEP = 0.42;
+  function clamp(nox, noy){
+    var minX = (-bw*(1-KEEP) - baseX) / unit;
+    var maxX = (window.innerWidth  - bw*KEEP - baseX) / unit;
+    var minY = (-bh*(1-KEEP) - baseY) / unit;
+    var maxY = (window.innerHeight - bh*KEEP - baseY) / unit;
+    return [Math.min(Math.max(nox, minX), maxX), Math.min(Math.max(noy, minY), maxY)];
+  }
+
+  /* pull anything the new viewport left off-screen back into reach */
+  function recover(){
+    unit = cu();
+    CURRENT.forEach(function(el){
+      var nox = parseFloat(el.style.getPropertyValue('--ox')) || 0;
+      var noy = parseFloat(el.style.getPropertyValue('--oy')) || 0;
+      if(!nox && !noy) return;
+      var r = el.getBoundingClientRect();
+      bw = r.width; bh = r.height;
+      baseX = r.left - nox*unit; baseY = r.top - noy*unit;
+      var at = clamp(nox, noy);
+      el.style.setProperty('--ox', at[0]);
+      el.style.setProperty('--oy', at[1]);
+    });
+  }
+
+  collage.addEventListener('pointerdown', function(e){
+    var el = e.target.closest('.st');
+    if(!armed || !el || e.button) return;
+    e.preventDefault();
+    held = el; unit = cu(); moved = 0;
+    ox = parseFloat(el.style.getPropertyValue('--ox')) || 0;
+    oy = parseFloat(el.style.getPropertyValue('--oy')) || 0;
+    sx = e.clientX; sy = e.clientY;
+    var r = el.getBoundingClientRect();
+    bw = r.width; bh = r.height;
+    baseX = r.left - ox*unit; baseY = r.top - oy*unit;   /* where it sits at zero offset */
+    el.style.zIndex = ++zTop;                             /* comes to the front, and stays */
+    el.classList.add('held');
+    el.setPointerCapture(e.pointerId);
+  });
+
+  collage.addEventListener('pointermove', function(e){
+    if(!held) return;
+    var dx = e.clientX - sx, dy = e.clientY - sy;
+    moved = Math.max(moved, Math.abs(dx) + Math.abs(dy));
+    var at = clamp(ox + dx/unit, oy + dy/unit);
+    held.style.setProperty('--ox', at[0]);
+    held.style.setProperty('--oy', at[1]);
+  });
+
+  function drop(e){
+    if(!held) return;
+    held.classList.remove('held');
+    try{ held.releasePointerCapture(e.pointerId); }catch(err){}
+    held = null;
+  }
+  collage.addEventListener('pointerup', drop);
+  collage.addEventListener('pointercancel', drop);
+  collage.addEventListener('lostpointercapture', drop);
+
+  /* a drag is not a click */
+  collage.addEventListener('click', function(e){
+    if(moved > 5){ e.preventDefault(); moved = 0; return; }
+    var el = e.target.closest('.st');
+    if(el && el._svc){ e.preventDefault(); openSheet(el._svc); }
+  });
+
+  /* ---------------- the services toggle ----------------
+     One page, two piles. PROJECTS keeps its dropdown; SERVICES swaps what the
+     board is showing rather than navigating away from it. */
+  var sheet = document.getElementById('sheet');
+  function openSheet(s){
+    document.getElementById('sTitle').textContent   = s.lines.join(' ');
+    document.getElementById('sQuote').textContent   = s.quote;
+    document.getElementById('sDeliver').textContent = s.deliver;
+    document.getElementById('sPrice').textContent   = s.price;
+    var intake = document.getElementById('sIntake');
+    intake.hidden = !s.intake;
+    if(s.intake) intake.href = s.intake;
+    if(sheet.showModal) sheet.showModal(); else sheet.setAttribute('open','');
+  }
+  document.getElementById('sShut').addEventListener('click', function(){ sheet.close(); });
+  /* mailto does nothing without a default mail app, so also copy the address and say so */
+  var go = document.querySelector('.sheet .go');
+  go.addEventListener('click', function(){
+    var addr = go.getAttribute('href').replace('mailto:', '');
+    try{ navigator.clipboard.writeText(addr); }catch(err){}
+    go.textContent = addr + ' (copied)';
+    setTimeout(function(){ go.textContent = 'Start a conversation'; }, 3000);
+  });
+  sheet.addEventListener('click', function(e){ if(e.target === sheet) sheet.close(); });
+
+  var svcBtn = document.getElementById('svcToggle');
+  function setMode(m, push){
+    MODE = m;
+    svcBtn.setAttribute('aria-pressed', m === 'services' ? 'true' : 'false');
+    var projTab = document.getElementById('projTab');
+    if(m === 'services'){
+      projTab.closest('.mi').classList.remove('open');
+      projTab.setAttribute('aria-haspopup', 'false');
+      projTab.removeAttribute('aria-expanded');
+    }else{
+      projTab.setAttribute('aria-haspopup', 'true');
+      projTab.setAttribute('aria-expanded', 'false');
+    }
+    document.querySelector('.tagline').textContent = m === 'services'
+      ? 'Four things I build for other people.'
+      : "Everything I've shipped, in one pile.";
+    if(push) history.replaceState(null, '', m === 'services' ? '#services' : location.pathname);
+    paint();
+  }
+  svcBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(MODE !== 'services') setMode('services', true);
+  });
+
+  /* PROJECTS is the other tab. Clicking it while the services pile is showing
+     brings the projects back instead of opening the dropdown over the wrong
+     board. Captured on the menu so this runs before the dropdown's own handler,
+     which is bound to the button itself. */
+  document.querySelector('.menu').addEventListener('click', function(e){
+    if(MODE !== 'services') return;
+    if(!e.target.closest('#projTab')) return;
+    e.stopPropagation();
+    setMode('projects', true);
+  }, true);
+
+  if(location.hash === '#services') setMode('services', false);
+})();
+</script>
+</body>
+</html>
