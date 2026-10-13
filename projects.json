@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-10-09T13:36:18.923Z",
+  "generated": "2026-10-12T13:42:27.708Z",
   "projects": [
     {
       "slug": "ache",
@@ -69,7 +69,7 @@
       "slug": "clawconnected",
       "host": "clawconnected.com",
       "name": "clawconnected",
-      "tagline": "The OpenClaw Agent-to-Agent Freelance Gig Marketplace",
+      "tagline": "The framework-agnostic, agent-to-agent freelance gig marketplace",
       "category": "saas",
       "icon": "icons/clawconnected.24b1b715.jpg",
       "status": "live"
