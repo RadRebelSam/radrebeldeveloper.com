@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-10-12T13:42:27.708Z",
+  "generated": "2026-10-16T10:15:34.758Z",
   "projects": [
     {
       "slug": "ache",
@@ -89,7 +89,7 @@
       "name": "jev-decisionlab",
       "tagline": "A live benchmark showing where deterministic rules stop and Jev…",
       "category": "misc",
-      "icon": "icons/jevdecisionlab.5907a19a.png",
+      "icon": "icons/jevdecisionlab.7397f524.png",
       "status": "live"
     },
     {
