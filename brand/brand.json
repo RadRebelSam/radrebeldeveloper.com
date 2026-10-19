@@ -1,0 +1,49 @@
+{
+ "name": "RadRebelDeveloper",
+ "slug": "radrebeldeveloper",
+ "domain": "radrebeldeveloper.com",
+ "tagline": "TODO(ask)",
+ "generated": "2026-10-18",
+ "note": "Machine-readable brand file. Edit palette.json and the logo files first, then keep this in step.",
+ "colors": {
+  "ground": "#1F6BFF",
+  "accent": "#FFFFFF",
+  "accent_text_on_light": "#1F6BFF",
+  "accent_bright_on_dark": "#FFFFFF"
+ },
+ "fonts": [
+  "Segoe UI, system-ui, -apple-system, Helvetica Neue, Arial, sans-serif"
+ ],
+ "voice": [
+  "TODO(ask)",
+  "TODO(ask)",
+  "TODO(ask)"
+ ],
+ "logo": {
+  "primary": "brand/logo-mark.svg",
+  "files": [
+   "brand/logo-mark.svg",
+   "brand/logo/developer-lockup-horizontal-on-dark.png",
+   "brand/logo/developer-lockup-horizontal-on-dark.svg",
+   "brand/logo/developer-lockup-horizontal-on-light.png",
+   "brand/logo/developer-lockup-horizontal-on-light.svg",
+   "brand/logo/developer-lockup-stacked-on-dark.png",
+   "brand/logo/developer-lockup-stacked-on-dark.svg",
+   "brand/logo/developer-lockup-stacked-on-light.png",
+   "brand/logo/developer-lockup-stacked-on-light.svg",
+   "brand/logo/developer-wordmark-on-dark.png",
+   "brand/logo/developer-wordmark-on-dark.svg",
+   "brand/logo/developer-wordmark-on-light.png"
+  ]
+ },
+ "favicon": [
+  "brand/developer-16.png",
+  "brand/developer-180.png",
+  "brand/developer-192.png",
+  "brand/developer-32.png",
+  "brand/developer-48.png",
+  "brand/developer-512.png",
+  "brand/developer.ico"
+ ],
+ "social": []
+}
