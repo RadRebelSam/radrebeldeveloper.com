@@ -69,5 +69,5 @@
   "palette": "service/radrebelsam.com/brand/palette.json",
   "generator": "service/radrebelsam.com/brand/make_favicons.py"
  },
- "endorsement": "Built by Rad Rebel Developer"
+ "endorsement": "By Rad Rebel Developer"
 }
