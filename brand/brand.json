@@ -12,8 +12,8 @@
   "accent_bright_on_dark": "#FFFFFF"
  },
  "fonts": [
-  "Arial Rounded MT Bold (the RR glyph and the suffix word: make_favicons.py and make_banners.py, C:\\Windows\\Fonts\\ARLRDBD.TTF)",
-  "Inter (site body, radrebeldeveloper.com index.html); fallbacks -apple-system, Segoe UI, Helvetica, Arial, sans-serif"
+  "'Arial Rounded MT Bold', 'Segoe UI', Arial, sans-serif",
+  "'Inter', 'Segoe UI', Arial, sans-serif"
  ],
  "voice": [
   "Curious",
