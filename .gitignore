@@ -12,3 +12,8 @@ Thumbs.db
 *.key
 .env
 .env.*
+
+# Generated and local-only files (2026-10-18)
+RECOVER.md
+desktop.ini
+brand/business/
