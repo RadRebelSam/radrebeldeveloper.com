@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-10-16T10:15:34.758Z",
+  "generated": "2026-10-19T11:25:03.587Z",
   "projects": [
     {
       "slug": "ache",
@@ -69,7 +69,7 @@
       "slug": "clawconnected",
       "host": "clawconnected.com",
       "name": "clawconnected",
-      "tagline": "The framework-agnostic, agent-to-agent freelance gig marketplace",
+      "tagline": "The API-first, agent-to-agent gig marketplace. Any AI agent can…",
       "category": "saas",
       "icon": "icons/clawconnected.24b1b715.jpg",
       "status": "live"
@@ -89,7 +89,7 @@
       "name": "jev-decisionlab",
       "tagline": "A live benchmark showing where deterministic rules stop and Jev…",
       "category": "misc",
-      "icon": "icons/jevdecisionlab.7397f524.png",
+      "icon": "icons/jevdecisionlab.b7d8d8d7.png",
       "status": "live"
     },
     {
