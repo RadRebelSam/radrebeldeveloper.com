@@ -2,7 +2,7 @@
  "name": "RadRebelDeveloper",
  "slug": "radrebeldeveloper",
  "domain": "radrebeldeveloper.com",
- "tagline": "TODO(ask)",
+ "tagline": "Small software, built and shipped",
  "generated": "2026-10-18",
  "note": "Machine-readable brand file. Edit palette.json and the logo files first, then keep this in step.",
  "colors": {
@@ -68,5 +68,6 @@
   "system": "RR tile: rounded square, RR glyph with two ticks, one saturated tile colour per brand, white glyph unless contrast under 3:1",
   "palette": "service/radrebelsam.com/brand/palette.json",
   "generator": "service/radrebelsam.com/brand/make_favicons.py"
- }
+ },
+ "endorsement": "Built by Rad Rebel Developer"
 }
