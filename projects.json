@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-10-19T11:25:03.587Z",
+  "generated": "2026-11-09T14:32:06.494Z",
   "projects": [
     {
       "slug": "ache",
@@ -153,6 +153,15 @@
       "tagline": "A privacy-first web application that analyzes your browser…",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
+      "status": "live"
+    },
+    {
+      "slug": "verdict",
+      "host": "verdict.radrebeldeveloper.com",
+      "name": "verdict:-test-your-idea,-get-a-verdict",
+      "tagline": "Ten research agents read 60+ live sources and grade your…",
+      "category": "misc",
+      "icon": "icons/verdict.c1f7a0bd.png",
       "status": "live"
     },
     {
