@@ -1,7 +1,16 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-11-13T13:32:04.802Z",
+  "generated": "2026-11-14T12:37:28.104Z",
   "projects": [
+    {
+      "slug": "ache",
+      "host": "ache.radrebeldeveloper.com",
+      "name": "ache",
+      "tagline": "demand finder",
+      "category": "chrome-extension",
+      "icon": "icons/ache.982a3428.png",
+      "status": "live"
+    },
     {
       "slug": "ai-web-activity-monitor",
       "host": "github.com/RadRebelSam/ai-web-activity-monitor",
@@ -39,12 +48,39 @@
       "status": "live"
     },
     {
+      "slug": "bouncer",
+      "host": "bouncer.radrebeldeveloper.com",
+      "name": "bouncer",
+      "tagline": "reading triage",
+      "category": "chrome-extension",
+      "icon": "icons/bouncer.ea658d5e.png",
+      "status": "live"
+    },
+    {
+      "slug": "catch",
+      "host": "catch.radrebeldeveloper.com",
+      "name": "catch",
+      "tagline": "pricing page and terms check",
+      "category": "chrome-extension",
+      "icon": "icons/catch.53d01ae2.png",
+      "status": "live"
+    },
+    {
       "slug": "clawconnected",
       "host": "clawconnected.com",
       "name": "clawconnected",
       "tagline": "The API-first, agent-to-agent gig marketplace. Any AI agent can…",
       "category": "saas",
       "icon": "icons/clawconnected.24b1b715.jpg",
+      "status": "live"
+    },
+    {
+      "slug": "decoder",
+      "host": "decoder.radrebeldeveloper.com",
+      "name": "decoder",
+      "tagline": "what social posts really mean",
+      "category": "chrome-extension",
+      "icon": "icons/decoder.4102b8f5.png",
       "status": "live"
     },
     {
@@ -72,6 +108,51 @@
       "tagline": "",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
+      "status": "live"
+    },
+    {
+      "slug": "reposcout",
+      "host": "reposcout.radrebeldeveloper.com",
+      "name": "reposcout",
+      "tagline": "what to do with this repo",
+      "category": "chrome-extension",
+      "icon": "icons/reposcout.94db9dd4.png",
+      "status": "live"
+    },
+    {
+      "slug": "rewordly",
+      "host": "rewordly.radrebeldeveloper.com",
+      "name": "rewordly",
+      "tagline": "swap words on any page",
+      "category": "chrome-extension",
+      "icon": "icons/rewordly.86720efb.png",
+      "status": "live"
+    },
+    {
+      "slug": "ricksanchez",
+      "host": "ricksanchez.radrebeldeveloper.com",
+      "name": "ricksanchez",
+      "tagline": "Rick and Morty season hub",
+      "category": "site",
+      "icon": "icons/ricksanchez.9c8bd75e.png",
+      "status": "live"
+    },
+    {
+      "slug": "sift",
+      "host": "sift.radrebeldeveloper.com",
+      "name": "sift",
+      "tagline": "comment triage",
+      "category": "chrome-extension",
+      "icon": "icons/sift.adda5eb3.png",
+      "status": "live"
+    },
+    {
+      "slug": "swipe",
+      "host": "swipe.radrebeldeveloper.com",
+      "name": "swipe",
+      "tagline": "swipe file that judges what you save",
+      "category": "chrome-extension",
+      "icon": "icons/swipe.66b38f0d.png",
       "status": "live"
     },
     {
@@ -109,6 +190,33 @@
       "category": "misc",
       "icon": "icons/whichjudge.83acd6fd.svg",
       "status": "live"
+    },
+    {
+      "slug": "worth",
+      "host": "worth.radrebeldeveloper.com",
+      "name": "worth",
+      "tagline": "job and event checker",
+      "category": "chrome-extension",
+      "icon": "icons/worth.b194affd.png",
+      "status": "live"
+    },
+    {
+      "slug": "nexusauditor",
+      "host": "nexusauditor.radrebeldeveloper.com",
+      "name": "nexusauditor",
+      "tagline": "Not serving yet (HTTP 403).",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "synapsecanvas",
+      "host": "synapsecanvas.radrebeldeveloper.com",
+      "name": "synapsecanvas",
+      "tagline": "Not serving yet (HTTP 403).",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
     }
   ]
 }
