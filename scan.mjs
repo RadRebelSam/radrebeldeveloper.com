@@ -16,6 +16,10 @@
  * A subdomain still serving the host's placeholder icon has nothing shipped on
  * it yet, so it is marked "building" and gets the dashed placeholder sticker.
  *
+ * listing.json, when it is there, is the owner's list and replaces discovery:
+ * which projects show, under what name, in which category, linking where. It is
+ * exported from the Sync tab of the owner's workbook by dashboard/export_rrd.py.
+ *
  * overrides.json wins over everything scraped:
  *   { "ricksanchez": { "category": "site", "tagline": "…" } }
  *
@@ -34,6 +38,7 @@ const OUT = resolve(HERE, 'projects.json');
 const PAGE = resolve(HERE, 'index.html');
 const OVERRIDES = resolve(HERE, 'overrides.json');
 const EXTRAS = resolve(HERE, 'extras.json');
+const LISTING = resolve(HERE, 'listing.json');
 const ICON_DIR = resolve(HERE, 'icons');
 const DRY = process.argv.includes('--dry');
 
@@ -82,8 +87,8 @@ async function discover() {
 
 /* ------------------------------------------------------------------ parsing */
 
-const decode = s => s.replace(/&(amp|lt|gt|quot|#39|nbsp);/g, m =>
-  ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&nbsp;': ' ' }[m]));
+const decode = s => s.replace(/&#0*39;/g, "'").replace(/&(amp|lt|gt|quot|nbsp);/g, m =>
+  ({ '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&nbsp;': ' ' }[m]));
 
 function tag(html, re) {
   const m = html.match(re);
@@ -296,17 +301,28 @@ async function probe(target, named) {
 
 /* --------------------------------------------------------------------- main */
 
-const slugs = await discover();
-if (!slugs.length) {
+/* The owner's list. When it is present it IS the board: nothing is discovered
+   and extras.json is not read. Without it the scan finds subdomains by itself,
+   as it did before the list existed. */
+let listing = [];
+try { listing = (JSON.parse(await readFile(LISTING, 'utf8')).projects || []); } catch {}
+
+const slugs = listing.length ? [] : await discover();
+if (!listing.length && !slugs.length) {
   console.error('no subdomains found - refusing to overwrite projects.json');
   process.exit(1);
 }
 
 let extras = [];
-try { extras = (JSON.parse(await readFile(EXTRAS, 'utf8')).hosts || []); } catch {}
+if (!listing.length) try { extras = (JSON.parse(await readFile(EXTRAS, 'utf8')).hosts || []); } catch {}
 
 const projects = [];
 const seen = new Set();
+const listed = new Map();                            /* slug -> its row in the owner's list */
+for (const row of listing) {
+  const p = await probe(row.link, true);              /* named by the owner: never dropped */
+  if (p && !seen.has(p.slug)) { seen.add(p.slug); listed.set(p.slug, row); projects.push(p); }
+}
 for (const t of slugs) {
   const p = await probe(t, false);                    /* serial: be polite */
   if (p && !seen.has(p.slug)) { seen.add(p.slug); projects.push(p); }
@@ -329,6 +345,8 @@ let overrides = {};
 try { overrides = JSON.parse(await readFile(OVERRIDES, 'utf8')); } catch {}
 for (const p of projects) {
   Object.assign(p, overrides[p.slug] || {});
+  /* the owner's list has the last word on what a project is called and where it is filed */
+  if (listed.has(p.slug)) { p.name = listed.get(p.slug).name; p.category = listed.get(p.slug).category; }
   /* house style: all lower case, no spaces - words are joined with hyphens */
   p.name = String(p.name || p.slug).trim().toLowerCase().replace(/[\s_]+/g, '-');
   /* a hand-supplied logo counts as shipped - some hosts just never set a favicon */
@@ -346,7 +364,7 @@ for (const k of orphans) {
 
 /* A live project nobody has categorised is worth knowing about: misc is a
    holding answer, not a decision. */
-const unsorted = projects.filter(p => p.status === 'live' && p.category === 'misc' &&
+const unsorted = projects.filter(p => !listed.has(p.slug) && p.status === 'live' && p.category === 'misc' &&
                                       !(overrides[p.slug] && overrides[p.slug].category));
 for (const p of unsorted) {
   console.warn(`  ? ${p.slug} is misc only because nothing said otherwise - give it a category in overrides.json`);

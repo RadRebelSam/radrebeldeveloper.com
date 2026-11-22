@@ -22,6 +22,13 @@ before deploy, never on the server.
 
 ## Adding a project
 
+The list of projects is the owner's: it comes from the Sync tab of the workbook (columns `RRD Visibility`,
+`RRD Category`, `RRD Link To`). After editing the tab, run `python ../../dashboard/export_rrd.py`, which writes
+`listing.json`. While that file exists, `scan.mjs` shows exactly what it lists and the two paragraphs below do not
+apply: nothing is discovered and `extras.json` is not read.
+
+Without `listing.json`, the scan works as it did before:
+
 A subdomain finds itself: ship it with a favicon and the next scan picks it up through
 certificate transparency. Anything else - another domain, or a repository with nothing
 deployed - goes in `extras.json` by hand, one line:
