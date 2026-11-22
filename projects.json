@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-11-21T13:49:07.399Z",
+  "generated": "2026-11-22T13:42:32.484Z",
   "projects": [
     {
       "slug": "ache",
@@ -45,15 +45,6 @@
       "tagline": "awesome lists that maintain themselves",
       "category": "misc",
       "icon": "icons/awesomex.8634426d.svg",
-      "status": "live"
-    },
-    {
-      "slug": "biolink",
-      "host": "biolink.radrebeldeveloper.com",
-      "name": "your-all-in-one-social-tool",
-      "tagline": "biolink.radrebeldeveloper.com",
-      "category": "misc",
-      "icon": "icons/biolink.f68e5f08.svg",
       "status": "live"
     },
     {
@@ -102,12 +93,30 @@
       "status": "live"
     },
     {
+      "slug": "linkparlor",
+      "host": "linkparlor.radrebeldeveloper.com",
+      "name": "your-all-in-one-social-tool",
+      "tagline": "LinkParlor",
+      "category": "misc",
+      "icon": "icons/linkparlor.f68e5f08.svg",
+      "status": "live"
+    },
+    {
       "slug": "mcphub",
       "host": "mcphub.radrebeldeveloper.com",
       "name": "mcphub-dashboard",
       "tagline": "",
       "category": "misc",
       "icon": "icons/mcphub.c0d72577.ico",
+      "status": "live"
+    },
+    {
+      "slug": "meet",
+      "host": "meet.radrebeldeveloper.com",
+      "name": "ai-powered-video-calls-to-close-more-deals",
+      "tagline": "Live Portals",
+      "category": "misc",
+      "icon": "icons/meet.8f569138.ico",
       "status": "live"
     },
     {
@@ -208,6 +217,15 @@
       "category": "chrome-extension",
       "icon": "icons/worth.b194affd.png",
       "status": "live"
+    },
+    {
+      "slug": "lcw-img",
+      "host": "lcw-img.radrebeldeveloper.com",
+      "name": "lcw-img",
+      "tagline": "Not serving yet (HTTP 404).",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
     },
     {
       "slug": "nexusauditor",
