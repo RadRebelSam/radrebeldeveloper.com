@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-11-22T13:42:32.484Z",
+  "generated": "2026-11-23T00:17:09.815Z",
   "projects": [
     {
       "slug": "ache",
@@ -12,17 +12,26 @@
       "status": "live"
     },
     {
+      "slug": "ai-support-agent",
+      "host": "github.com/RadRebelSam/ai-support-agent",
+      "name": "ai-support-agent",
+      "tagline": "AI support agent, a scholarship capstone",
+      "category": "misc",
+      "icon": "icons/github.1bedd6a1.png",
+      "status": "live"
+    },
+    {
       "slug": "ai-web-activity-monitor",
       "host": "github.com/RadRebelSam/ai-web-activity-monitor",
       "name": "ai-web-activity-monitor",
-      "tagline": "A Tampermonkey userscript that monitors your web browsing…",
+      "tagline": "an AI that comments on your browsing",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
     {
       "slug": "ai4all-20c-darkpatterns",
-      "host": "radrebelsam.github.io/ai4all-20c-darkpatterns",
+      "host": "github.com/RadRebelSam/ai4all-20c-darkpatterns",
       "name": "darkpatterns",
       "tagline": "Detecting manipulative e-commerce language",
       "category": "misc",
@@ -33,8 +42,8 @@
       "slug": "awesomejev",
       "host": "awesomejev.radrebeldeveloper.com",
       "name": "awesome-jev",
-      "tagline": "A crawler-maintained directory of Jev projects",
-      "category": "directory",
+      "tagline": "self-updating directory of Jev projects",
+      "category": "misc",
       "icon": "icons/awesomejev.53e1ba38.svg",
       "status": "live"
     },
@@ -66,15 +75,6 @@
       "status": "live"
     },
     {
-      "slug": "clawconnected",
-      "host": "clawconnected.com",
-      "name": "clawconnected",
-      "tagline": "The API-first, agent-to-agent gig marketplace. Any AI agent can…",
-      "category": "saas",
-      "icon": "icons/clawconnected.24b1b715.jpg",
-      "status": "live"
-    },
-    {
       "slug": "decoder",
       "host": "decoder.radrebeldeveloper.com",
       "name": "decoder",
@@ -84,48 +84,75 @@
       "status": "live"
     },
     {
+      "slug": "federicopian-clone",
+      "host": "github.com/RadRebelSam/federicopian-clone",
+      "name": "federicopian-clone",
+      "tagline": "a rebuild of federicopian.com",
+      "category": "site",
+      "icon": "icons/github.1bedd6a1.png",
+      "status": "live"
+    },
+    {
       "slug": "jevdecisionlab",
       "host": "jevdecisionlab.radrebeldeveloper.com",
-      "name": "jev-decisionlab",
-      "tagline": "A live benchmark showing where deterministic rules stop and Jev…",
+      "name": "jev-decision-lab",
+      "tagline": "live benchmark: rules alone vs rules + Jev",
       "category": "misc",
       "icon": "icons/jevdecisionlab.b7d8d8d7.png",
       "status": "live"
     },
     {
-      "slug": "linkparlor",
-      "host": "linkparlor.radrebeldeveloper.com",
-      "name": "your-all-in-one-social-tool",
-      "tagline": "LinkParlor",
+      "slug": "judge",
+      "host": "clawmagic.ai/plugin/judge",
+      "name": "clawmagic-judge",
+      "tagline": "fast, calibrated judgments for agents",
       "category": "misc",
-      "icon": "icons/linkparlor.f68e5f08.svg",
+      "icon": "icons/judge.b43d02ea.png",
       "status": "live"
     },
     {
-      "slug": "mcphub",
-      "host": "mcphub.radrebeldeveloper.com",
-      "name": "mcphub-dashboard",
-      "tagline": "",
+      "slug": "mcp-bridge",
+      "host": "clawmagic.ai/plugin/mcp-bridge",
+      "name": "clawmagic-mcp-bridge",
+      "tagline": "remote MCP tools for your agents",
       "category": "misc",
-      "icon": "icons/mcphub.c0d72577.ico",
-      "status": "live"
-    },
-    {
-      "slug": "meet",
-      "host": "meet.radrebeldeveloper.com",
-      "name": "ai-powered-video-calls-to-close-more-deals",
-      "tagline": "Live Portals",
-      "category": "misc",
-      "icon": "icons/meet.8f569138.ico",
+      "icon": "icons/mcp-bridge.b43d02ea.png",
       "status": "live"
     },
     {
       "slug": "motionsites-demo",
       "host": "github.com/RadRebelSam/motionsites-demo",
       "name": "motionsites-demo",
-      "tagline": "",
-      "category": "misc",
+      "tagline": "demo sites built with Motion.page",
+      "category": "site",
       "icon": "icons/github.1bedd6a1.png",
+      "status": "live"
+    },
+    {
+      "slug": "provider-adapter",
+      "host": "clawmagic.ai/plugin/provider-adapter",
+      "name": "clawmagic-provider-adapter",
+      "tagline": "plug any AI provider into your agents",
+      "category": "misc",
+      "icon": "icons/provider-adapter.b43d02ea.png",
+      "status": "live"
+    },
+    {
+      "slug": "radrebeldeveloper",
+      "host": "radrebeldeveloper.com",
+      "name": "radrebeldeveloper.com",
+      "tagline": "everything I've shipped, in one place",
+      "category": "site",
+      "icon": "icons/radrebeldeveloper.d3ed4b5a.png",
+      "status": "live"
+    },
+    {
+      "slug": "radrebelmarketing",
+      "host": "radrebelmarketing.com",
+      "name": "radrebelmarketing.com",
+      "tagline": "Content, sites and services that ship",
+      "category": "site",
+      "icon": "icons/radrebelmarketing.e488c902.png",
       "status": "live"
     },
     {
@@ -165,6 +192,24 @@
       "status": "live"
     },
     {
+      "slug": "sora-watermark",
+      "host": "github.com/RadRebelSam/sora-watermark",
+      "name": "sora-watermark",
+      "tagline": "add a Sora watermark to a video",
+      "category": "misc",
+      "icon": "icons/github.1bedd6a1.png",
+      "status": "live"
+    },
+    {
+      "slug": "storyflow",
+      "host": "github.com/RadRebelSam/storyflow",
+      "name": "storyflow",
+      "tagline": "the structure behind great podcasts",
+      "category": "misc",
+      "icon": "icons/github.1bedd6a1.png",
+      "status": "live"
+    },
+    {
       "slug": "swipe",
       "host": "swipe.radrebeldeveloper.com",
       "name": "swipe",
@@ -177,7 +222,7 @@
       "slug": "true-me-in-browser",
       "host": "github.com/RadRebelSam/true-me-in-browser",
       "name": "true-me-in-browser",
-      "tagline": "A privacy-first web application that analyzes your browser…",
+      "tagline": "what your browser history says about you",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
@@ -195,7 +240,7 @@
       "slug": "videomark",
       "host": "github.com/RadRebelSam/videomark",
       "name": "videomark",
-      "tagline": "Add transparent animated video watermark to your video.",
+      "tagline": "animated watermarks for your videos",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
@@ -203,7 +248,7 @@
     {
       "slug": "whichjudge",
       "host": "whichjudge.dev",
-      "name": "whichjudge",
+      "name": "whichjudge.dev",
       "tagline": "which model for this decision",
       "category": "misc",
       "icon": "icons/whichjudge.83acd6fd.svg",
@@ -219,29 +264,182 @@
       "status": "live"
     },
     {
-      "slug": "lcw-img",
-      "host": "lcw-img.radrebeldeveloper.com",
-      "name": "lcw-img",
-      "tagline": "Not serving yet (HTTP 404).",
+      "slug": "clawconnected-com",
+      "host": "",
+      "name": "clawconnected.com",
+      "tagline": "",
+      "category": "saas",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "cottinaceramics-com",
+      "host": "",
+      "name": "cottinaceramics.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "ezystudiodev-hoaportal",
+      "host": "",
+      "name": "ezystudiodev-hoaportal",
+      "tagline": "",
       "category": "misc",
       "icon": "",
       "status": "building"
     },
     {
-      "slug": "nexusauditor",
-      "host": "nexusauditor.radrebeldeveloper.com",
-      "name": "nexusauditor",
-      "tagline": "Not serving yet (HTTP 403).",
-      "category": "misc",
+      "slug": "flutterrobotics-com",
+      "host": "",
+      "name": "flutterrobotics.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "fundedstartuplist-com",
+      "host": "",
+      "name": "fundedstartuplist.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "glazedpetal-com",
+      "host": "",
+      "name": "glazedpetal.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "inkling",
+      "host": "",
+      "name": "inkling",
+      "tagline": "",
+      "category": "ios",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "ipixelit-com",
+      "host": "",
+      "name": "ipixelit.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "linkparlor",
+      "host": "",
+      "name": "linkparlor",
+      "tagline": "",
+      "category": "saas",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "littleclayworld-com",
+      "host": "",
+      "name": "littleclayworld.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "minjiceramics-com",
+      "host": "",
+      "name": "minjiceramics.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "nexusauditor-com",
+      "host": "",
+      "name": "nexusauditor.com",
+      "tagline": "",
+      "category": "saas",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "radrebelcommerce-com",
+      "host": "",
+      "name": "radrebelcommerce.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "radrebelsam",
+      "host": "radrebelsam.com",
+      "name": "radrebelsam.com",
+      "tagline": "No favicon yet - still being built.",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "secondthought",
+      "host": "",
+      "name": "secondthought",
+      "tagline": "",
+      "category": "chrome-extension",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "sharethismemory-com",
+      "host": "",
+      "name": "sharethismemory.com",
+      "tagline": "",
+      "category": "site",
       "icon": "",
       "status": "building"
     },
     {
       "slug": "synapsecanvas",
-      "host": "synapsecanvas.radrebeldeveloper.com",
+      "host": "",
       "name": "synapsecanvas",
-      "tagline": "Not serving yet (HTTP 403).",
+      "tagline": "",
       "category": "misc",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "verdict",
+      "host": "",
+      "name": "verdict",
+      "tagline": "",
+      "category": "saas",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "verisitesystem-com",
+      "host": "",
+      "name": "verisitesystem.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "yuniqueprint-com",
+      "host": "",
+      "name": "yuniqueprint.com",
+      "tagline": "",
+      "category": "site",
       "icon": "",
       "status": "building"
     }
