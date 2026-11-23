@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-11-23T00:13:04.645Z",
+  "generated": "2026-11-23T00:17:09.815Z",
   "projects": [
     {
       "slug": "ache",
@@ -15,7 +15,7 @@
       "slug": "ai-support-agent",
       "host": "github.com/RadRebelSam/ai-support-agent",
       "name": "ai-support-agent",
-      "tagline": "for Conclase Academy x SBSC NextGen Scholarship Capstone",
+      "tagline": "AI support agent, a scholarship capstone",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
@@ -24,7 +24,7 @@
       "slug": "ai-web-activity-monitor",
       "host": "github.com/RadRebelSam/ai-web-activity-monitor",
       "name": "ai-web-activity-monitor",
-      "tagline": "A Tampermonkey userscript that monitors your web browsing…",
+      "tagline": "an AI that comments on your browsing",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
@@ -39,21 +39,21 @@
       "status": "live"
     },
     {
-      "slug": "awesome-jev",
-      "host": "github.com/RadRebelSam/awesome-jev",
+      "slug": "awesomejev",
+      "host": "awesomejev.radrebeldeveloper.com",
       "name": "awesome-jev",
-      "tagline": "A crawler-maintained directory of projects built on Jev,…",
+      "tagline": "self-updating directory of Jev projects",
       "category": "misc",
-      "icon": "icons/github.1bedd6a1.png",
+      "icon": "icons/awesomejev.53e1ba38.svg",
       "status": "live"
     },
     {
-      "slug": "awesome-x",
-      "host": "github.com/RadRebelSam/awesome-x",
+      "slug": "awesomex",
+      "host": "awesomex.radrebeldeveloper.com",
       "name": "awesome-x",
-      "tagline": "Awesome lists that maintain themselves. Crawls GitHub and npm,…",
+      "tagline": "awesome lists that maintain themselves",
       "category": "misc",
-      "icon": "icons/github.1bedd6a1.png",
+      "icon": "icons/awesomex.8634426d.svg",
       "status": "live"
     },
     {
@@ -87,25 +87,25 @@
       "slug": "federicopian-clone",
       "host": "github.com/RadRebelSam/federicopian-clone",
       "name": "federicopian-clone",
-      "tagline": "",
+      "tagline": "a rebuild of federicopian.com",
       "category": "site",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
     {
-      "slug": "jev-decision-lab",
-      "host": "github.com/RadRebelSam/jev-decision-lab",
+      "slug": "jevdecisionlab",
+      "host": "jevdecisionlab.radrebeldeveloper.com",
       "name": "jev-decision-lab",
-      "tagline": "A transparent Next.js benchmark comparing function-only…",
+      "tagline": "live benchmark: rules alone vs rules + Jev",
       "category": "misc",
-      "icon": "icons/github.1bedd6a1.png",
+      "icon": "icons/jevdecisionlab.b7d8d8d7.png",
       "status": "live"
     },
     {
       "slug": "judge",
       "host": "clawmagic.ai/plugin/judge",
-      "name": "clawmagic",
-      "tagline": "Your AI workstation for Agent Orbs. Connect your tools, build…",
+      "name": "clawmagic-judge",
+      "tagline": "fast, calibrated judgments for agents",
       "category": "misc",
       "icon": "icons/judge.b43d02ea.png",
       "status": "live"
@@ -113,8 +113,8 @@
     {
       "slug": "mcp-bridge",
       "host": "clawmagic.ai/plugin/mcp-bridge",
-      "name": "clawmagic",
-      "tagline": "Your AI workstation for Agent Orbs. Connect your tools, build…",
+      "name": "clawmagic-mcp-bridge",
+      "tagline": "remote MCP tools for your agents",
       "category": "misc",
       "icon": "icons/mcp-bridge.b43d02ea.png",
       "status": "live"
@@ -123,7 +123,7 @@
       "slug": "motionsites-demo",
       "host": "github.com/RadRebelSam/motionsites-demo",
       "name": "motionsites-demo",
-      "tagline": "",
+      "tagline": "demo sites built with Motion.page",
       "category": "site",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
@@ -131,8 +131,8 @@
     {
       "slug": "provider-adapter",
       "host": "clawmagic.ai/plugin/provider-adapter",
-      "name": "clawmagic",
-      "tagline": "Your AI workstation for Agent Orbs. Connect your tools, build…",
+      "name": "clawmagic-provider-adapter",
+      "tagline": "plug any AI provider into your agents",
       "category": "misc",
       "icon": "icons/provider-adapter.b43d02ea.png",
       "status": "live"
@@ -141,7 +141,7 @@
       "slug": "radrebeldeveloper",
       "host": "radrebeldeveloper.com",
       "name": "radrebeldeveloper.com",
-      "tagline": "A sticker board of everything RadRebelDeveloper has shipped.…",
+      "tagline": "everything I've shipped, in one place",
       "category": "site",
       "icon": "icons/radrebeldeveloper.d3ed4b5a.png",
       "status": "live"
@@ -195,7 +195,7 @@
       "slug": "sora-watermark",
       "host": "github.com/RadRebelSam/sora-watermark",
       "name": "sora-watermark",
-      "tagline": "Add Sora watermark to your video.",
+      "tagline": "add a Sora watermark to a video",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
@@ -204,7 +204,7 @@
       "slug": "storyflow",
       "host": "github.com/RadRebelSam/storyflow",
       "name": "storyflow",
-      "tagline": "StoryFlow dissects long-form podcasts and videos (from YouTube…",
+      "tagline": "the structure behind great podcasts",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
@@ -222,7 +222,7 @@
       "slug": "true-me-in-browser",
       "host": "github.com/RadRebelSam/true-me-in-browser",
       "name": "true-me-in-browser",
-      "tagline": "A privacy-first web application that analyzes your browser…",
+      "tagline": "what your browser history says about you",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
@@ -231,18 +231,18 @@
       "slug": "videomark",
       "host": "github.com/RadRebelSam/videomark",
       "name": "videomark",
-      "tagline": "Add transparent animated video watermark to your video.",
+      "tagline": "animated watermarks for your videos",
       "category": "misc",
       "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
     {
-      "slug": "whichjudge.dev",
-      "host": "github.com/RadRebelSam/whichjudge.dev",
+      "slug": "whichjudge",
+      "host": "whichjudge.dev",
       "name": "whichjudge.dev",
-      "tagline": "Replacement matrix for cheap judge / decision models.",
+      "tagline": "which model for this decision",
       "category": "misc",
-      "icon": "icons/github.1bedd6a1.png",
+      "icon": "icons/whichjudge.83acd6fd.svg",
       "status": "live"
     },
     {

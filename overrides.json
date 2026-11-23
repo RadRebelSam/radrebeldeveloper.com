@@ -16,10 +16,12 @@
     "name": "clawconnected"
   },
   "motionsites-demo": {
-    "category": "misc"
+    "category": "misc",
+    "tagline": "demo sites built with Motion.page"
   },
   "ai-web-activity-monitor": {
-    "category": "misc"
+    "category": "misc",
+    "tagline": "an AI that comments on your browsing"
   },
   "ai4all-20c-darkpatterns": {
     "category": "misc",
@@ -28,21 +30,48 @@
     "icon": "icons/github.1bedd6a1.png"
   },
   "videomark": {
-    "category": "misc"
+    "category": "misc",
+    "tagline": "animated watermarks for your videos"
   },
   "true-me-in-browser": {
-    "category": "misc"
+    "category": "misc",
+    "tagline": "what your browser history says about you"
   },
   "awesomejev": {
     "category": "directory",
     "name": "awesome-jev",
-    "tagline": "A crawler-maintained directory of Jev projects"
+    "tagline": "self-updating directory of Jev projects"
   },
   "jevdecisionlab": {
     "category": "misc",
-    "name": "jev-decisionlab"
+    "name": "jev-decisionlab",
+    "tagline": "live benchmark: rules alone vs rules + Jev"
   },
   "awesomex": {
     "category": "misc"
+  },
+  "judge": {
+    "tagline": "fast, calibrated judgments for agents"
+  },
+  "provider-adapter": {
+    "tagline": "plug any AI provider into your agents"
+  },
+  "mcp-bridge": {
+    "tagline": "remote MCP tools for your agents"
+  },
+  "storyflow": {
+    "tagline": "the structure behind great podcasts"
+  },
+  "ai-support-agent": {
+    "tagline": "AI support agent, a scholarship capstone"
+  },
+  "federicopian-clone": {
+    "tagline": "a rebuild of federicopian.com"
+  },
+  "sora-watermark": {
+    "tagline": "add a Sora watermark to a video"
+  },
+  "radrebeldeveloper": {
+    "tagline": "everything I've shipped, in one place"
   }
 }
