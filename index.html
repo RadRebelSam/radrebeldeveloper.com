@@ -93,23 +93,33 @@ ol{list-style:none}
 @media (max-width:760px){.swatches{display:none}.tools{gap:6px}.pop,.pop.svc{position:fixed;left:var(--gut);right:var(--gut);top:64px;width:auto;grid-template-columns:1fr}}
 
 /* left column */
-.left{position:absolute;left:var(--gut);top:clamp(64px,11vh,104px);bottom:calc(var(--word-h,18vh) + 20px);
-  width:min(360px,calc(100vw - 2*var(--gut)));display:flex;flex-direction:column;justify-content:space-between;gap:14px;
-  pointer-events:none;transition:bottom .6s cubic-bezier(.2,.7,.2,1)}
+/* the column is as wide as the title, so the drawer list lines up with it on both sides */
+/* its left edge is the balance rule's left margin (see balance() in the script): free width * 1.5 / 3.2, where the title is
+   6.93 of its font size wide and the desk and cabinet take 95.3vh. In CSS so the text never jumps when the script starts */
+.left{--h1:clamp(27px,min(4.55vw,6.95vh),63px);position:absolute;left:max(var(--gut),calc((100vw - 6.93 * var(--h1) - 95.3vh) * 1.5 / 3.2));top:clamp(64px,11vh,104px);bottom:calc(var(--word-h,18vh) + clamp(40px,7.4vh,76px));
+  width:fit-content;min-width:min(280px,calc(100vw - 2*var(--gut)));max-width:calc(100vw - 2*var(--gut));display:flex;flex-direction:column;justify-content:space-between;gap:14px;
+  pointer-events:none;transition:bottom .6s cubic-bezier(.2,.7,.2,1),left .6s cubic-bezier(.2,.7,.2,1)}
 /* the floor word is gone once a drawer is open, so the list drops into its space and the file caption gets room */
-:root:not([data-mode="overview"]) .left{bottom:clamp(16px,4vh,40px)}
+:root:not([data-mode="overview"]) .left{bottom:clamp(16px,4vh,40px);left:var(--gut)}
 .left > *{pointer-events:auto}
-.intro{display:flex;flex-direction:column;gap:12px;transition:opacity .45s,transform .6s cubic-bezier(.2,.7,.2,1)}
-.eyebrow{font:500 12px/1.4 var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
-h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spacing:-.01em;text-wrap:balance}
-.lede{font-size:15px;line-height:1.5;max-width:34ch}
+.intro{display:flex;flex-direction:column;gap:12px;margin-top:clamp(24px,5.6vh,54px);transition:opacity .45s,transform .6s cubic-bezier(.2,.7,.2,1)}
+/* sized from the title so its 46 characters (with the year) fit on one row under it; it never widens the column */
+.eyebrow{font:500 clamp(10px,calc(var(--h1) * .226),13px)/1.4 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;width:0;min-width:100%}
+h1{font:400 var(--h1)/1.02 var(--f-display);letter-spacing:-.01em;white-space:nowrap}
+.lede{font-size:16px;line-height:1.5;width:0;min-width:100%}
 :root:not([data-mode="overview"]) .intro{opacity:0;transform:translateY(-10px);pointer-events:none}
 .back{align-self:flex-start;position:absolute;top:0;left:0;opacity:0;pointer-events:none;transition:opacity .4s}
 :root:not([data-mode="overview"]) .back{opacity:1;pointer-events:auto}
 
-.index{font:500 13px/1 var(--f-mono);transition:opacity .3s}
+.index{font:500 14px/1 var(--f-mono);transition:opacity .3s}
 :root[data-mode="file"] .index{opacity:0;pointer-events:none}
-.index button{display:flex;align-items:baseline;gap:10px;width:100%;padding:8px 10px;margin-left:-10px;border-radius:8px;
+/* with a drawer open the list joins the caption on the right: the drawer now stands where the list was. It fades in at
+   its new place (two names, so the fade restarts each way) */
+@keyframes inA{from{opacity:0}}
+@keyframes inB{from{opacity:0}}
+.index{animation:inA .5s both}
+:root:not([data-mode="overview"]) .index{position:fixed;right:var(--gut);bottom:clamp(16px,4vh,40px);width:min(350px,36vw);animation:inB .5s .25s both}
+.index button{display:flex;align-items:baseline;gap:10px;width:calc(100% + 20px);padding:8.5px 10px;margin-left:-10px;border-radius:8px;
   text-align:left;text-transform:uppercase;letter-spacing:.04em}
 .index button:hover,.index button.hot{box-shadow:inset 0 0 0 1.5px var(--on-ground)}
 .index button[aria-current="true"]{background:var(--on-ground);color:var(--ground)}
@@ -118,7 +128,7 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
 .index .c{font-variant-numeric:tabular-nums}
 
 /* caption: the file under your thumb while a drawer is open */
-.caption{position:absolute;left:0;top:58px;width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+.caption{position:fixed;right:var(--gut);top:clamp(96px,22vh,200px);width:min(350px,36vw);display:flex;flex-direction:column;align-items:flex-start;gap:8px;
   opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .4s,transform .6s cubic-bezier(.2,.7,.2,1)}
 .left > .caption{pointer-events:none}
 :root[data-mode="drawer"] .left > .caption{opacity:1;pointer-events:auto;transform:none;transition-delay:.25s}
@@ -163,7 +173,7 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
 
 @media (max-width:760px){
   .brand span{display:none}
-  .left{bottom:auto;width:auto;right:var(--gut)}
+  .left{bottom:auto;width:auto;left:var(--gut);right:var(--gut)}
   .lede{display:none}
   .index{position:fixed;left:0;right:0;bottom:calc(var(--word-h,14vh) + 14px);padding:0 var(--gut);overflow-x:auto}
   .index ol{display:flex;gap:8px}
@@ -180,7 +190,7 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
 </head>
 <body>
 
-<div class="word" aria-hidden="true"><svg id="word" height="0"><text id="wordText" text-anchor="middle">SHIPPED</text></svg></div>
+<div class="word" aria-hidden="true"><svg id="word" height="0"><text id="wordText" text-anchor="middle">RADREBEL</text></svg></div>
 <canvas id="stage" role="img" aria-label="A filing cabinet. Each drawer is a kind of project and each folder is one project. The drawer list and List view give the same content as text."></canvas>
 
 <div class="ui">
@@ -191,12 +201,12 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
         <summary class="chip">Services</summary>
         <div class="pop svc">
           <article>
-            <h3>Chrome extensions <b>From $500</b></h3>
+            <h3>Chrome Extensions <b>From $500</b></h3>
             <p class="q">"Our product only works while someone is sitting on our site."</p>
             <p>A published Manifest V3 extension, the source, the store listing with screenshots, and a demo clip for your launch.</p>
           </article>
           <article>
-            <h3>MCP servers <b>From $500</b></h3>
+            <h3>MCP Servers and Agent Skills <b>From $500</b></h3>
             <p class="q">"People want to use us from inside Claude, and there is no door."</p>
             <p>An MCP server over the API you already have, a skill file so agents use it correctly rather than guessing, and a test run against a real account.</p>
             <p><a href="https://intake.radrebeldeveloper.com/deployment-0815c5ef-24a2-4be5-a356-375b37ed1c70" target="_blank" rel="noopener">Start the project intake</a></p>
@@ -207,27 +217,27 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
             <p>The job running on a schedule, a written record of every system it touches, and an alert that reaches a human when it fails.</p>
           </article>
           <article>
-            <h3>Online stores <b>From $1,000</b></h3>
+            <h3>Online Stores <b>From $1,000</b></h3>
             <p class="q">"We need to sell online without assembling twelve plugins."</p>
             <p>A live store with payments, shipping and inventory set up, your own domain and certificate, and a walkthrough so your team can run it without me.</p>
           </article>
           <article>
-            <h3>Custom AI agents <b>From $1,000</b></h3>
+            <h3>Custom AI Agents <b>From $1,000</b></h3>
             <p class="q">"We keep doing the same research by hand, every time."</p>
             <p>An agent that does the job end to end on your own data and tools, with the prompts and code handed over, and a human check where a wrong answer would cost you.</p>
           </article>
           <article>
-            <h3>Self-updating directories <b>From $1,000</b></h3>
+            <h3>Self-Updating Directories <b>From $1,000</b></h3>
             <p class="q">"Our list of tools is out of date the day we publish it."</p>
             <p>A directory site that crawls its sources on a schedule, adds and retires entries by itself, and stays yours to edit.</p>
           </article>
           <article>
-            <h3>MVP builds <b>From $2,500</b></h3>
+            <h3>MVP Builds <b>From $2,500</b></h3>
             <p class="q">"We have the idea and the first customers, but no product."</p>
             <p>A working first version with sign-in, payments and a landing page, on your own accounts, ready for real users.</p>
           </article>
           <article>
-            <h3>Monthly plan <b>From $19/mo</b></h3>
+            <h3>Monthly Plan <b>From $19/mo</b></h3>
             <p class="q">"The site is live. Now who answers the questions and keeps it healthy?"</p>
             <p>Add it to a store, site or MVP build. $19 a month: an AI chatbot kept trained on your catalog and pages. $39 a month: the chatbot, a booking page, a monthly security and email check, and small fixes. An AI phone agent is $29 a month more, plus call minutes at cost.</p>
           </article>
@@ -254,8 +264,8 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
     <button id="backBtn" type="button" class="chip back">&larr; Back</button>
     <section class="intro">
       <p class="eyebrow" id="eyebrow"></p>
-      <h1>Small software, built and shipped.</h1>
-      <p class="lede">Filed by kind. Pull a drawer, flip through the files, open one. Drag to look around.</p>
+      <h1>Build and Ship</h1>
+      <p class="lede">Extensions, agents and small SaaS, from idea to live. Pull a drawer to see the work, or open Services to start yours.</p>
     </section>
     <div class="caption" id="caption" aria-live="polite">
       <p class="where" id="capWhere"></p>
@@ -357,8 +367,8 @@ let DATA = /*__DATA__*/null;      // build.py fills this in for the self-contain
 if (!DATA) {
   /* on the site: read the manifest the daily scan writes, and file each project in its drawer */
   const m = await fetch('projects.json').then((r) => r.json()).catch(() => window.FALLBACK);
-  const LABELS = { 'chrome-extension': 'Chrome extensions', 'obsidian-plugin': 'Obsidian plugins', saas: 'SaaS', skill: 'Skills',
-    directory: 'Directories', site: 'Sites', ios: 'iOS apps', misc: 'Misc' };
+  const LABELS = { 'chrome-extension': 'Chrome Extensions', 'obsidian-plugin': 'Obsidian Plugins', saas: 'SaaS', skill: 'Skills',
+    directory: 'Directories', site: 'Sites', ios: 'iOS Apps', misc: 'Misc' };
   const groups = {};
   for (const p of m.projects) {
     (groups[p.category in LABELS ? p.category : 'misc'] ||= []).push({ ...p,
@@ -878,7 +888,7 @@ function glass(mon) {
 function placeDesk() {
   if (!deskSet) return;
   const p = overviewPose(STILL), ppm = innerHeight / (2 * p.pos.distanceTo(p.tgt) * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
-  const text = $('.left').getBoundingClientRect().right, centre = (0.5 + p.sx) * innerWidth, L = 0.93, R = 0.8;   // the set reaches L left and R right of its origin
+  const text = LAY.textRight, centre = (0.5 + p.sx) * innerWidth, L = 0.93, R = 0.8;   // the set reaches L left and R right of its origin
   deskFits = wide();
   const x0 = Math.max(centre - (0.5 + 0.15 + R) * ppm, text + 24 + L * ppm);       // its origin, in window pixels
   const gap = (centre - x0) / ppm - TUNE.desk;                                     // cabinet centre to its origin, metres
@@ -940,7 +950,19 @@ function span(pos, tgt) {
 }
 /* the overview, as the owner tuned it: which side the camera stands on, shift right, shift down, height on screen,
    and a nudge for the desk (metres, + is right) */
-const TUNE = { angle: 0.46, x: 0.285, y: -0.015, size: 0.58, desk: 0 };
+const TUNE = { angle: 0.46, x: 0.24, y: -0.015, size: 0.58, desk: 0 };
+/* the overview is one balanced row: text, desk, cabinet. The width they leave free is shared as left margin : gap :
+   right margin = 1.5 : 0.4 : 1.3, which puts the text as far from the left edge as the cabinet is from the right
+   (the cabinet is a little narrower than the 1 m counted for it). The owner found any smaller left share left-heavy */
+const LAY = { sx: null, textRight: 0 };
+function balance() {
+  const gut = clamp(innerWidth * 0.032, 16, 44), wt = $('.left').offsetWidth;
+  if (!wide()) { LAY.sx = null; LAY.textRight = gut + wt; return; }
+  const p = overviewPose(STILL), ppm = innerHeight / (2 * p.pos.distanceTo(p.tgt) * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
+  const free = innerWidth - wt - 2.88 * ppm;                       // 2.88 m: from the chair to the cabinet's far edge
+  const a = Math.max(gut, free * 1.5 / 3.2), b = Math.max(24, free * 1.3 / 3.2);
+  LAY.sx = 0.5 - (b + 0.5 * ppm) / innerWidth; LAY.textRight = a + wt;   // a is also .left's left edge, worked out in CSS
+}
 const orbit = { yaw: 0, pitch: 0 }, STILL = { yaw: 0, pitch: 0 };   // how far a drag has turned the overview, radians
 function overviewPose(o = orbit) {
   const az = Math.atan2(TUNE.angle, 1) + o.yaw, el = Math.atan2(0.2, Math.hypot(TUNE.angle, 1)) + o.pitch;
@@ -951,14 +973,13 @@ function overviewPose(o = orbit) {
   const [a, b] = span(tgt.clone().addScaledVector(dir, d), tgt);
   d *= (b - a) / (w ? TUNE.size : foot - 0.25);          // on a phone it fills the room under the headline
   const pos = tgt.clone().addScaledVector(dir, d);
-  // eases right as the window narrows, to stay clear of the text column
-  const sx = w ? TUNE.x + Math.max(0, 0.1 - 0.1 * (camera.aspect - 1.15) / 0.45) : 0;
+  const sx = w ? LAY.sx ?? TUNE.x : 0;                   // balance() sets it; TUNE.x only until it has run
   return { pos, tgt, sx, sy: foot - span(pos, tgt)[1] + (w ? TUNE.y : 0) };
 }
 function drawerPose(i) {
   const tgt = new V3(0, drawerY(i) + 0.03, D / 2 + TRAVEL * 0.5), dir = new V3(-0.18, 1.05, 1).normalize();
   const d = fitDist(0.95, wide() ? 1.02 : 1.5);
-  return { pos: tgt.clone().addScaledVector(dir, d), tgt, sx: wide() ? 0.13 : 0, sy: wide() ? -0.02 : -0.08 };
+  return { pos: tgt.clone().addScaledVector(dir, d), tgt, sx: 0, sy: wide() ? -0.02 : -0.08 };
 }
 function filePose() {
   const p = drawerPose(S.open), back = p.pos.clone().sub(p.tgt).normalize();
@@ -1202,7 +1223,7 @@ function resize() {
   const w = innerWidth, h = innerHeight;
   if (!w || !h) return;
   renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
-  fitWord(); camTo(currentPose(), 0); placeDesk();
+  fitWord(); balance(); camTo(currentPose(), 0); placeDesk();
 }
 
 /* ---------- frame ---------- */
@@ -1281,8 +1302,9 @@ async function boot() {
   veil.scale.set(9, 9, 1); veil.visible = false; camera.add(veil);
 
   build(); applyTheme('blue'); wire();
+  balance();
   addDesk().catch((err) => console.error(err));   // the cabinet works without it
-  if (location.hash === '#debug') window.dbg = { cam, TUNE };
+  if (location.hash === '#debug') window.dbg = { cam, TUNE, LAY };
   renderer.setSize(innerWidth, innerHeight, false);
   const p = overviewPose();
   if (reduce) { cam.pos.copy(p.pos); cam.tgt.copy(p.tgt); cam.sx = p.sx; cam.sy = p.sy; }
