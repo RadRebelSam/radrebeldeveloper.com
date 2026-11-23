@@ -850,14 +850,15 @@ function glass(mon) {
   m.position.set(0, 0.0555, 0.047); m.rotation.x = -0.12;                  // the panel leans back 7 degrees
   mon.getObjectByName('panel').add(m); screens.push({ ctx, tex });
 }
-/* it stands in the gap between the text column and the cabinet, nearer the text; TUNE.desk nudges it (metres, + is right) */
+/* the desk stands beside the cabinet, 15 cm clear of it, however wide the window is. Only when the text column
+   leaves no room for that does it give way and close the gap. TUNE.desk nudges it (metres, + is right) */
 function placeDesk() {
   if (!deskSet) return;
   const p = overviewPose(STILL), ppm = innerHeight / (2 * p.pos.distanceTo(p.tgt) * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
-  const text = $('.left').getBoundingClientRect().right, cab = (0.5 + p.sx) * innerWidth - 0.5 * ppm, L = 0.93, R = 0.8;   // the set reaches L left and R right of its origin
-  const spare = cab - text - (L + R) * ppm;
+  const text = $('.left').getBoundingClientRect().right, centre = (0.5 + p.sx) * innerWidth, L = 0.93, R = 0.8;   // the set reaches L left and R right of its origin
   deskFits = wide();
-  const gap = ((0.5 + p.sx) * innerWidth - (text + Math.max(24, spare * 0.35) + L * ppm)) / ppm - TUNE.desk;        // cabinet centre to its origin, metres
+  const x0 = Math.max(centre - (0.5 + 0.15 + R) * ppm, text + 24 + L * ppm);       // its origin, in window pixels
+  const gap = (centre - x0) / ppm - TUNE.desk;                                     // cabinet centre to its origin, metres
   deskSet.position.set(-gap * 0.908 - 0.19, 0, gap * 0.418 - 0.41);
 }
 async function addDesk() {
