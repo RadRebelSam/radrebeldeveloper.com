@@ -83,7 +83,7 @@ ol{list-style:none}
 .pop p{margin:0 0 6px}
 .pop .q{font-style:italic}
 .pop a:not(.btn){color:inherit;text-underline-offset:3px}
-/* twelve services: two columns on a wide window. Fixed to the window, because hung under its chip the wide panel ran off the left edge below about 1100px */
+/* the services: two columns on a wide window. Fixed to the window, because hung under its chip the wide panel ran off the left edge below about 1100px */
 .pop.svc{position:fixed;right:var(--gut);top:64px;width:min(780px,calc(100vw - 2 * var(--gut)));display:grid;grid-template-columns:1fr 1fr;gap:0 24px;align-items:start}
 .pop.svc .btn{grid-column:1 / -1}
 .pop.links{width:230px;display:grid;gap:2px;padding:10px}
@@ -191,12 +191,12 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
         <summary class="chip">Services</summary>
         <div class="pop svc">
           <article>
-            <h3>Chrome extensions <b>From $500</b></h3>
+            <h3>Chrome Extensions <b>From $500</b></h3>
             <p class="q">"Our product only works while someone is sitting on our site."</p>
             <p>A published Manifest V3 extension, the source, the store listing with screenshots, and a demo clip for your launch.</p>
           </article>
           <article>
-            <h3>MCP servers <b>From $500</b></h3>
+            <h3>MCP Servers and Agent Skills <b>From $500</b></h3>
             <p class="q">"People want to use us from inside Claude, and there is no door."</p>
             <p>An MCP server over the API you already have, a skill file so agents use it correctly rather than guessing, and a test run against a real account.</p>
             <p><a href="https://intake.radrebeldeveloper.com/deployment-0815c5ef-24a2-4be5-a356-375b37ed1c70" target="_blank" rel="noopener">Start the project intake</a></p>
@@ -207,49 +207,29 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
             <p>The job running on a schedule, a written record of every system it touches, and an alert that reaches a human when it fails.</p>
           </article>
           <article>
-            <h3>Online stores <b>From $1,000</b></h3>
+            <h3>Online Stores <b>From $1,000</b></h3>
             <p class="q">"We need to sell online without assembling twelve plugins."</p>
             <p>A live store with payments, shipping and inventory set up, your own domain and certificate, and a walkthrough so your team can run it without me.</p>
           </article>
           <article>
-            <h3>Custom AI agents <b>From $1,000</b></h3>
+            <h3>Custom AI Agents <b>From $1,000</b></h3>
             <p class="q">"We keep doing the same research by hand, every time."</p>
             <p>An agent that does the job end to end on your own data and tools, with the prompts and code handed over, and a human check where a wrong answer would cost you.</p>
           </article>
           <article>
-            <h3>Self-updating directories <b>From $1,000</b></h3>
+            <h3>Self-Updating Directories <b>From $1,000</b></h3>
             <p class="q">"Our list of tools is out of date the day we publish it."</p>
             <p>A directory site that crawls its sources on a schedule, adds and retires entries by itself, and stays yours to edit.</p>
           </article>
           <article>
-            <h3>MVP builds <b>From $2,500</b></h3>
+            <h3>MVP Builds <b>From $2,500</b></h3>
             <p class="q">"We have the idea and the first customers, but no product."</p>
             <p>A working first version with sign-in, payments and a landing page, on your own accounts, ready for real users.</p>
           </article>
           <article>
-            <h3>AI chatbots <b>From $500</b></h3>
-            <p class="q">"People ask us the same ten questions every day."</p>
-            <p>A chatbot on your site trained on your own documents, that answers in your voice and hands over to a person when it is unsure.</p>
-          </article>
-          <article>
-            <h3>AI phone agents <b>From $500</b></h3>
-            <p class="q">"We miss calls, and every missed call is a lost booking."</p>
-            <p>A voice agent on your number that answers, qualifies and books, with every call transcribed and sent to you.</p>
-          </article>
-          <article>
-            <h3>Client portals and internal tools <b>From $500</b></h3>
-            <p class="q">"We run the business from five spreadsheets and a shared inbox."</p>
-            <p>One login for your team or your clients: the data, forms and views you actually use, with roles and a clean handover.</p>
-          </article>
-          <article>
-            <h3>Booking systems <b>From $500</b></h3>
-            <p class="q">"Scheduling by email is eating our week."</p>
-            <p>A branded booking page with your services, staff, payments and reminders, connected to your calendar.</p>
-          </article>
-          <article>
-            <h3>Security and email check-up <b>From $500</b></h3>
-            <p class="q">"We have no idea if our site or our email is exposed."</p>
-            <p>A scan of your site and API, your SPF, DKIM and DMARC put right, and a short report in plain words with what was fixed.</p>
+            <h3>Monthly Plan <b>From $19/mo</b></h3>
+            <p class="q">"The site is live. Now who answers the questions and keeps it healthy?"</p>
+            <p>Add it to a store, site or MVP build. $19 a month: an AI chatbot kept trained on your catalog and pages. $39 a month: the chatbot, a booking page, a monthly security and email check, and small fixes. An AI phone agent is $29 a month more, plus call minutes at cost.</p>
           </article>
           <a class="btn" href="mailto:contact@radrebeldeveloper.com">Start a conversation</a>
         </div>
@@ -377,8 +357,8 @@ let DATA = /*__DATA__*/null;      // build.py fills this in for the self-contain
 if (!DATA) {
   /* on the site: read the manifest the daily scan writes, and file each project in its drawer */
   const m = await fetch('projects.json').then((r) => r.json()).catch(() => window.FALLBACK);
-  const LABELS = { 'chrome-extension': 'Chrome extensions', 'obsidian-plugin': 'Obsidian plugins', saas: 'SaaS', skill: 'Skills',
-    directory: 'Directories', site: 'Sites', ios: 'iOS apps', misc: 'Misc' };
+  const LABELS = { 'chrome-extension': 'Chrome Extensions', 'obsidian-plugin': 'Obsidian Plugins', saas: 'SaaS', skill: 'Skills',
+    directory: 'Directories', site: 'Sites', ios: 'iOS Apps', misc: 'Misc' };
   const groups = {};
   for (const p of m.projects) {
     (groups[p.category in LABELS ? p.category : 'misc'] ||= []).push({ ...p,
