@@ -191,12 +191,12 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
         <summary class="chip">Services</summary>
         <div class="pop svc">
           <article>
-            <h3>Chrome Extensions <b>From $500</b></h3>
+            <h3>Chrome extensions <b>From $500</b></h3>
             <p class="q">"Our product only works while someone is sitting on our site."</p>
             <p>A published Manifest V3 extension, the source, the store listing with screenshots, and a demo clip for your launch.</p>
           </article>
           <article>
-            <h3>MCP Servers and Agent Skills <b>From $500</b></h3>
+            <h3>MCP servers <b>From $500</b></h3>
             <p class="q">"People want to use us from inside Claude, and there is no door."</p>
             <p>An MCP server over the API you already have, a skill file so agents use it correctly rather than guessing, and a test run against a real account.</p>
             <p><a href="https://intake.radrebeldeveloper.com/deployment-0815c5ef-24a2-4be5-a356-375b37ed1c70" target="_blank" rel="noopener">Start the project intake</a></p>
@@ -207,27 +207,27 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
             <p>The job running on a schedule, a written record of every system it touches, and an alert that reaches a human when it fails.</p>
           </article>
           <article>
-            <h3>Online Stores <b>From $1,000</b></h3>
+            <h3>Online stores <b>From $1,000</b></h3>
             <p class="q">"We need to sell online without assembling twelve plugins."</p>
             <p>A live store with payments, shipping and inventory set up, your own domain and certificate, and a walkthrough so your team can run it without me.</p>
           </article>
           <article>
-            <h3>Custom AI Agents <b>From $1,000</b></h3>
+            <h3>Custom AI agents <b>From $1,000</b></h3>
             <p class="q">"We keep doing the same research by hand, every time."</p>
             <p>An agent that does the job end to end on your own data and tools, with the prompts and code handed over, and a human check where a wrong answer would cost you.</p>
           </article>
           <article>
-            <h3>Self-Updating Directories <b>From $1,000</b></h3>
+            <h3>Self-updating directories <b>From $1,000</b></h3>
             <p class="q">"Our list of tools is out of date the day we publish it."</p>
             <p>A directory site that crawls its sources on a schedule, adds and retires entries by itself, and stays yours to edit.</p>
           </article>
           <article>
-            <h3>MVP Builds <b>From $2,500</b></h3>
+            <h3>MVP builds <b>From $2,500</b></h3>
             <p class="q">"We have the idea and the first customers, but no product."</p>
             <p>A working first version with sign-in, payments and a landing page, on your own accounts, ready for real users.</p>
           </article>
           <article>
-            <h3>Monthly Plan <b>From $19/mo</b></h3>
+            <h3>Monthly plan <b>From $19/mo</b></h3>
             <p class="q">"The site is live. Now who answers the questions and keeps it healthy?"</p>
             <p>Add it to a store, site or MVP build. $19 a month: an AI chatbot kept trained on your catalog and pages. $39 a month: the chatbot, a booking page, a monthly security and email check, and small fixes. An AI phone agent is $29 a month more, plus call minutes at cost.</p>
           </article>
@@ -357,8 +357,8 @@ let DATA = /*__DATA__*/null;      // build.py fills this in for the self-contain
 if (!DATA) {
   /* on the site: read the manifest the daily scan writes, and file each project in its drawer */
   const m = await fetch('projects.json').then((r) => r.json()).catch(() => window.FALLBACK);
-  const LABELS = { 'chrome-extension': 'Chrome Extensions', 'obsidian-plugin': 'Obsidian Plugins', saas: 'SaaS', skill: 'Skills',
-    directory: 'Directories', site: 'Sites', ios: 'iOS Apps', misc: 'Misc' };
+  const LABELS = { 'chrome-extension': 'Chrome extensions', 'obsidian-plugin': 'Obsidian plugins', saas: 'SaaS', skill: 'Skills',
+    directory: 'Directories', site: 'Sites', ios: 'iOS apps', misc: 'Misc' };
   const groups = {};
   for (const p of m.projects) {
     (groups[p.category in LABELS ? p.category : 'misc'] ||= []).push({ ...p,
