@@ -20,6 +20,12 @@ before deploy, never on the server.
 | `overrides.json` | Hand-set names, taglines, categories. Wins over the scan. |
 | `extras.json` | Projects not on a `radrebeldeveloper.com` subdomain. |
 
+## The page
+
+`index.html` is the filing-cabinet homepage. Its source is `_tools/concepts/rrd-filing-cabinet/template.html` in the
+owner's Code folder: edit that, then run `python build.py --site` there, which writes `index.html` and `assets/models/`
+here. `scan.mjs` only rewrites the inline copy of the project list inside it.
+
 ## Adding a project
 
 The list of projects is the owner's: it comes from the Sync tab of the workbook (columns `RRD Visibility`,

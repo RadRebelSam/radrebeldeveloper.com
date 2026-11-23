@@ -778,13 +778,16 @@ function makeFigure() {
   for (const s of [-1, 1]) {
     const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.035, 24), dark); cup.rotation.z = Math.PI / 2; cup.position.set(0.152 * s, -0.005, -0.012);
     const ear = ball(0.042, fur, 0.15 * s, -0.055, -0.005); ear.scale.set(1.8, 0.45, 0.85); ear.rotation.z = -0.75 * s;      // ears droop out under the cups
-    // an eye is nested balls sunk deep into the face, so it shows as a nearly flat disc: white, iris, pupil, a glint. The iris sits toward the nose so she looks ahead
+    // an eye is a white ball sunk deep into the face. Iris, pupil and glint are patches of that same curved surface,
+    // each a hair further out so they do not flicker, so nothing stands proud of the white. The iris sits toward the nose.
     const e = new V3(0.04 * s, 0.018, 0.068).normalize().multiplyScalar(0.055), gaze = new V3(0.42 * s, 0.2, 1).normalize();
-    head.add(cup, ear,
-      at(new THREE.Mesh(new THREE.SphereGeometry(0.045, 32, 20), white), e),
-      at(new THREE.Mesh(new THREE.SphereGeometry(0.02, 24, 16), brown), e.clone().addScaledVector(gaze, 0.027)),
-      at(new THREE.Mesh(new THREE.SphereGeometry(0.012, 16, 12), ink), e.clone().addScaledVector(gaze, 0.0365)),
-      at(new THREE.Mesh(new THREE.SphereGeometry(0.004, 10, 8), white), e.clone().addScaledVector(gaze, 0.0475).add(new V3(0.004, 0.006, 0))));
+    const patch = (r, angle, m, dir) => {
+      const o = at(new THREE.Mesh(new THREE.SphereGeometry(r, 24, 8, 0, Math.PI * 2, 0, angle), m), e);
+      o.quaternion.setFromUnitVectors(new V3(0, 1, 0), dir); return o;
+    };
+    head.add(cup, ear, at(new THREE.Mesh(new THREE.SphereGeometry(0.045, 32, 20), white), e),
+      patch(0.0453, 0.25, brown, gaze), patch(0.0456, 0.14, ink, gaze),
+      patch(0.0459, 0.045, white, gaze.clone().add(new V3(0.1, 0.14, 0)).normalize()));
   }
   head.traverse((m) => { m.castShadow = true; });
   g.add(head);
