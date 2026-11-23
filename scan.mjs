@@ -320,7 +320,10 @@ const projects = [];
 const seen = new Set();
 const listed = new Map();                            /* slug -> its row in the owner's list */
 for (const row of listing) {
-  const p = await probe(row.link, true);              /* named by the owner: never dropped */
+  /* no link: the owner lists it as work in progress, so there is nothing to probe and nowhere to send anyone */
+  const p = row.link
+    ? await probe(row.link, true)                     /* named by the owner: never dropped */
+    : { slug: row.name.replace(/[^a-z0-9]+/g, '-'), host: '', name: row.name, tagline: '', category: row.category, icon: '', status: 'building' };
   if (p && !seen.has(p.slug)) { seen.add(p.slug); listed.set(p.slug, row); projects.push(p); }
 }
 for (const t of slugs) {
@@ -346,7 +349,7 @@ try { overrides = JSON.parse(await readFile(OVERRIDES, 'utf8')); } catch {}
 for (const p of projects) {
   Object.assign(p, overrides[p.slug] || {});
   /* the owner's list has the last word on what a project is called and where it is filed */
-  if (listed.has(p.slug)) { p.name = listed.get(p.slug).name; p.category = listed.get(p.slug).category; }
+  if (listed.has(p.slug)) { p.name = listed.get(p.slug).name || p.name; p.category = listed.get(p.slug).category; }
   /* house style: all lower case, no spaces - words are joined with hyphens */
   p.name = String(p.name || p.slug).trim().toLowerCase().replace(/[\s_]+/g, '-');
   /* a hand-supplied logo counts as shipped - some hosts just never set a favicon */

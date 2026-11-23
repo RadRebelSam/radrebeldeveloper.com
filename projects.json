@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-11-22T23:22:41.729Z",
+  "generated": "2026-11-23T00:13:04.645Z",
   "projects": [
     {
       "slug": "ache",
@@ -75,15 +75,6 @@
       "status": "live"
     },
     {
-      "slug": "clawconnected",
-      "host": "clawconnected.com",
-      "name": "clawconnected.com",
-      "tagline": "The API-first, agent-to-agent gig marketplace. Any AI agent can…",
-      "category": "saas",
-      "icon": "icons/clawconnected.24b1b715.jpg",
-      "status": "live"
-    },
-    {
       "slug": "decoder",
       "host": "decoder.radrebeldeveloper.com",
       "name": "decoder",
@@ -93,12 +84,12 @@
       "status": "live"
     },
     {
-      "slug": "fundedstartuplist",
-      "host": "fundedstartuplist.com",
-      "name": "fundedstartuplist.com",
-      "tagline": "You got funded. Now show why it matters.",
+      "slug": "federicopian-clone",
+      "host": "github.com/RadRebelSam/federicopian-clone",
+      "name": "federicopian-clone",
+      "tagline": "",
       "category": "site",
-      "icon": "icons/fundedstartuplist.a7c8f0ed.png",
+      "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
     {
@@ -111,30 +102,39 @@
       "status": "live"
     },
     {
-      "slug": "linkparlor",
-      "host": "linkparlor.radrebeldeveloper.com",
-      "name": "linkparlor",
-      "tagline": "LinkParlor",
-      "category": "saas",
-      "icon": "icons/linkparlor.f68e5f08.svg",
+      "slug": "judge",
+      "host": "clawmagic.ai/plugin/judge",
+      "name": "clawmagic",
+      "tagline": "Your AI workstation for Agent Orbs. Connect your tools, build…",
+      "category": "misc",
+      "icon": "icons/judge.b43d02ea.png",
       "status": "live"
     },
     {
-      "slug": "littleclayworld",
-      "host": "littleclayworld.com",
-      "name": "littleclayworld.com",
-      "tagline": "It's my awesome LittleClayWorld website.",
+      "slug": "mcp-bridge",
+      "host": "clawmagic.ai/plugin/mcp-bridge",
+      "name": "clawmagic",
+      "tagline": "Your AI workstation for Agent Orbs. Connect your tools, build…",
+      "category": "misc",
+      "icon": "icons/mcp-bridge.b43d02ea.png",
+      "status": "live"
+    },
+    {
+      "slug": "motionsites-demo",
+      "host": "github.com/RadRebelSam/motionsites-demo",
+      "name": "motionsites-demo",
+      "tagline": "",
       "category": "site",
-      "icon": "icons/littleclayworld.fa0a8474.png",
+      "icon": "icons/github.1bedd6a1.png",
       "status": "live"
     },
     {
-      "slug": "nexusauditor",
-      "host": "nexusauditor.com",
-      "name": "nexusauditor.com",
-      "tagline": "Per-state nexus answers you can defend",
-      "category": "saas",
-      "icon": "icons/nexusauditor.d24f6f41.png",
+      "slug": "provider-adapter",
+      "host": "clawmagic.ai/plugin/provider-adapter",
+      "name": "clawmagic",
+      "tagline": "Your AI workstation for Agent Orbs. Connect your tools, build…",
+      "category": "misc",
+      "icon": "icons/provider-adapter.b43d02ea.png",
       "status": "live"
     },
     {
@@ -174,12 +174,12 @@
       "status": "live"
     },
     {
-      "slug": "sharethismemory",
-      "host": "sharethismemory.com",
-      "name": "sharethismemory.com",
-      "tagline": "ShareThisMemory",
+      "slug": "ricksanchez",
+      "host": "ricksanchez.radrebeldeveloper.com",
+      "name": "ricksanchez",
+      "tagline": "Rick and Morty season hub",
       "category": "site",
-      "icon": "icons/sharethismemory.1e990a98.png",
+      "icon": "icons/ricksanchez.9c8bd75e.png",
       "status": "live"
     },
     {
@@ -228,15 +228,6 @@
       "status": "live"
     },
     {
-      "slug": "verdict",
-      "host": "verdict.radrebeldeveloper.com",
-      "name": "verdict",
-      "tagline": "Ten research agents read 60+ live sources and grade your…",
-      "category": "saas",
-      "icon": "icons/verdict.c1f7a0bd.png",
-      "status": "live"
-    },
-    {
       "slug": "videomark",
       "host": "github.com/RadRebelSam/videomark",
       "name": "videomark",
@@ -264,55 +255,118 @@
       "status": "live"
     },
     {
-      "slug": "cottinaceramics",
-      "host": "cottinaceramics.com",
+      "slug": "clawconnected-com",
+      "host": "",
+      "name": "clawconnected.com",
+      "tagline": "",
+      "category": "saas",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "cottinaceramics-com",
+      "host": "",
       "name": "cottinaceramics.com",
-      "tagline": "No favicon yet - still being built.",
+      "tagline": "",
       "category": "site",
       "icon": "",
       "status": "building"
     },
     {
-      "slug": "flutterrobotics",
-      "host": "flutterrobotics.com",
+      "slug": "ezystudiodev-hoaportal",
+      "host": "",
+      "name": "ezystudiodev-hoaportal",
+      "tagline": "",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "flutterrobotics-com",
+      "host": "",
       "name": "flutterrobotics.com",
-      "tagline": "Not live yet.",
+      "tagline": "",
       "category": "site",
       "icon": "",
       "status": "building"
     },
     {
-      "slug": "glazedpetal",
-      "host": "glazedpetal.com",
+      "slug": "fundedstartuplist-com",
+      "host": "",
+      "name": "fundedstartuplist.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "glazedpetal-com",
+      "host": "",
       "name": "glazedpetal.com",
-      "tagline": "No favicon yet - still being built.",
+      "tagline": "",
       "category": "site",
       "icon": "",
       "status": "building"
     },
     {
-      "slug": "ipixelit",
-      "host": "ipixelit.com",
+      "slug": "inkling",
+      "host": "",
+      "name": "inkling",
+      "tagline": "",
+      "category": "ios",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "ipixelit-com",
+      "host": "",
       "name": "ipixelit.com",
-      "tagline": "Not live yet.",
+      "tagline": "",
       "category": "site",
       "icon": "",
       "status": "building"
     },
     {
-      "slug": "minjiceramics",
-      "host": "minjiceramics.com",
+      "slug": "linkparlor",
+      "host": "",
+      "name": "linkparlor",
+      "tagline": "",
+      "category": "saas",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "littleclayworld-com",
+      "host": "",
+      "name": "littleclayworld.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "minjiceramics-com",
+      "host": "",
       "name": "minjiceramics.com",
-      "tagline": "No favicon yet - still being built.",
+      "tagline": "",
       "category": "site",
       "icon": "",
       "status": "building"
     },
     {
-      "slug": "radrebelcommerce",
-      "host": "radrebelcommerce.com",
+      "slug": "nexusauditor-com",
+      "host": "",
+      "name": "nexusauditor.com",
+      "tagline": "",
+      "category": "saas",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "radrebelcommerce-com",
+      "host": "",
       "name": "radrebelcommerce.com",
-      "tagline": "No favicon yet - still being built.",
+      "tagline": "",
       "category": "site",
       "icon": "",
       "status": "building"
@@ -328,36 +382,54 @@
     },
     {
       "slug": "secondthought",
-      "host": "secondthought.radrebeldeveloper.com",
+      "host": "",
       "name": "secondthought",
-      "tagline": "Not live yet.",
+      "tagline": "",
       "category": "chrome-extension",
       "icon": "",
       "status": "building"
     },
     {
-      "slug": "synapsecanvas",
-      "host": "synapsecanvas.radrebeldeveloper.com",
-      "name": "synapsecanvas",
-      "tagline": "Not serving yet (HTTP 403).",
-      "category": "misc",
-      "icon": "",
-      "status": "building"
-    },
-    {
-      "slug": "verisitesystem",
-      "host": "verisitesystem.com",
-      "name": "verisitesystem.com",
-      "tagline": "No favicon yet - still being built.",
+      "slug": "sharethismemory-com",
+      "host": "",
+      "name": "sharethismemory.com",
+      "tagline": "",
       "category": "site",
       "icon": "",
       "status": "building"
     },
     {
-      "slug": "yuniqueprint",
-      "host": "yuniqueprint.com",
+      "slug": "synapsecanvas",
+      "host": "",
+      "name": "synapsecanvas",
+      "tagline": "",
+      "category": "misc",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "verdict",
+      "host": "",
+      "name": "verdict",
+      "tagline": "",
+      "category": "saas",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "verisitesystem-com",
+      "host": "",
+      "name": "verisitesystem.com",
+      "tagline": "",
+      "category": "site",
+      "icon": "",
+      "status": "building"
+    },
+    {
+      "slug": "yuniqueprint-com",
+      "host": "",
       "name": "yuniqueprint.com",
-      "tagline": "No favicon yet - still being built.",
+      "tagline": "",
       "category": "site",
       "icon": "",
       "status": "building"

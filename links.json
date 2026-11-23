@@ -1,0 +1,7 @@
+{
+  "_comment": "Addresses the Sync tab cannot hold, keyed by its Project name: a project whose address is not its folder or repo name, or one row that is several things. Each address becomes one sticker. Read by dashboard/export_rrd.py; it wins over the tab's RRD Link To. Given by the owner on 2026-11-22.",
+  "motionsites-demo": ["github.com/RadRebelSam/motionsites-demo"],
+  "federicopian-clone": ["github.com/RadRebelSam/federicopian-clone"],
+  "rick-sanchez": ["ricksanchez.radrebeldeveloper.com"],
+  "ClawMagic-Plugin": ["clawmagic.ai/plugin/judge", "clawmagic.ai/plugin/provider-adapter", "clawmagic.ai/plugin/mcp-bridge"]
+}

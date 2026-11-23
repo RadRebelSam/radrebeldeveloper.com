@@ -2,204 +2,236 @@
   "_comment": "Written by dashboard/export_rrd.py from the Sync tab. Do not edit by hand: change the Sync tab and run it again.",
   "projects": [
     {
-      "name": "ai-web-activity-monitor",
-      "category": "misc",
-      "link": "github.com/RadRebelSam/ai-web-activity-monitor"
-    },
-    {
-      "name": "darkpatterns",
-      "category": "misc",
-      "link": "github.com/RadRebelSam/ai4all-20c-darkpatterns"
-    },
-    {
-      "name": "ai-support-agent",
-      "category": "misc",
-      "link": "github.com/RadRebelSam/ai-support-agent"
-    },
-    {
-      "name": "sora-watermark",
-      "category": "misc",
-      "link": "github.com/RadRebelSam/sora-watermark"
-    },
-    {
-      "name": "storyflow",
-      "category": "misc",
-      "link": "github.com/RadRebelSam/storyflow"
-    },
-    {
-      "name": "true-me-in-browser",
-      "category": "misc",
-      "link": "github.com/RadRebelSam/true-me-in-browser"
-    },
-    {
-      "name": "videomark",
-      "category": "misc",
-      "link": "github.com/RadRebelSam/videomark"
-    },
-    {
-      "name": "awesome-jev",
-      "category": "misc",
-      "link": "github.com/RadRebelSam/awesome-jev"
-    },
-    {
-      "name": "jev-decision-lab",
-      "category": "misc",
-      "link": "github.com/RadRebelSam/jev-decision-lab"
-    },
-    {
-      "name": "whichjudge.dev",
-      "category": "misc",
-      "link": "github.com/RadRebelSam/whichjudge.dev"
-    },
-    {
-      "name": "nexusauditor.com",
-      "category": "saas",
-      "link": "nexusauditor.com"
-    },
-    {
-      "name": "linkparlor",
-      "category": "saas",
-      "link": "linkparlor.radrebeldeveloper.com"
-    },
-    {
-      "name": "verdict",
-      "category": "saas",
-      "link": "verdict.radrebeldeveloper.com"
+      "category": "site",
+      "link": "radrebelsam.com",
+      "name": "radrebelsam.com"
     },
     {
       "name": "cottinaceramics.com",
       "category": "site",
-      "link": "cottinaceramics.com"
-    },
-    {
-      "name": "littleclayworld.com",
-      "category": "site",
-      "link": "littleclayworld.com"
-    },
-    {
-      "name": "minjiceramics.com",
-      "category": "site",
-      "link": "minjiceramics.com"
-    },
-    {
-      "name": "fundedstartuplist.com",
-      "category": "site",
-      "link": "fundedstartuplist.com"
-    },
-    {
-      "name": "sharethismemory.com",
-      "category": "site",
-      "link": "sharethismemory.com"
-    },
-    {
-      "name": "ache",
-      "category": "chrome-extension",
-      "link": "ache.radrebeldeveloper.com"
-    },
-    {
-      "name": "bouncer",
-      "category": "chrome-extension",
-      "link": "bouncer.radrebeldeveloper.com"
-    },
-    {
-      "name": "catch",
-      "category": "chrome-extension",
-      "link": "catch.radrebeldeveloper.com"
-    },
-    {
-      "name": "decoder",
-      "category": "chrome-extension",
-      "link": "decoder.radrebeldeveloper.com"
-    },
-    {
-      "name": "reposcout",
-      "category": "chrome-extension",
-      "link": "reposcout.radrebeldeveloper.com"
-    },
-    {
-      "name": "rewordly",
-      "category": "chrome-extension",
-      "link": "rewordly.radrebeldeveloper.com"
-    },
-    {
-      "name": "sift",
-      "category": "chrome-extension",
-      "link": "sift.radrebeldeveloper.com"
-    },
-    {
-      "name": "swipe",
-      "category": "chrome-extension",
-      "link": "swipe.radrebeldeveloper.com"
-    },
-    {
-      "name": "worth",
-      "category": "chrome-extension",
-      "link": "worth.radrebeldeveloper.com"
-    },
-    {
-      "name": "awesome-x",
-      "category": "misc",
-      "link": "github.com/RadRebelSam/awesome-x"
-    },
-    {
-      "name": "radrebelsam.com",
-      "category": "site",
-      "link": "radrebelsam.com"
-    },
-    {
-      "name": "radrebeldeveloper.com",
-      "category": "site",
-      "link": "radrebeldeveloper.com"
-    },
-    {
-      "name": "radrebelmarketing.com",
-      "category": "site",
-      "link": "radrebelmarketing.com"
-    },
-    {
-      "name": "radrebelcommerce.com",
-      "category": "site",
-      "link": "radrebelcommerce.com"
-    },
-    {
-      "name": "secondthought",
-      "category": "chrome-extension",
-      "link": "secondthought.radrebeldeveloper.com"
-    },
-    {
-      "name": "synapsecanvas",
-      "category": "misc",
-      "link": "synapsecanvas.radrebeldeveloper.com"
-    },
-    {
-      "name": "clawconnected.com",
-      "category": "saas",
-      "link": "clawconnected.com"
+      "link": ""
     },
     {
       "name": "glazedpetal.com",
       "category": "site",
-      "link": "glazedpetal.com"
+      "link": ""
     },
     {
       "name": "ipixelit.com",
       "category": "site",
-      "link": "ipixelit.com"
+      "link": ""
+    },
+    {
+      "name": "littleclayworld.com",
+      "category": "site",
+      "link": ""
+    },
+    {
+      "name": "minjiceramics.com",
+      "category": "site",
+      "link": ""
+    },
+    {
+      "name": "radrebelcommerce.com",
+      "category": "site",
+      "link": ""
     },
     {
       "name": "yuniqueprint.com",
       "category": "site",
-      "link": "yuniqueprint.com"
+      "link": ""
+    },
+    {
+      "category": "chrome-extension",
+      "link": "ache.radrebeldeveloper.com",
+      "name": "ache"
+    },
+    {
+      "category": "misc",
+      "link": "github.com/RadRebelSam/ai-support-agent",
+      "name": "ai-support-agent"
+    },
+    {
+      "category": "misc",
+      "link": "github.com/RadRebelSam/ai-web-activity-monitor",
+      "name": "ai-web-activity-monitor"
+    },
+    {
+      "category": "misc",
+      "link": "awesomejev.radrebeldeveloper.com",
+      "name": "awesome-jev"
+    },
+    {
+      "category": "misc",
+      "link": "awesomex.radrebeldeveloper.com",
+      "name": "awesome-x"
+    },
+    {
+      "category": "chrome-extension",
+      "link": "bouncer.radrebeldeveloper.com",
+      "name": "bouncer"
+    },
+    {
+      "category": "chrome-extension",
+      "link": "catch.radrebeldeveloper.com",
+      "name": "catch"
+    },
+    {
+      "name": "clawconnected.com",
+      "category": "saas",
+      "link": ""
+    },
+    {
+      "category": "misc",
+      "link": "clawmagic.ai/plugin/judge"
+    },
+    {
+      "category": "misc",
+      "link": "clawmagic.ai/plugin/provider-adapter"
+    },
+    {
+      "category": "misc",
+      "link": "clawmagic.ai/plugin/mcp-bridge"
+    },
+    {
+      "category": "misc",
+      "link": "github.com/RadRebelSam/ai4all-20c-darkpatterns",
+      "name": "darkpatterns"
+    },
+    {
+      "category": "chrome-extension",
+      "link": "decoder.radrebeldeveloper.com",
+      "name": "decoder"
+    },
+    {
+      "name": "ezystudiodev-hoaportal",
+      "category": "misc",
+      "link": ""
+    },
+    {
+      "category": "site",
+      "link": "github.com/RadRebelSam/federicopian-clone",
+      "name": "federicopian-clone"
+    },
+    {
+      "name": "inkling",
+      "category": "ios",
+      "link": ""
+    },
+    {
+      "category": "misc",
+      "link": "jevdecisionlab.radrebeldeveloper.com",
+      "name": "jev-decision-lab"
+    },
+    {
+      "name": "linkparlor",
+      "category": "saas",
+      "link": ""
+    },
+    {
+      "category": "site",
+      "link": "github.com/RadRebelSam/motionsites-demo",
+      "name": "motionsites-demo"
+    },
+    {
+      "name": "nexusauditor.com",
+      "category": "saas",
+      "link": ""
+    },
+    {
+      "category": "chrome-extension",
+      "link": "reposcout.radrebeldeveloper.com",
+      "name": "reposcout"
+    },
+    {
+      "category": "chrome-extension",
+      "link": "rewordly.radrebeldeveloper.com",
+      "name": "rewordly"
+    },
+    {
+      "category": "site",
+      "link": "ricksanchez.radrebeldeveloper.com",
+      "name": "ricksanchez"
+    },
+    {
+      "name": "secondthought",
+      "category": "chrome-extension",
+      "link": ""
+    },
+    {
+      "category": "chrome-extension",
+      "link": "sift.radrebeldeveloper.com",
+      "name": "sift"
+    },
+    {
+      "category": "misc",
+      "link": "github.com/RadRebelSam/sora-watermark",
+      "name": "sora-watermark"
+    },
+    {
+      "category": "misc",
+      "link": "github.com/RadRebelSam/storyflow",
+      "name": "storyflow"
+    },
+    {
+      "category": "chrome-extension",
+      "link": "swipe.radrebeldeveloper.com",
+      "name": "swipe"
+    },
+    {
+      "name": "synapsecanvas",
+      "category": "misc",
+      "link": ""
+    },
+    {
+      "category": "misc",
+      "link": "github.com/RadRebelSam/true-me-in-browser",
+      "name": "true-me-in-browser"
+    },
+    {
+      "name": "verdict",
+      "category": "saas",
+      "link": ""
+    },
+    {
+      "category": "misc",
+      "link": "github.com/RadRebelSam/videomark",
+      "name": "videomark"
+    },
+    {
+      "category": "misc",
+      "link": "whichjudge.dev",
+      "name": "whichjudge.dev"
+    },
+    {
+      "category": "chrome-extension",
+      "link": "worth.radrebeldeveloper.com",
+      "name": "worth"
     },
     {
       "name": "flutterrobotics.com",
       "category": "site",
-      "link": "flutterrobotics.com"
+      "link": ""
+    },
+    {
+      "name": "fundedstartuplist.com",
+      "category": "site",
+      "link": ""
+    },
+    {
+      "category": "site",
+      "link": "radrebelmarketing.com",
+      "name": "radrebelmarketing.com"
+    },
+    {
+      "name": "sharethismemory.com",
+      "category": "site",
+      "link": ""
     },
     {
       "name": "verisitesystem.com",
       "category": "site",
-      "link": "verisitesystem.com"
+      "link": ""
     }
   ]
 }
