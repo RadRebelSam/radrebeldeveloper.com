@@ -83,11 +83,14 @@ ol{list-style:none}
 .pop p{margin:0 0 6px}
 .pop .q{font-style:italic}
 .pop a:not(.btn){color:inherit;text-underline-offset:3px}
+/* twelve services: two columns on a wide window. Fixed to the window, because hung under its chip the wide panel ran off the left edge below about 1100px */
+.pop.svc{position:fixed;right:var(--gut);top:64px;width:min(780px,calc(100vw - 2 * var(--gut)));display:grid;grid-template-columns:1fr 1fr;gap:0 24px;align-items:start}
+.pop.svc .btn{grid-column:1 / -1}
 .pop.links{width:230px;display:grid;gap:2px;padding:10px}
 .pop.links a{display:flex;justify-content:space-between;gap:12px;padding:9px 8px;border-radius:8px;text-decoration:none}
 .pop.links a:hover{background:rgba(20,22,28,.07)}
 .pop.links span{font:500 12px/1.6 var(--f-mono)}
-@media (max-width:760px){.swatches{display:none}.tools{gap:6px}.pop{position:fixed;left:var(--gut);right:var(--gut);top:64px;width:auto}}
+@media (max-width:760px){.swatches{display:none}.tools{gap:6px}.pop,.pop.svc{position:fixed;left:var(--gut);right:var(--gut);top:64px;width:auto;grid-template-columns:1fr}}
 
 /* left column */
 .left{position:absolute;left:var(--gut);top:clamp(64px,11vh,104px);bottom:calc(var(--word-h,18vh) + 20px);
@@ -186,7 +189,7 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
     <div class="tools">
       <details class="menu">
         <summary class="chip">Services</summary>
-        <div class="pop">
+        <div class="pop svc">
           <article>
             <h3>Chrome extensions <b>From $500</b></h3>
             <p class="q">"Our product only works while someone is sitting on our site."</p>
@@ -207,6 +210,46 @@ h1{font:400 clamp(26px,min(4.2vw,6.4vh),58px)/1.02 var(--f-display);letter-spaci
             <h3>Online stores <b>From $1,000</b></h3>
             <p class="q">"We need to sell online without assembling twelve plugins."</p>
             <p>A live store with payments, shipping and inventory set up, your own domain and certificate, and a walkthrough so your team can run it without me.</p>
+          </article>
+          <article>
+            <h3>Custom AI agents <b>From $1,000</b></h3>
+            <p class="q">"We keep doing the same research by hand, every time."</p>
+            <p>An agent that does the job end to end on your own data and tools, with the prompts and code handed over, and a human check where a wrong answer would cost you.</p>
+          </article>
+          <article>
+            <h3>Self-updating directories <b>From $1,000</b></h3>
+            <p class="q">"Our list of tools is out of date the day we publish it."</p>
+            <p>A directory site that crawls its sources on a schedule, adds and retires entries by itself, and stays yours to edit.</p>
+          </article>
+          <article>
+            <h3>MVP builds <b>From $2,500</b></h3>
+            <p class="q">"We have the idea and the first customers, but no product."</p>
+            <p>A working first version with sign-in, payments and a landing page, on your own accounts, ready for real users.</p>
+          </article>
+          <article>
+            <h3>AI chatbots <b>From $500</b></h3>
+            <p class="q">"People ask us the same ten questions every day."</p>
+            <p>A chatbot on your site trained on your own documents, that answers in your voice and hands over to a person when it is unsure.</p>
+          </article>
+          <article>
+            <h3>AI phone agents <b>From $500</b></h3>
+            <p class="q">"We miss calls, and every missed call is a lost booking."</p>
+            <p>A voice agent on your number that answers, qualifies and books, with every call transcribed and sent to you.</p>
+          </article>
+          <article>
+            <h3>Client portals and internal tools <b>From $500</b></h3>
+            <p class="q">"We run the business from five spreadsheets and a shared inbox."</p>
+            <p>One login for your team or your clients: the data, forms and views you actually use, with roles and a clean handover.</p>
+          </article>
+          <article>
+            <h3>Booking systems <b>From $500</b></h3>
+            <p class="q">"Scheduling by email is eating our week."</p>
+            <p>A branded booking page with your services, staff, payments and reminders, connected to your calendar.</p>
+          </article>
+          <article>
+            <h3>Security and email check-up <b>From $500</b></h3>
+            <p class="q">"We have no idea if our site or our email is exposed."</p>
+            <p>A scan of your site and API, your SPF, DKIM and DMARC put right, and a short report in plain words with what was fixed.</p>
           </article>
           <a class="btn" href="mailto:contact@radrebeldeveloper.com">Start a conversation</a>
         </div>
