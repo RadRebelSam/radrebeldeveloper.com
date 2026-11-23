@@ -16,7 +16,7 @@
 
 import { readFile, writeFile, mkdir, readdir, stat } from 'node:fs/promises';
 import { deflateRawSync } from 'node:zlib';
-import { resolve, dirname, posix } from 'node:path';
+import { resolve, dirname, posix, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -106,8 +106,13 @@ async function collect() {
   for (const f of FILES) out.push(f);
   for (const d of DIRS) {
     let names = [];
-    try { names = await readdir(resolve(HERE, d)); } catch { continue; }
-    for (const name of names.sort()) out.push(posix.join(d, name));
+    /* recursive: assets/models/ holds the page's 3D models */
+    const base = resolve(HERE, d);
+    let found = [];
+    try { found = await readdir(base, { recursive: true, withFileTypes: true }); } catch { continue; }
+    const files = found.filter(e => e.isFile())
+      .map(e => posix.join(d, relative(base, resolve(e.parentPath ?? e.path, e.name)).split(sep).join('/')));
+    for (const rel of files.sort()) out.push(rel);
   }
   return out;
 }

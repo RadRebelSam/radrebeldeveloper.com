@@ -411,6 +411,8 @@ if (DRY) {
   console.log(JSON.stringify(next, null, 2));
 } else if (same) {
   console.log(`no change - ${projects.length} projects`);
+  /* the page itself may have been replaced since the last scan, with an empty inline copy */
+  if (await syncFallback()) console.log('synced the inline copy in index.html');
 } else {
   await writeFile(OUT, JSON.stringify(next, null, 2) + '\n');
   console.log(`wrote projects.json - ${projects.length} projects`);
