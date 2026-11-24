@@ -20,7 +20,7 @@ cd "$(dirname "$0")"
 # What actually gets served. scan.mjs, overrides.json, extras.json and README.md
 # stay on your machine - they are the toolchain, not the site.
 FILES=(index.html projects.json)
-DIRS=(icons assets)
+DIRS=(icons assets ces)
 
 mode="${1:-}"
 

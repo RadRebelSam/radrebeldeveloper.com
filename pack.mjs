@@ -25,7 +25,7 @@ const OUT = resolve(OUT_DIR, 'radrebeldeveloper.com.zip');
 
 /* What the server actually serves. Everything else stays on this machine. */
 const FILES = ['index.html', 'projects.json'];
-const DIRS = ['assets', 'icons'];
+const DIRS = ['assets', 'icons', 'ces'];
 
 /* ------------------------------------------------------------------- crc32 */
 

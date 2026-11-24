@@ -11,6 +11,7 @@ on:
     paths:                        # a hand-edit to the page redeploys too
       - "index.html"
       - "assets/**"
+      - "ces/**"
       - "overrides.json"
       - "extras.json"
 
