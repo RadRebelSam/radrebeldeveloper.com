@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-11-23T20:33:41.649Z",
+  "generated": "2026-11-24T10:45:52.699Z",
   "projects": [
     {
       "slug": "ache",
@@ -8,7 +8,7 @@
       "name": "ache",
       "tagline": "demand finder",
       "category": "chrome-extension",
-      "icon": "icons/ache.6edf535a.ico",
+      "icon": "icons/ache.982a3428.png",
       "status": "live"
     },
     {
@@ -62,7 +62,7 @@
       "name": "bouncer",
       "tagline": "reading triage",
       "category": "chrome-extension",
-      "icon": "icons/bouncer.553362ee.ico",
+      "icon": "icons/bouncer.ea658d5e.png",
       "status": "live"
     },
     {
@@ -143,7 +143,7 @@
       "name": "radrebeldeveloper.com",
       "tagline": "everything I've shipped, in one place",
       "category": "site",
-      "icon": "icons/radrebeldeveloper.179c4696.svg",
+      "icon": "icons/radrebeldeveloper.d3ed4b5a.png",
       "status": "live"
     },
     {
@@ -162,6 +162,15 @@
       "tagline": "what to do with this repo",
       "category": "chrome-extension",
       "icon": "icons/reposcout.94db9dd4.png",
+      "status": "live"
+    },
+    {
+      "slug": "rewordly",
+      "host": "rewordly.radrebeldeveloper.com",
+      "name": "rewordly",
+      "tagline": "swap words on any page",
+      "category": "chrome-extension",
+      "icon": "icons/rewordly.86720efb.png",
       "status": "live"
     },
     {
@@ -368,15 +377,6 @@
       "name": "radrebelsam.com",
       "tagline": "No favicon yet - still being built.",
       "category": "site",
-      "icon": "",
-      "status": "building"
-    },
-    {
-      "slug": "rewordly",
-      "host": "rewordly.radrebeldeveloper.com",
-      "name": "rewordly",
-      "tagline": "No favicon yet - still being built.",
-      "category": "chrome-extension",
       "icon": "",
       "status": "building"
     },
