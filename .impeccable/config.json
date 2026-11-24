@@ -1,0 +1,23 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "ces/index.html"
+        ],
+        "createdAt": "2026-11-24T10:48:00.463Z",
+        "reason": "Claude, not user confirmed: false positive from clamp() sizes; measured h1 76px vs body 17px (4.5x) on desktop and 36px vs 17px (2.1x) on a 375px phone, h2 2.0x and 1.4x"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-11-24T10:48:03.650Z",
+        "reason": "Claude, not user confirmed: Inter is the documented site body font (brand/fonts.md, radrebeldeveloper.com/index.html) and is on the business card; /ces must match the homepage"
+      }
+    ]
+  }
+}
