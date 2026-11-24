@@ -54,7 +54,7 @@ ol{list-style:none}
 .ui > *{pointer-events:auto}
 
 /* top bar */
-.bar{position:absolute;inset:0 0 auto 0;display:flex;align-items:center;justify-content:space-between;gap:12px;
+.bar{position:absolute;inset:0 0 auto 0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;
   padding:clamp(12px,2vh,22px) var(--gut)}
 .brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;font:400 18px/1 var(--f-display)}
 .brand img{width:30px;height:30px;border-radius:8px;display:block}
@@ -187,6 +187,12 @@ h1{font:400 var(--h1)/1.02 var(--f-display);letter-spacing:-.01em;white-space:no
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;transition-delay:0s!important}}
 </style>
+<!-- Pagemetry. Loaded deferred and at low priority so it never competes with
+     the page itself; data-cfasync keeps Cloudflare's Rocket Loader from
+     rewriting it. scan.mjs only rewrites the @generated:fallback block in
+     the body, so this tag survives a refresh. Dropped by mistake when the cabinet
+     replaced the sticker board (2026-11-22) and put back 2026-11-23. -->
+<script defer fetchpriority="low" data-cfasync="false" src="https://rest.pagemetry.com/v3/script?clientId=gkRmYtAUmAot7wzLEzbazG"></script>
 </head>
 <body>
 
