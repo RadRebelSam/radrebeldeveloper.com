@@ -1,6 +1,6 @@
 {
   "site": "radrebeldeveloper.com",
-  "generated": "2026-11-24T10:45:52.699Z",
+  "generated": "2026-11-26T15:55:02.870Z",
   "projects": [
     {
       "slug": "ache",
@@ -150,9 +150,18 @@
       "slug": "radrebelmarketing",
       "host": "radrebelmarketing.com",
       "name": "radrebelmarketing.com",
-      "tagline": "Content, sites and services that ship",
+      "tagline": "Clear marketing, planned and shipped",
       "category": "site",
       "icon": "icons/radrebelmarketing.e488c902.png",
+      "status": "live"
+    },
+    {
+      "slug": "radrebelsam",
+      "host": "radrebelsam.com",
+      "name": "radrebelsam.com",
+      "tagline": "The lab behind Rad Rebel",
+      "category": "site",
+      "icon": "icons/radrebelsam.a81eb1a7.png",
       "status": "live"
     },
     {
@@ -367,15 +376,6 @@
       "host": "",
       "name": "radrebelcommerce.com",
       "tagline": "",
-      "category": "site",
-      "icon": "",
-      "status": "building"
-    },
-    {
-      "slug": "radrebelsam",
-      "host": "radrebelsam.com",
-      "name": "radrebelsam.com",
-      "tagline": "No favicon yet - still being built.",
       "category": "site",
       "icon": "",
       "status": "building"
